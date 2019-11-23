@@ -2,25 +2,25 @@ package modelo;
 
 public class Usuario {
 	
-	private String DNI; //Se podria quitar id
-	private int id;
+	private String DNI;
 	private String nombre;
 	private String correo;
-	private String contraseña;
+	private String pas;
 	private String apellido1;
 	private String apellido2;
 	private int telf;
-	private String getCorreo() {
+	
+	public String getCorreo() {
 		return correo;
 	}
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
 	public String getContraseña() {
-		return contraseña;
+		return pas;
 	}
 	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+		this.pas = contraseña;
 	}
 	public String getNombre() {
 		return nombre;
