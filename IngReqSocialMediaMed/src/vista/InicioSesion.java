@@ -26,6 +26,7 @@ import javax.swing.border.MatteBorder;
 
 import utilidades.*;
 import java.awt.image.BufferedImage;
+import java.awt.SystemColor;
 
 @SuppressWarnings("serial")
 public class InicioSesion extends JFrame {
@@ -38,7 +39,7 @@ public class InicioSesion extends JFrame {
 
 	/**
 	 * Launch the application.
-	 */
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -51,11 +52,12 @@ public class InicioSesion extends JFrame {
 			}
 		});
 	}
-
+*/
 	/**
 	 * Create the frame.
 	 */
 	public InicioSesion() {
+		setAlwaysOnTop(true);
 		setResizable(false);
 		setUndecorated(true);
 		setForeground(new Color(255, 255, 255));
@@ -64,20 +66,20 @@ public class InicioSesion extends JFrame {
 		setBounds(100, 100, 764, 475);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
+		contentPane.setBackground(new Color(247, 247, 247));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setSize(800,430);
 		contentPane.setLayout(null);
 	
-		JButton cerrar = new JButton("X");
-		cerrar.setBounds(744, 0, 40, 30);
+		JButton cerrar = new JButton("x");
+		cerrar.setBounds(770, 0, 30, 30);
 		cerrar.setForeground(new Color(0, 0, 0));
 		
 		cerrar.setFocusable(false);
 		cerrar.setFocusPainted(false);
 		cerrar.setBorderPainted(false);
-		cerrar.setFont(new Font("Arial Narrow", Font.PLAIN, 23));
+		cerrar.setFont(new Font("Corbel", Font.PLAIN, 23));
 		cerrar.setAlignmentY(Component.TOP_ALIGNMENT);
 		
 		cerrar.setOpaque(true);
@@ -89,7 +91,7 @@ public class InicioSesion extends JFrame {
 		barra.setBounds(400, 0, 400, 40);
 		barra.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		barra.setOpaque(true);
-		barra.setBackground(new Color(255, 255, 255));
+		barra.setBackground(new Color(247, 247, 247));
 		contentPane.add(barra);
 		
 		cerrar.setBackground(barra.getBackground());
@@ -197,7 +199,7 @@ public class InicioSesion extends JFrame {
 		emailong.setForeground(Color.BLACK);
 		emailong.setColumns(10);
 		emailong.setBorder(new MatteBorder(0, 0, 2, 0, (Color) Color.BLACK));
-		emailong.setBackground(Color.WHITE);
+		emailong.setBackground(new Color(247, 247, 247));
 		emailong.setBounds(527, 228, 190, 30);
 		
 		TextPrompt placeholder3 = new TextPrompt("Email", emailong);
@@ -210,7 +212,7 @@ public class InicioSesion extends JFrame {
 		passong.setForeground(Color.BLACK);
 		passong.setColumns(10);
 		passong.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
-		passong.setBackground(Color.WHITE);
+		passong.setBackground(new Color(247, 247, 247));
 		passong.setBounds(527, 278, 190, 30);
 		
 		TextPrompt placeholder4 = new TextPrompt("Contraseña", passong);
@@ -278,7 +280,7 @@ public class InicioSesion extends JFrame {
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				System.exit(0); 
+				dispose();
 			}
 		});
 	}
