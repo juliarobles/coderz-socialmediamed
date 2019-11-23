@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import modelo.Usuario;
+import modelo.Usuario;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
@@ -26,9 +27,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class PerfilUsuario2 {
+	
 
 	private JFrame frmAccionsocialmedPerfil;
-	private Usuario usuarioActivo;
+	private Usuario UsuarioActivo;
 	private JLabel Nombre, Titulo, Telefono, DNI, Descripcion, Oferta, Disponibilidad, Zona;
 
 	/**
@@ -59,7 +61,13 @@ public class PerfilUsuario2 {
 	 */
 	private void initialize() {
 		
-		
+		UsuarioActivo = new Usuario();
+		UsuarioActivo.setApellido1("Ruiz");
+		UsuarioActivo.setApellido2("Aswani");
+		UsuarioActivo.setNombre("Daniel");
+		//UsuarioActivo.setDescripcion("Mi nombre es Dani y esto es una prueba");
+		UsuarioActivo.setDNI("123456A");
+		UsuarioActivo.setTelf(952123456);
 		int width, height;
 		width = 800;
 		height = 500;
@@ -78,9 +86,8 @@ public class PerfilUsuario2 {
 		  frmAccionsocialmedPerfil.getContentPane().setLayout(null);
 		  
 		  JLabel lblTelfono = new JLabel("Tel\u00E9fono:");
-		  Telefono = lblTelfono;
 		  lblTelfono.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblTelfono.setBounds(407, 109, 61, 14);
+		  lblTelfono.setBounds(407, 107, 61, 14);
 		  frmAccionsocialmedPerfil.getContentPane().add(lblTelfono);
 		  
 		  JLabel lblTitulacion = new JLabel("Titulaci\u00F3n:");
@@ -92,7 +99,7 @@ public class PerfilUsuario2 {
 		  JLabel lblDni = new JLabel("DNI:");
 		  DNI = lblDni;
 		  lblDni.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblDni.setBounds(274, 107, 61, 14);
+		  lblDni.setBounds(274, 107, 33, 14);
 		  frmAccionsocialmedPerfil.getContentPane().add(lblDni);
 		  
 		  JPanel panelDisponibilidad = new JPanel();
@@ -104,7 +111,8 @@ public class PerfilUsuario2 {
 		  panelDisponibilidad.setLayout(null);
 		  
 		  JLabel lblDisponibilidad = new JLabel("");
-		  lblDisponibilidad.setBounds(6, 16, 90, 24);
+		  //this.Disponibilidad = lblDisponibilidad.setText(UsuarioActivo.getDisponibilidad());
+		  lblDisponibilidad.setBounds(6, 16, 234, 24);
 		  panelDisponibilidad.add(lblDisponibilidad);
 		  lblDisponibilidad.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  
@@ -115,11 +123,12 @@ public class PerfilUsuario2 {
 		  frmAccionsocialmedPerfil.getContentPane().add(panelZonaDeAccion);
 		  panelZonaDeAccion.setLayout(null);
 		  
-		  JLabel lblZonaDeAccin = new JLabel("");
-		  Zona = lblZonaDeAccin;
-		  lblZonaDeAccin.setBounds(6, 16, 127, 24);
-		  panelZonaDeAccion.add(lblZonaDeAccin);
-		  lblZonaDeAccin.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		  JLabel lblZonaDeAccion = new JLabel("");
+		  this.Zona = lblZonaDeAccion;
+		  //lblZonaDeAccion.setText(UsuarioActivo.getZona());
+		  lblZonaDeAccion.setBounds(6, 16, 234, 24);
+		  panelZonaDeAccion.add(lblZonaDeAccion);
+		  lblZonaDeAccion.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  
 		  JPanel panelOferta = new JPanel();
 		  
@@ -131,7 +140,8 @@ public class PerfilUsuario2 {
 		  
 		  JLabel lblTipoDeOferta = new JLabel("");
 		  Oferta = lblTipoDeOferta;
-		  lblTipoDeOferta.setBounds(6, 16, 153, 24);
+		  //lblTipoDeOferta.setText(UsuarioActivo.getOferta());
+		  lblTipoDeOferta.setBounds(6, 16, 234, 24);
 		  panelOferta.add(lblTipoDeOferta);
 		  lblTipoDeOferta.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  
@@ -139,6 +149,34 @@ public class PerfilUsuario2 {
 		  lblOferta.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblOferta.setBounds(274, 57, 61, 14);
 		  frmAccionsocialmedPerfil.getContentPane().add(lblOferta);
+		  
+		  JLabel lblNombreR = new JLabel("");
+		  this.Nombre = lblNombreR;
+		  lblNombreR.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		  lblNombreR.setBounds(333, 57, 383, 14);
+		  lblNombreR.setText(UsuarioActivo.getNombre() + " " + UsuarioActivo.getApellido1()+ " " + UsuarioActivo.getApellido2());
+		  frmAccionsocialmedPerfil.getContentPane().add(lblNombreR);
+		  
+		  JLabel lblTituloR = new JLabel("");
+		  this.Titulo = lblTituloR;
+		  lblTituloR.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		  lblTituloR.setBounds(343, 84, 373, 14);
+		  
+		  frmAccionsocialmedPerfil.getContentPane().add(lblTituloR);
+		  
+		  JLabel lblDNIR = new JLabel("");
+		  this.DNI = lblDNIR;
+		  lblDNIR.setText(UsuarioActivo.getDNI());
+		  lblDNIR.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		  lblDNIR.setBounds(304, 107, 95, 14);
+		  frmAccionsocialmedPerfil.getContentPane().add(lblDNIR);
+		  
+		  JLabel lblTelefonoR = new JLabel("");
+		  this.Telefono = lblTelefonoR;
+		  lblTelefonoR.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		  lblTelefonoR.setBounds(471, 107, 95, 14);
+		  lblTelefonoR.setText(String.valueOf(UsuarioActivo.getTelf()));
+		  frmAccionsocialmedPerfil.getContentPane().add(lblTelefonoR);
 		  frmAccionsocialmedPerfil.getContentPane().add(user);
 		    
 		    JPanel panelEditarPerfil = new JPanel();
@@ -184,12 +222,14 @@ public class PerfilUsuario2 {
 		    frmAccionsocialmedPerfil.getContentPane().add(panelDescripcion);
 		    panelDescripcion.setLayout(null);
 		    
-		    JLabel label = new JLabel("");
-		    label.setBounds(6, 16, 430, 93);
-		    panelDescripcion.add(label);
-		    label.setHorizontalAlignment(SwingConstants.LEFT);
-		    label.setVerticalAlignment(SwingConstants.TOP);
-		    label.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		    JLabel lblDescripcion = new JLabel("");
+		    lblDescripcion.setBounds(6, 16, 430, 73);
+		    this.Descripcion = lblDescripcion;
+		    //lblDescripcion.setText(UsuarioActivo.getDescripcion());
+		    panelDescripcion.add(lblDescripcion);
+		    lblDescripcion.setHorizontalAlignment(SwingConstants.LEFT);
+		    lblDescripcion.setVerticalAlignment(SwingConstants.TOP);
+		    lblDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		  
 		    
 		  
@@ -216,11 +256,11 @@ public class PerfilUsuario2 {
 	}
 
 	public Usuario getUsuarioActivo() {
-		return usuarioActivo;
+		return UsuarioActivo;
 	}
 
-	public void setUsuarioActivo(Usuario usuarioActivo) {
-		this.usuarioActivo = usuarioActivo;
+	public void setUsuarioActivo(Usuario UsuarioActivo) {
+		this.UsuarioActivo = UsuarioActivo;
 	}
 	public void esperar(int tiempo) {
 		try {
