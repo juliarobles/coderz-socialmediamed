@@ -5,7 +5,7 @@ public class ONG {
 	private String nombre;
 	public String correo;
 	public String pas;
-	public String descripcion;
+	private String descripcion;
 	
 	public String getNombre() {
 		return nombre;

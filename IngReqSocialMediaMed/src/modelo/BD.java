@@ -1,23 +1,25 @@
 package modelo;
-/*
+
 import java.sql.*;
 import java.util.*;
 
 public class BD 
 {
-	//private SQLServerDataSource ds;
+	
 	private Connection con ;	
 	
-	public BD(String server, String databaseName)
+	public BD()
 	{
 		try
 		{
-			ds = new SQLServerDataSource();
-			ds.setIntegratedSecurity(true);
-			ds.setServerName(server);
-			ds.setPortNumber(1433); 
-			ds.setDatabaseName(databaseName);
-			con = ds.getConnection();
+			try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Error al registrar el driver de MySQL: " + ex);
+            }
+			String jdbcUrl = "jdbc:mysql://remotemysql.com:3306/tY4NcDDTGP";
+
+			con = DriverManager.getConnection(jdbcUrl, "tY4NcDDTGP", "L3P846ILrv");
 		}
 		catch (SQLException ex)
 		{
@@ -131,4 +133,4 @@ public class BD
 	}
 
 }
-*/
+
