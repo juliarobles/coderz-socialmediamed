@@ -12,7 +12,7 @@ public class Alumno extends Usuario{
 		Medicina, Enfermeria
 	}
 	private enum idioma{ //Añadir todos los idiomas
-		Español, Ingles, Frances
+		Espa�ol, Ingles, Frances
 	}
 	
 	public enum disponibilidad{ //Mejorar con fechas concretas

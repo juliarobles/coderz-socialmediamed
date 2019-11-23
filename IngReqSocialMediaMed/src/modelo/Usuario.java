@@ -6,7 +6,7 @@ public class Usuario {
 	private int id;
 	private String nombre;
 	private String correo;
-	private String contraseña;
+	private String pass;
 	private String apellido1;
 	private String apellido2;
 	private int telf;
@@ -16,11 +16,11 @@ public class Usuario {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public String getContraseña() {
-		return contraseña;
+	public String getPass() {
+		return pass;
 	}
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 	public String getNombre() {
 		return nombre;
