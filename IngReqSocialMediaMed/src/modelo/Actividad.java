@@ -33,10 +33,10 @@ public class Actividad {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-	public etiquetas[] getEtiquetas() {
+	public Etiquetas[] getEtiquetas() {
 		return etiquetas;
 	}
-	public void setEtiquetas(etiquetas[] etiquetas) {
+	public void setEtiquetas(Etiquetas[] etiquetas) {
 		this.etiquetas = etiquetas;
 	}
 	

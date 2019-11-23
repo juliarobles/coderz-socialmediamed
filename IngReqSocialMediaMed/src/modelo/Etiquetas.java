@@ -1,5 +1,5 @@
 package modelo;
 
 public enum Etiquetas {
-	inmigrantes, sintecho, ancianos, niños, enfermos, sanitarias, educacion
+	inmigrantes, sintecho, ancianos, ninos, enfermos, sanitarias, educacion
 }
