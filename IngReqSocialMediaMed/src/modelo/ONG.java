@@ -19,11 +19,11 @@ public class ONG {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public String getContraseña() {
+	public String getPas() {
 		return pas;
 	}
-	public void setContraseña(String contraseña) {
-		this.pas = contraseña;
+	public void setPas(String pas) {
+		this.pas = pas;
 	}
 	public String getDescripcion() {
 		return descripcion;
