@@ -8,7 +8,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Toolkit;
 
-public class EditarPerfil {
+public class EditarPerfil extends JFrame{
 
 	private JFrame frameEditarPerfil;
 

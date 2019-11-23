@@ -26,7 +26,7 @@ import javax.swing.border.Border;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class PerfilUsuario2 {
+public class PerfilUsuario2 extends JFrame{
 	
 
 	private JFrame frmAccionsocialmedPerfil;
@@ -204,6 +204,9 @@ public class PerfilUsuario2 {
 		    	public void mouseClicked(MouseEvent e) {
 		    		Border bordeArriba = new BevelBorder(0);
 		    		panelEditarPerfil.setBorder(bordeArriba);
+		    		//Cambiar a editar perfil
+		    		EditarPerfil frame = new EditarPerfil();
+					frame.setVisible(true);
 		    	}
 		    });
 		     
