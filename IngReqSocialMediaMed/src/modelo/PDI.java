@@ -2,8 +2,15 @@ package modelo;
 
 public class PDI extends Usuario{
 	
-	private int idUniv;
-	private String nombre;
-	private String correo;
-	private Enum cargo;
+	private Asignatura[] asigImpartidas;
+	private enum cargo{
+		profesor, investigador
+	}
+	
+	public Asignatura[] getAsigImpartidas() {
+		return asigImpartidas;
+	}
+	public void setAsigImpartidas(Asignatura[] asigImpartidas) {
+		this.asigImpartidas = asigImpartidas;
+	}
 }
