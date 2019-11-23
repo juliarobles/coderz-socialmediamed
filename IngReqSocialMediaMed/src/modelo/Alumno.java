@@ -7,18 +7,20 @@ public class Alumno extends Usuario{
 	private String descripcion;
 	private Asignatura[] asigCursadas;
 	private idioma[] idiomas;
+	private titulacion[] titulacion;
+	private disponibilidad[] disponibilidad;
+	private zonaAccion[] zonaAccion;
 	
-	public enum titulacion { //Añadir más titulaciones
+	private enum titulacion { //Añadir más titulaciones
 		Medicina, Enfermeria
 	}
 	private enum idioma{ //Añadir todos los idiomas
-		Espa�ol, Ingles, Frances
+		Español, Ingles, Frances, Aleman, Italiano, Otros
 	}
-	
-	public enum disponibilidad{ //Mejorar con fechas concretas
-		Siempre, Parcial, Nunca
+	private enum disponibilidad{ //Mejorar con fechas concretas
+		Siempre, FindeSemana, EntreSemana, Nunca
 	}
-	public enum zonaAccion{
+	private enum zonaAccion{
 		Local, Nacional, Internacional
 	}
 	public int getCodUniv() {
@@ -44,6 +46,24 @@ public class Alumno extends Usuario{
 	}
 	public void setIdiomas(idioma[] idiomas) {
 		this.idiomas = idiomas;
+	}
+	public titulacion[] getTitulacion() {
+		return titulacion;
+	}
+	public void setTitulacion(titulacion[] titulacion) {
+		this.titulacion = titulacion;
+	}
+	public disponibilidad[] getDisponibilidad() {
+		return disponibilidad;
+	}
+	public void setDisponibilidad(disponibilidad[] disponibilidad) {
+		this.disponibilidad = disponibilidad;
+	}
+	public zonaAccion[] getZonaAccion() {
+		return zonaAccion;
+	}
+	public void setZonaAccion(zonaAccion[] zonaAccion) {
+		this.zonaAccion = zonaAccion;
 	}
 	public Asignatura[] getAsigCursadas() {
 		return asigCursadas;
