@@ -14,13 +14,22 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import modelo.Usuario;
+
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PerfilUsuario2 {
 
 	private JFrame frmAccionsocialmedPerfil;
+	private Usuario usuarioActivo;
+	private JLabel Nombre, Titulo, Telefono, DNI, Descripcion, Oferta, Disponibilidad, Zona;
 
 	/**
 	 * Launch the application.
@@ -49,6 +58,8 @@ public class PerfilUsuario2 {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		
 		int width, height;
 		width = 800;
 		height = 500;
@@ -67,60 +78,67 @@ public class PerfilUsuario2 {
 		  frmAccionsocialmedPerfil.getContentPane().setLayout(null);
 		  
 		  JLabel lblTelfono = new JLabel("Tel\u00E9fono:");
+		  Telefono = lblTelfono;
 		  lblTelfono.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblTelfono.setBounds(407, 109, 61, 14);
 		  frmAccionsocialmedPerfil.getContentPane().add(lblTelfono);
 		  
-		  JLabel lblTitulacin = new JLabel("Titulaci\u00F3n:");
-		  lblTitulacin.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblTitulacin.setBounds(274, 82, 73, 14);
-		  frmAccionsocialmedPerfil.getContentPane().add(lblTitulacin);
+		  JLabel lblTitulacion = new JLabel("Titulaci\u00F3n:");
+		  Titulo = lblTitulacion;
+		  lblTitulacion.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		  lblTitulacion.setBounds(274, 82, 73, 14);
+		  frmAccionsocialmedPerfil.getContentPane().add(lblTitulacion);
 		  
 		  JLabel lblDni = new JLabel("DNI:");
+		  DNI = lblDni;
 		  lblDni.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblDni.setBounds(274, 107, 61, 14);
 		  frmAccionsocialmedPerfil.getContentPane().add(lblDni);
 		  
-		  JPanel panel = new JPanel();
-		  panel.setBackground(Color.WHITE);
-		  panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Disponibilidad", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		  panel.setBounds(274, 320, 250, 50);
-		  frmAccionsocialmedPerfil.getContentPane().add(panel);
-		  panel.setLayout(null);
+		  JPanel panelDisponibilidad = new JPanel();
+		  
+		  panelDisponibilidad.setBackground(Color.WHITE);
+		  panelDisponibilidad.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Disponibilidad", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		  panelDisponibilidad.setBounds(274, 320, 250, 50);
+		  frmAccionsocialmedPerfil.getContentPane().add(panelDisponibilidad);
+		  panelDisponibilidad.setLayout(null);
 		  
 		  JLabel lblDisponibilidad = new JLabel("");
 		  lblDisponibilidad.setBounds(6, 16, 90, 24);
-		  panel.add(lblDisponibilidad);
+		  panelDisponibilidad.add(lblDisponibilidad);
 		  lblDisponibilidad.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  
-		  JPanel panel_1 = new JPanel();
-		  panel_1.setBackground(Color.WHITE);
-		  panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Zona de acci\u00F3n:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		  panel_1.setBounds(274, 250, 250, 50);
-		  frmAccionsocialmedPerfil.getContentPane().add(panel_1);
-		  panel_1.setLayout(null);
+		  JPanel panelZonaDeAccion = new JPanel();
+		  panelZonaDeAccion.setBackground(Color.WHITE);
+		  panelZonaDeAccion.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Zona de acci\u00F3n:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		  panelZonaDeAccion.setBounds(274, 250, 250, 50);
+		  frmAccionsocialmedPerfil.getContentPane().add(panelZonaDeAccion);
+		  panelZonaDeAccion.setLayout(null);
 		  
 		  JLabel lblZonaDeAccin = new JLabel("");
+		  Zona = lblZonaDeAccin;
 		  lblZonaDeAccin.setBounds(6, 16, 127, 24);
-		  panel_1.add(lblZonaDeAccin);
+		  panelZonaDeAccion.add(lblZonaDeAccin);
 		  lblZonaDeAccin.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  
-		  JPanel panel_2 = new JPanel();
-		  panel_2.setBackground(Color.WHITE);
-		  panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Tipo de oferta preferida", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		  panel_2.setBounds(274, 390, 250, 46);
-		  frmAccionsocialmedPerfil.getContentPane().add(panel_2);
-		  panel_2.setLayout(null);
+		  JPanel panelOferta = new JPanel();
+		  
+		  panelOferta.setBackground(Color.WHITE);
+		  panelOferta.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Tipo de oferta preferida", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		  panelOferta.setBounds(274, 390, 250, 46);
+		  frmAccionsocialmedPerfil.getContentPane().add(panelOferta);
+		  panelOferta.setLayout(null);
 		  
 		  JLabel lblTipoDeOferta = new JLabel("");
+		  Oferta = lblTipoDeOferta;
 		  lblTipoDeOferta.setBounds(6, 16, 153, 24);
-		  panel_2.add(lblTipoDeOferta);
+		  panelOferta.add(lblTipoDeOferta);
 		  lblTipoDeOferta.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  
-		  JLabel lblNombre = new JLabel("Nombre:");
-		  lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblNombre.setBounds(274, 62, 61, 14);
-		  frmAccionsocialmedPerfil.getContentPane().add(lblNombre);
+		  JLabel lblOferta = new JLabel("Nombre:");
+		  lblOferta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		  lblOferta.setBounds(274, 57, 61, 14);
+		  frmAccionsocialmedPerfil.getContentPane().add(lblOferta);
 		  frmAccionsocialmedPerfil.getContentPane().add(user);
 		    
 		    JPanel panelEditarPerfil = new JPanel();
@@ -131,6 +149,26 @@ public class PerfilUsuario2 {
 		    panelEditarPerfil.setLayout(null);
 		    
 		    JLabel lblEditarPerfil = new JLabel("Editar perfil");
+		    lblEditarPerfil.addMouseListener(new MouseAdapter() {
+		    	@Override
+		    	public void mousePressed(MouseEvent e) {
+		    		
+		    		Border bordeAbajo = new BevelBorder(1);
+		    		
+		    		panelEditarPerfil.setBorder(bordeAbajo);
+		    		
+		    		
+		    		//panelEditarPerfil.setBorder(bordeArriba);
+		    		
+		    	}
+		    	
+		    	@Override
+		    	public void mouseClicked(MouseEvent e) {
+		    		Border bordeArriba = new BevelBorder(0);
+		    		panelEditarPerfil.setBorder(bordeArriba);
+		    	}
+		    });
+		     
 		    lblEditarPerfil.setFont(new Font("Tahoma", Font.BOLD, 14));
 		    lblEditarPerfil.setBounds(0, 0, 200, 50);
 		    panelEditarPerfil.add(lblEditarPerfil);
@@ -157,15 +195,40 @@ public class PerfilUsuario2 {
 		  
 		  
 		  
-		    JLabel lblNewLabel = new JLabel("");
-		    lblNewLabel.setBounds(0, 0, 794, 471);
-		    lblNewLabel.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		    lblNewLabel.setIcon(new
+		    JLabel lblFondo = new JLabel("");
+		    lblFondo.setBounds(0, 0, 794, 471);
+		    lblFondo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		    lblFondo.setIcon(new
 		    		  ImageIcon(PerfilUsuario2.class.getResource("/resources/Perfil usuario.png")))
 		    		  ;
-		    frmAccionsocialmedPerfil.getContentPane().add(lblNewLabel);
+		    frmAccionsocialmedPerfil.getContentPane().add(lblFondo);
 		 
 		  
 		
+	}
+
+	public JFrame getFrmAccionsocialmedPerfil() {
+		return frmAccionsocialmedPerfil;
+	}
+
+	public void setFrmAccionsocialmedPerfil(JFrame frmAccionsocialmedPerfil) {
+		this.frmAccionsocialmedPerfil = frmAccionsocialmedPerfil;
+	}
+
+	public Usuario getUsuarioActivo() {
+		return usuarioActivo;
+	}
+
+	public void setUsuarioActivo(Usuario usuarioActivo) {
+		this.usuarioActivo = usuarioActivo;
+	}
+	public void esperar(int tiempo) {
+		try {
+			Thread.sleep(tiempo);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+  
 	}
 }
