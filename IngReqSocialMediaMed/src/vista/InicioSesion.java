@@ -28,15 +28,16 @@ import controlador.CtrLoginUMA;
 import utilidades.*;
 import java.awt.image.BufferedImage;
 import java.awt.SystemColor;
+import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
 public class InicioSesion extends JFrame {
 
 	private JPanel contentPane;
 	public JTextField emailuma;
-	public JTextField passuma;
 	public JTextField emailong;
-	public JTextField passong;
+	public JPasswordField passong;
+	public JPasswordField passuma;
 
 	/**
 	 * Launch the application.
@@ -73,7 +74,7 @@ public class InicioSesion extends JFrame {
 		setSize(800,430);
 		contentPane.setLayout(null);
 	
-		JButton cerrar = new JButton("x");
+		JButton cerrar = new JButton("<html>&#10005;<html>");
 		cerrar.setBounds(770, 0, 30, 30);
 		cerrar.setForeground(new Color(0, 0, 0));
 		
@@ -151,7 +152,7 @@ public class InicioSesion extends JFrame {
 		contentPane.add(emailuma);
 		emailuma.setColumns(10);
 		
-		passuma = new JTextField();
+		passuma = new JPasswordField();
 		passuma.setForeground(new Color(255, 255, 255));
 		passuma.setBackground(new Color(28, 47, 87));
 		passuma.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(255, 255, 255)));
@@ -210,7 +211,7 @@ public class InicioSesion extends JFrame {
 		
 		contentPane.add(emailong);
 		
-		passong = new JTextField();
+		passong = new JPasswordField();
 		passong.setForeground(Color.BLACK);
 		passong.setColumns(10);
 		passong.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));

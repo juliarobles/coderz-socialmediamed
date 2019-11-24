@@ -30,7 +30,8 @@ public class CtrLoginUMA implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		String email = vista.emailuma.getText();
-		String pass = vista.passuma.getText();
+		char[] password = vista.passuma.getPassword();
+		String pass = String.valueOf(password);
 		ConsultaiDuma ci = new ConsultaiDuma();
 		if(ci.consultar(email, pass)) {
 			principal.cambiarUsuario(new Usuario(email));

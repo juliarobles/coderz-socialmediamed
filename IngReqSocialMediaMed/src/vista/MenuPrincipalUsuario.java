@@ -7,7 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import modelo.Disponibilidad;
+import modelo.Etiquetas;
 import modelo.Usuario;
+import modelo.ZonaAccion;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -77,7 +80,16 @@ public class MenuPrincipalUsuario extends JPanel {
 		btnPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				PerfilUsuario2 pu = new PerfilUsuario2();
+				usu.setApellido1("Ruiz");
+				usu.setApellido2("Aswani");
+				usu.setNombre("Daniel");
+				usu.setDescripcion("Mi nombre es Dani y esto es una prueba");
+				usu.setDNI("123456A");
+				usu.setTelf(952123456);
+				usu.setDisponibilidad(Disponibilidad.Nunca);
+				usu.setEtiquetas(Etiquetas.ancianos);
+				usu.setZonaAccion(ZonaAccion.Internacional);
+				Perfil pu = new Perfil(usu);
 				pu.setVisible(true);
 			}
 		});

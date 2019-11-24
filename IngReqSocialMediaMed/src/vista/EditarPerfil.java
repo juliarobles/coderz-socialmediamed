@@ -27,13 +27,16 @@ import javax.swing.border.Border;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class EditarPerfil extends JFrame{
+public class EditarPerfil extends JPanel{
 	
 	private Usuario UsuarioActivo;
 	private JFrame frameEditarPerfil;
+	private Perfil padre;
 
 	/**
 	 * Launch the application.
@@ -47,10 +50,12 @@ public class EditarPerfil extends JFrame{
 	 */
 	/**
 	 * Create the application.
+	 * @param perfil 
 	 */
-	public EditarPerfil(Usuario usuario) {
+	public EditarPerfil(Usuario usuario, Perfil perfil) {
 		UsuarioActivo = usuario;
-		getContentPane().setBackground(Color.WHITE);
+		padre = perfil;
+		//getContentPane().setBackground(Color.WHITE);
 		initialize();
 	}
 
@@ -64,46 +69,46 @@ public class EditarPerfil extends JFrame{
 		int height = 500;
 		//frameEditarPerfil.setVisible(true);
 		//frameEditarPerfil = new JFrame();
-		setTitle("AccionSocialMed - Editar perfil");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(EditarPerfil.class.getResource("/resources/_Logo AccionSocialMed png.png")));
-		setResizable(false);
+		//setTitle("AccionSocialMed - Editar perfil");
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(EditarPerfil.class.getResource("/resources/_Logo AccionSocialMed png.png")));
+		//setResizable(false);
 		setBounds(100, 100, width, height);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLayout(null);
 		
 		JLabel lblDescripcion = new JLabel("Descripci\u00F3n personal:");
 		lblDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		lblDescripcion.setBounds(46, 76, 134, 20);
-		getContentPane().add(lblDescripcion);
+		add(lblDescripcion);
 		
 		JLabel lblEditarPerfil = new JLabel("Editar perfil");
 		lblEditarPerfil.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 29));
 		lblEditarPerfil.setBounds(316, 11, 162, 47);
-		getContentPane().add(lblEditarPerfil);
+		add(lblEditarPerfil);
 		
 		JPanel panelBorde = new JPanel();
 		panelBorde.setBackground(Color.WHITE);
 		panelBorde.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		panelBorde.setBounds(185, 76, 564, 136);
-		getContentPane().add(panelBorde);
+		add(panelBorde);
 		panelBorde.setLayout(null);
 		
 		JTextPane textoDescripcion = new JTextPane();
-		textoDescripcion.setText(UsuarioActivo.getDescripcion());
-		textoDescripcion.setBounds(10, 11, 548, 114);
+		textoDescripcion.setBounds(10, 10, 548, 114);
 		panelBorde.add(textoDescripcion);
+		textoDescripcion.setText(UsuarioActivo.getDescripcion());
 		
 		JLabel lblTelefono = new JLabel("Tel\u00E9fono:");
 		lblTelefono.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		lblTelefono.setBounds(118, 250, 62, 20);
-		getContentPane().add(lblTelefono);
+		add(lblTelefono);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(185, 239, 162, 41);
-		getContentPane().add(panel);
+		add(panel);
 		
 		JTextPane rellenarTelefono = new JTextPane();
 		rellenarTelefono.setText(String.valueOf(UsuarioActivo.getTelf()));
@@ -113,7 +118,7 @@ public class EditarPerfil extends JFrame{
 		JLabel lblZona = new JLabel("Zona de acci\u00F3n:");
 		lblZona.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		lblZona.setBounds(75, 301, 106, 20);
-		getContentPane().add(lblZona);
+		add(lblZona);
 		
 		int index=0;
 		JComboBox<ZonaAccion> boxZona = new JComboBox<ZonaAccion>();
@@ -126,7 +131,7 @@ public class EditarPerfil extends JFrame{
 		boxZona.setSelectedIndex(index);
 		boxZona.setBackground(Color.WHITE);
 		boxZona.setBounds(185, 300, 162, 22);
-		getContentPane().add(boxZona);
+		add(boxZona);
 		
 		JComboBox <Disponibilidad>boxDispo = new JComboBox<Disponibilidad>();
 		
@@ -139,12 +144,12 @@ public class EditarPerfil extends JFrame{
 		boxDispo.setSelectedIndex(index);
 		boxDispo.setBackground(Color.WHITE);
 		boxDispo.setBounds(185, 332, 162, 22);
-		getContentPane().add(boxDispo);
+		add(boxDispo);
 		
 		JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
 		lblDisponibilidad.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		lblDisponibilidad.setBounds(75, 333, 106, 20);
-		getContentPane().add(lblDisponibilidad);
+		add(lblDisponibilidad);
 		
 		JComboBox <Etiquetas> boxOferta = new JComboBox<Etiquetas>();
 		for(int cont = 0;Etiquetas.values().length>cont; cont++) {
@@ -156,19 +161,19 @@ public class EditarPerfil extends JFrame{
 		boxOferta.setSelectedIndex(index);
 		boxOferta.setBackground(Color.WHITE);
 		boxOferta.setBounds(185, 365, 162, 22);
-		getContentPane().add(boxOferta);
+		add(boxOferta);
 		
 		JLabel lblOfertaPreferida = new JLabel("Oferta preferida:");
 		lblOfertaPreferida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		lblOfertaPreferida.setBounds(75, 366, 106, 20);
-		getContentPane().add(lblOfertaPreferida);
+		add(lblOfertaPreferida);
 		
 		JPanel panelGuardarCambios = new JPanel();
 		panelGuardarCambios.setLayout(null);
 		panelGuardarCambios.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelGuardarCambios.setBackground(new Color(51, 204, 204));
 		panelGuardarCambios.setBounds(185, 398, 200, 50);
-		getContentPane().add(panelGuardarCambios);
+		add(panelGuardarCambios);
 		
 		JLabel lblGuardarCambios = new JLabel("Guardar cambios");
 		lblGuardarCambios.addMouseListener(new MouseAdapter() {
@@ -190,9 +195,10 @@ public class EditarPerfil extends JFrame{
 	    		UsuarioActivo.setEtiquetas((Etiquetas)boxOferta.getSelectedItem());
 	    		UsuarioActivo.setDescripcion(textoDescripcion.getText());
 	    		//Cambiar a perfil
-	    		PerfilUsuario2 frame = new PerfilUsuario2(UsuarioActivo);
-				frame.setVisible(true);
-				dispose();
+	    		//PerfilUsuario2 frame = new PerfilUsuario2(UsuarioActivo);
+				//frame.setVisible(true);
+				//dispose();
+	    		padre.cambiarAVer();
 				
 			}
 		});
