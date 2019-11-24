@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import modelo.Disponibilidad;
-import modelo.Etiquetas;
+import modelo.TipoOferta;
 import modelo.Usuario;
 import modelo.ZonaAccion;
 
@@ -151,10 +151,10 @@ public class EditarPerfil extends JPanel{
 		lblDisponibilidad.setBounds(75, 333, 106, 20);
 		add(lblDisponibilidad);
 		
-		JComboBox <Etiquetas> boxOferta = new JComboBox<Etiquetas>();
-		for(int cont = 0;Etiquetas.values().length>cont; cont++) {
-			boxOferta.addItem(Etiquetas.values()[cont]);
-			if(Etiquetas.values()[cont] == UsuarioActivo.getEtiquetas()) {
+		JComboBox <TipoOferta> boxOferta = new JComboBox<TipoOferta>();
+		for(int cont = 0;TipoOferta.values().length>cont; cont++) {
+			boxOferta.addItem(TipoOferta.values()[cont]);
+			if(TipoOferta.values()[cont] == UsuarioActivo.getEtiquetas()) {
 				index = cont;
 			}
 		}
@@ -192,7 +192,7 @@ public class EditarPerfil extends JPanel{
 	    		//UsuarioActivo.setTelf(Integer.parseInt(rellenarTelefono.getText()));
 	    		UsuarioActivo.setDisponibilidad((Disponibilidad)boxDispo.getSelectedItem());
 	    		UsuarioActivo.setZonaAccion((ZonaAccion)boxZona.getSelectedItem());
-	    		UsuarioActivo.setEtiquetas((Etiquetas)boxOferta.getSelectedItem());
+	    		UsuarioActivo.setTipoOferta((TipoOferta)boxOferta.getSelectedItem());
 	    		UsuarioActivo.setDescripcion(textoDescripcion.getText());
 	    		//Cambiar a perfil
 	    		//PerfilUsuario2 frame = new PerfilUsuario2(UsuarioActivo);

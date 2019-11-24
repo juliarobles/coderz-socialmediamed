@@ -1,45 +1,25 @@
 package modelo;
 
-public class Alumno extends Usuario{
-	
-	public Alumno(String email) {
+public class Alumno extends Usuario {
+
+	public Alumno(String email) { //Saca un alumno de la base de datos
 		super(email);
-		// TODO Auto-generated constructor stub
 	}
-	private int idUniv;
-	private Asignatura[] asigCursadas;
-	//Todo lo comentado en principio fuera
-	/*private idioma[] idiomas;
-	private titulacion[] titulacion;
-	private enum titulacion { //Añadir más titulaciones
-		Medicina, Enfermeria
+
+	public Alumno(String email, String nombre, String apellido1, String apellido2, int telefono,
+			Disponibilidad disponibilidad, TipoOferta tipoOferta, ZonaAccion zonaAccion, String url,
+			String descripcion) {
+		super(email, nombre, apellido1, apellido2, telefono, disponibilidad, tipoOferta, zonaAccion, url, descripcion);
+		BD mibd = new BD();
+		mibd.Insert("INSERT INTO ALUMNOS VALUES ('" + email + "');");
 	}
-	private enum idioma{ //Añadir todos los idiomas
-		Español, Ingles, Frances, Aleman, Italiano, Otros
-	}*/
-	public int getCodUniv() {
-		return idUniv;
-	}
-	public void setCodUniv(int codUniv) {
-		this.idUniv = codUniv;
-	}/*
-	public idioma[] getIdiomas() {
-		return idiomas;
-	}
-	public void setIdiomas(idioma[] idiomas) {
-		this.idiomas = idiomas;
-	}
-	public titulacion[] getTitulacion() {
-		return titulacion;
-	}
-	public void setTitulacion(titulacion[] titulacion) {
-		this.titulacion = titulacion;
-	}*/
-	public Asignatura[] getAsigCursadas() {
-		return asigCursadas;
-	}
-	public void setAsigCursadas(Asignatura[] asigCursadas) {
-		this.asigCursadas = asigCursadas;
+
+	public Alumno(String email, String nombre, String apellido1, String apellido2) {
+		super(email, nombre, apellido1, apellido2);
+		BD mibd = new BD();
+		mibd.Insert("INSERT INTO ALUMNOS VALUES ('" + email + "');");
 	}
 	
+	
+
 }

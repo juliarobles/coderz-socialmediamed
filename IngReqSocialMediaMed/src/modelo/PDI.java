@@ -1,38 +1,25 @@
 package modelo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PDI extends Usuario{
-	
-	//private List<Asignatura> asigImpartidas;
-	//private CargoPdi[] cargo;
-	
+
+	public PDI(String email, String nombre, String apellido1, String apellido2, int telefono,
+			Disponibilidad disponibilidad, TipoOferta tipoOferta, ZonaAccion zonaAccion, String url,
+			String descripcion) {
+		super(email, nombre, apellido1, apellido2, telefono, disponibilidad, tipoOferta, zonaAccion, url, descripcion);
+		BD mibd = new BD();
+		mibd.Insert("INSERT INTO PDI VALUES ('" + email + "');");
+	}
+
+	public PDI(String email, String nombre, String apellido1, String apellido2) {
+		super(email, nombre, apellido1, apellido2);
+		BD mibd = new BD();
+		mibd.Insert("INSERT INTO PDI VALUES ('" + email + "');");
+	}
+
 	public PDI(String email) {
 		super(email);
-		// TODO Auto-generated constructor stub
-	}
 
-	//usar bd pa sacar las asignaturas impartidas
-	public List<Asignatura> getAsigImpartidas(){
-		List<Asignatura> asigImpartidas = new ArrayList<Asignatura>();
-		
-		return asigImpartidas;
 	}
 	
-	/*
-	public Asignatura[] getAsigImpartidas() {
-		return asigImpartidas;
-	}
 	
-	public void setAsigImpartidas(Asignatura[] asigImpartidas) {
-		this.asigImpartidas = asigImpartidas;
-	}
-	public CargoPdi[] getCargo() {
-		return cargo;
-	}
-	public void setCargo(CargoPdi[] cargo) {
-		this.cargo = cargo;
-	}
-	*/
 }

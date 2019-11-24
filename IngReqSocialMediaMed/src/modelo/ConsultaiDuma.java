@@ -41,10 +41,25 @@ public class ConsultaiDuma {
 		return res;
 	}
 	
-	/*
-	public boolean existe(String user, String pass) {
-		consultar(user, pass);
-		return datos.get("situation").toString().equals("\"PRESENT\"");
+	
+	public String dameNombre() {
+		String d = datos.get("nombre").toString();
+		return d.substring(1, d.length()-1);
 	}
-	*/
+	
+	public String dameApellido1() {
+		String d = datos.get("primerApellido").toString();
+		return d.substring(1, d.length()-1);
+	}
+	
+	public String dameApellido2() {
+		String d = datos.get("segundoApellido").toString();
+		return d.substring(1, d.length()-1);
+	}
+	
+	public String dameTipo() {
+		String d = datos.get("categoryName").toString();
+		return d.substring(1, d.length()-1);
+	}
+	
 }

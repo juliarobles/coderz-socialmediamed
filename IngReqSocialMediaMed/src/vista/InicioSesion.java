@@ -173,7 +173,7 @@ public class InicioSesion extends JFrame {
 		btnEntrar.setBorder(border);
 		btnEntrar.setBackground(Color.WHITE);
 		btnEntrar.setBounds(138, 337, 129, 40);
-		btnEntrar.addMouseListener(new CtrLoginUMA(this, principal));
+		btnEntrar.addMouseListener(new CtrLoginUMA(this, principal, btnEntrar));
 		contentPane.add(btnEntrar);
 		
 		ImageIcon lb  = new ImageIcon(InicioSesion.class.getResource("/resources/lockblanco.png"));

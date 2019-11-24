@@ -1,5 +1,5 @@
 package modelo;
 
-public enum Etiquetas {
+public enum TipoOferta {
 	inmigrantes, sintecho, ancianos, ninos, enfermos, sanitarias, educacion
 }

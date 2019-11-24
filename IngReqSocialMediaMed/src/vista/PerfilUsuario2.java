@@ -16,10 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import modelo.Disponibilidad;
-import modelo.Etiquetas;
 import modelo.Usuario;
 import modelo.ZonaAccion;
-import modelo.Usuario;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
@@ -39,7 +37,7 @@ public class PerfilUsuario2 extends JPanel{
 
 	/**
 	 * Launch the application.
-	 */
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -52,7 +50,7 @@ public class PerfilUsuario2 extends JPanel{
 			}
 		});
 	}
-
+*/
 	/**
 	 * Create the application.
 	 * @param perfil 
@@ -63,6 +61,7 @@ public class PerfilUsuario2 extends JPanel{
 		System.out.println("He entrado por constructor con argumento");
 		initialize();
 	}
+	/*
 	public PerfilUsuario2() {
 		System.out.println("He entrado por constructor sin argumento");
 		UsuarioActivo = new Usuario(null);
@@ -78,6 +77,7 @@ public class PerfilUsuario2 extends JPanel{
 		initialize();
 		
 	}
+	*/
 
 	/**
 	 * Initialize the contents of the frame.
@@ -180,14 +180,14 @@ public class PerfilUsuario2 extends JPanel{
 		  lblTituloR.setBounds(343, 84, 373, 14);
 		  
 		  add(lblTituloR);
-		  
+		  /*
 		  JLabel lblDNIR = new JLabel("");
 		  this.DNI = lblDNIR;
 		  lblDNIR.setText(UsuarioActivo.getDNI());
 		  lblDNIR.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblDNIR.setBounds(304, 107, 95, 14);
 		  add(lblDNIR);
-		  
+		  */
 		  JLabel lblTelefonoR = new JLabel("");
 		  this.Telefono = lblTelefonoR;
 		  lblTelefonoR.setFont(new Font("Tahoma", Font.PLAIN, 14));

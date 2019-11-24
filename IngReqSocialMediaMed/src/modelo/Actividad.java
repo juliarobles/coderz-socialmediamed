@@ -8,7 +8,7 @@ public class Actividad {
 	private String nombre;
 	private String descripcion;
 	private String imageUrl;
-	private Etiquetas[] etiquetas;
+	private TipoOferta[] etiquetas;
 	public int getCodActividad() {
 		return codActividad;
 	}
@@ -33,10 +33,10 @@ public class Actividad {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-	public Etiquetas[] getEtiquetas() {
+	public TipoOferta[] getEtiquetas() {
 		return etiquetas;
 	}
-	public void setEtiquetas(Etiquetas[] etiquetas) {
+	public void setEtiquetas(TipoOferta[] etiquetas) {
 		this.etiquetas = etiquetas;
 	}
 	
