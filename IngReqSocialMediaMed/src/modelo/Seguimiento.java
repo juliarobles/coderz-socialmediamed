@@ -1,7 +1,8 @@
 package modelo;
 
 public class Seguimiento {
-
+//AUN NO ESTA SINCRONIZADO CON LA BD
+	//No usar aun
 	private String comentariosAlu;
 	private String comentariosPdi;
 	private String comentariosOng;

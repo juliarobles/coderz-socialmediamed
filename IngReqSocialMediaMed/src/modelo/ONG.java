@@ -6,8 +6,6 @@ public class ONG {
 	private String nombre;
 	private String descripcion;
 	
-	
-	
 	public ONG(String email) {
 		BD mibd = new BD();
 		Object[] tupla = mibd.Select("SELECT * FROM USUARIOONG WHERE email = '" + email + "';").get(0);

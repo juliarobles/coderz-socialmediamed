@@ -1,43 +1,39 @@
 package modelo;
 
-import java.util.HashSet;
-
 public class Proyecto {
 	
 	private int id;
-	private String titulo;
-	private String contenido;
-	private String image;
-	private HashSet<Actividad> Actividades = new HashSet<Actividad>();
+	private String nombre;
 	
-	public HashSet<Actividad> getActividades() {
-		return Actividades;
+	public Proyecto(int id) { //Saca un proyecto de la BD y lo guarda en un objeto
+		BD mibd = new BD();
+		Object[] tupla = mibd.Select("SELECT * FROM PROYECTO WHERE id = " + id + ";").get(0);
+		mibd.finalize();
+		this.id = (Integer) tupla[0];
+		this.nombre = (String) tupla[1];
 	}
-	public void setActividades(HashSet<Actividad> actividades) {
-		Actividades = actividades;
+	
+	public Proyecto(String nombre) {
+		BD mibd = new BD();
+		mibd.Insert("INSERT INTO PROYECTO VALUES('" + nombre + "');");
+		mibd.finalize();
+		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM PROYECTO;");;
+		this.nombre = nombre;
 	}
+	
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public String getNombre() {
+		return nombre;
 	}
-	public String getTitulo() {
-		return titulo;
+	public void setNombre(String nombre) {
+		BD mibd = new BD();
+		mibd.Update("UPDATE PROYECTO SET nombre = '" + nombre + "' WHERE id = " + id + ";");
+		mibd.finalize();
+		this.nombre = nombre;
 	}
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-	public String getContenido() {
-		return contenido;
-	}
-	public void setContenido(String contenido) {
-		this.contenido = contenido;
-	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
+	
+	
 }
