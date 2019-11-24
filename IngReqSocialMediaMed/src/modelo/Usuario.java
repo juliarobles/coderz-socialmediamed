@@ -10,9 +10,9 @@ public class Usuario {
 	private String apellido2;
 	private int telf;
 	private String imagenUrl;
-	private Etiquetas[] etiquetas;
-	private Disponibilidad[] disponibilidad;
-	private ZonaAccion[] zonaAccion;
+	private Etiquetas etiquetas;
+	private Disponibilidad disponibilidad;
+	private ZonaAccion zonaAccion;
 	private String descripcion;
 	public String getCorreo() {
 		return correo;
@@ -56,22 +56,22 @@ public class Usuario {
 	public void setTelf(int telf) {
 		this.telf = telf;
 	}
-	public Etiquetas[] getEtiquetas() {
+	public Etiquetas getEtiquetas() {
 		return etiquetas;
 	}
-	public void setEtiquetas(Etiquetas[] etiquetas) {
+	public void setEtiquetas(Etiquetas etiquetas) {
 		this.etiquetas = etiquetas;
 	}
-	public Disponibilidad[] getDisponibilidad() {
+	public Disponibilidad getDisponibilidad() {
 		return disponibilidad;
 	}
-	public void setDisponibilidad(Disponibilidad[] disponibilidad) {
+	public void setDisponibilidad(Disponibilidad disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
-	public ZonaAccion[] getZonaAccion() {
+	public ZonaAccion getZonaAccion() {
 		return zonaAccion;
 	}
-	public void setZonaAccion(ZonaAccion[] zonaAccion) {
+	public void setZonaAccion(ZonaAccion zonaAccion) {
 		this.zonaAccion = zonaAccion;
 	}
 	public String getDescripcion() {

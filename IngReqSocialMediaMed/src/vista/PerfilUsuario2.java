@@ -15,7 +15,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import modelo.Disponibilidad;
+import modelo.Etiquetas;
 import modelo.Usuario;
+import modelo.ZonaAccion;
 import modelo.Usuario;
 
 import javax.swing.border.EtchedBorder;
@@ -31,7 +34,7 @@ public class PerfilUsuario2 extends JFrame{
 
 	private JFrame frmAccionsocialmedPerfil;
 	private Usuario UsuarioActivo;
-	private JLabel Nombre, Titulo, Telefono, DNI, Descripcion, Oferta, Disponibilidad, Zona;
+	private JLabel Nombre, Titulo, Telefono, DNI, Descripcion, Oferta, Dispo, Zona;
 
 	/**
 	 * Launch the application.
@@ -65,9 +68,12 @@ public class PerfilUsuario2 extends JFrame{
 		UsuarioActivo.setApellido1("Ruiz");
 		UsuarioActivo.setApellido2("Aswani");
 		UsuarioActivo.setNombre("Daniel");
-		//UsuarioActivo.setDescripcion("Mi nombre es Dani y esto es una prueba");
+		UsuarioActivo.setDescripcion("Mi nombre es Dani y esto es una prueba");
 		UsuarioActivo.setDNI("123456A");
 		UsuarioActivo.setTelf(952123456);
+		UsuarioActivo.setDisponibilidad(Disponibilidad.Siempre);
+		UsuarioActivo.setEtiquetas(Etiquetas.ancianos);
+		UsuarioActivo.setZonaAccion(ZonaAccion.Internacional);
 		int width, height;
 		width = 800;
 		height = 500;
@@ -102,19 +108,19 @@ public class PerfilUsuario2 extends JFrame{
 		  lblDni.setBounds(274, 107, 33, 14);
 		  frmAccionsocialmedPerfil.getContentPane().add(lblDni);
 		  
-		  JPanel panelDisponibilidad = new JPanel();
+		  JPanel panelDispo = new JPanel();
 		  
-		  panelDisponibilidad.setBackground(Color.WHITE);
-		  panelDisponibilidad.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Disponibilidad", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		  panelDisponibilidad.setBounds(274, 320, 250, 50);
-		  frmAccionsocialmedPerfil.getContentPane().add(panelDisponibilidad);
-		  panelDisponibilidad.setLayout(null);
+		  panelDispo.setBackground(Color.WHITE);
+		  panelDispo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Dispo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		  panelDispo.setBounds(274, 320, 250, 50);
+		  frmAccionsocialmedPerfil.getContentPane().add(panelDispo);
+		  panelDispo.setLayout(null);
 		  
-		  JLabel lblDisponibilidad = new JLabel("");
-		  //this.Disponibilidad = lblDisponibilidad.setText(UsuarioActivo.getDisponibilidad());
-		  lblDisponibilidad.setBounds(6, 16, 234, 24);
-		  panelDisponibilidad.add(lblDisponibilidad);
-		  lblDisponibilidad.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		  JLabel lblDispo = new JLabel("");
+		  
+		  lblDispo.setBounds(6, 16, 234, 24);
+		  panelDispo.add(lblDispo);
+		  lblDispo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  
 		  JPanel panelZonaDeAccion = new JPanel();
 		  panelZonaDeAccion.setBackground(Color.WHITE);
@@ -125,7 +131,7 @@ public class PerfilUsuario2 extends JFrame{
 		  
 		  JLabel lblZonaDeAccion = new JLabel("");
 		  this.Zona = lblZonaDeAccion;
-		  //lblZonaDeAccion.setText(UsuarioActivo.getZona());
+		  lblZonaDeAccion.setText(UsuarioActivo.getZonaAccion().toString());
 		  lblZonaDeAccion.setBounds(6, 16, 234, 24);
 		  panelZonaDeAccion.add(lblZonaDeAccion);
 		  lblZonaDeAccion.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -140,7 +146,7 @@ public class PerfilUsuario2 extends JFrame{
 		  
 		  JLabel lblTipoDeOferta = new JLabel("");
 		  Oferta = lblTipoDeOferta;
-		  //lblTipoDeOferta.setText(UsuarioActivo.getOferta());
+		  lblTipoDeOferta.setText(UsuarioActivo.getEtiquetas().toString());
 		  lblTipoDeOferta.setBounds(6, 16, 234, 24);
 		  panelOferta.add(lblTipoDeOferta);
 		  lblTipoDeOferta.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -205,8 +211,10 @@ public class PerfilUsuario2 extends JFrame{
 		    		Border bordeArriba = new BevelBorder(0);
 		    		panelEditarPerfil.setBorder(bordeArriba);
 		    		//Cambiar a editar perfil
-		    		EditarPerfil frame = new EditarPerfil();
+		    		EditarPerfil frame = new EditarPerfil(UsuarioActivo);
 					frame.setVisible(true);
+					frmAccionsocialmedPerfil.dispose();
+					
 		    	}
 		    });
 		     
@@ -228,7 +236,7 @@ public class PerfilUsuario2 extends JFrame{
 		    JLabel lblDescripcion = new JLabel("");
 		    lblDescripcion.setBounds(6, 16, 430, 73);
 		    this.Descripcion = lblDescripcion;
-		    //lblDescripcion.setText(UsuarioActivo.getDescripcion());
+		    lblDescripcion.setText(UsuarioActivo.getDescripcion());
 		    panelDescripcion.add(lblDescripcion);
 		    lblDescripcion.setHorizontalAlignment(SwingConstants.LEFT);
 		    lblDescripcion.setVerticalAlignment(SwingConstants.TOP);
