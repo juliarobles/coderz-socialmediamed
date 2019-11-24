@@ -44,7 +44,7 @@ public class PerfilUsuario2 extends JFrame{
 			public void run() {
 				try {
 					PerfilUsuario2 window = new PerfilUsuario2();
-					window.frmAccionsocialmedPerfil.setVisible(true);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,15 +55,13 @@ public class PerfilUsuario2 extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public PerfilUsuario2() {
+	public PerfilUsuario2(Usuario usuario) {
+		UsuarioActivo = usuario;
+		System.out.println("He entrado por constructor con argumento");
 		initialize();
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		
+	public PerfilUsuario2() {
+		System.out.println("He entrado por constructor sin argumento");
 		UsuarioActivo = new Usuario();
 		UsuarioActivo.setApellido1("Ruiz");
 		UsuarioActivo.setApellido2("Aswani");
@@ -71,54 +69,65 @@ public class PerfilUsuario2 extends JFrame{
 		UsuarioActivo.setDescripcion("Mi nombre es Dani y esto es una prueba");
 		UsuarioActivo.setDNI("123456A");
 		UsuarioActivo.setTelf(952123456);
-		UsuarioActivo.setDisponibilidad(Disponibilidad.Siempre);
+		UsuarioActivo.setDisponibilidad(Disponibilidad.Nunca);
 		UsuarioActivo.setEtiquetas(Etiquetas.ancianos);
 		UsuarioActivo.setZonaAccion(ZonaAccion.Internacional);
+		initialize();
+		
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		
+	
 		int width, height;
 		width = 800;
 		height = 500;
 		ImageIcon imgus = new ImageIcon(PerfilUsuario2.class.getResource("/resources/user.png"));
-		frmAccionsocialmedPerfil = new JFrame();
-		frmAccionsocialmedPerfil.setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilUsuario2.class.getResource("/resources/_Logo AccionSocialMed png.png")));
-		frmAccionsocialmedPerfil.setTitle("AccionSocialMed - Perfil");
-		frmAccionsocialmedPerfil.setResizable(false);
-		frmAccionsocialmedPerfil.setBounds(100, 100, width, height);
-		frmAccionsocialmedPerfil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frmAccionsocialmedPerfil = new JFrame();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilUsuario2.class.getResource("/resources/_Logo AccionSocialMed png.png")));
+		 setTitle("AccionSocialMed - Perfil");
+		 setResizable(false);
+		 setBounds(100, 100, width, height);
+		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPictureBox user = new JPictureBox();
 		user.setBounds(121, 52, 90, 85);
 		user.setIcon(imgus);
 		user.repaint();
-		  frmAccionsocialmedPerfil.getContentPane().setLayout(null);
+		   getContentPane().setLayout(null);
 		  
 		  JLabel lblTelfono = new JLabel("Tel\u00E9fono:");
 		  lblTelfono.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblTelfono.setBounds(407, 107, 61, 14);
-		  frmAccionsocialmedPerfil.getContentPane().add(lblTelfono);
+		   getContentPane().add(lblTelfono);
 		  
 		  JLabel lblTitulacion = new JLabel("Titulaci\u00F3n:");
 		  Titulo = lblTitulacion;
 		  lblTitulacion.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblTitulacion.setBounds(274, 82, 73, 14);
-		  frmAccionsocialmedPerfil.getContentPane().add(lblTitulacion);
+		  getContentPane().add(lblTitulacion);
 		  
 		  JLabel lblDni = new JLabel("DNI:");
 		  DNI = lblDni;
 		  lblDni.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblDni.setBounds(274, 107, 33, 14);
-		  frmAccionsocialmedPerfil.getContentPane().add(lblDni);
+		   getContentPane().add(lblDni);
 		  
 		  JPanel panelDispo = new JPanel();
 		  
 		  panelDispo.setBackground(Color.WHITE);
-		  panelDispo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Dispo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		  panelDispo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Disponibilidad", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		  panelDispo.setBounds(274, 320, 250, 50);
-		  frmAccionsocialmedPerfil.getContentPane().add(panelDispo);
+		  getContentPane().add(panelDispo);
 		  panelDispo.setLayout(null);
 		  
 		  JLabel lblDispo = new JLabel("");
 		  
 		  lblDispo.setBounds(6, 16, 234, 24);
+		  lblDispo.setText(UsuarioActivo.getDisponibilidad().toString());
 		  panelDispo.add(lblDispo);
 		  lblDispo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  
@@ -126,7 +135,7 @@ public class PerfilUsuario2 extends JFrame{
 		  panelZonaDeAccion.setBackground(Color.WHITE);
 		  panelZonaDeAccion.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Zona de acci\u00F3n:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		  panelZonaDeAccion.setBounds(274, 250, 250, 50);
-		  frmAccionsocialmedPerfil.getContentPane().add(panelZonaDeAccion);
+		  getContentPane().add(panelZonaDeAccion);
 		  panelZonaDeAccion.setLayout(null);
 		  
 		  JLabel lblZonaDeAccion = new JLabel("");
@@ -141,7 +150,7 @@ public class PerfilUsuario2 extends JFrame{
 		  panelOferta.setBackground(Color.WHITE);
 		  panelOferta.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Tipo de oferta preferida", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		  panelOferta.setBounds(274, 390, 250, 46);
-		  frmAccionsocialmedPerfil.getContentPane().add(panelOferta);
+		  getContentPane().add(panelOferta);
 		  panelOferta.setLayout(null);
 		  
 		  JLabel lblTipoDeOferta = new JLabel("");
@@ -154,42 +163,42 @@ public class PerfilUsuario2 extends JFrame{
 		  JLabel lblOferta = new JLabel("Nombre:");
 		  lblOferta.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblOferta.setBounds(274, 57, 61, 14);
-		  frmAccionsocialmedPerfil.getContentPane().add(lblOferta);
+		  getContentPane().add(lblOferta);
 		  
 		  JLabel lblNombreR = new JLabel("");
 		  this.Nombre = lblNombreR;
 		  lblNombreR.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblNombreR.setBounds(333, 57, 383, 14);
 		  lblNombreR.setText(UsuarioActivo.getNombre() + " " + UsuarioActivo.getApellido1()+ " " + UsuarioActivo.getApellido2());
-		  frmAccionsocialmedPerfil.getContentPane().add(lblNombreR);
+		  getContentPane().add(lblNombreR);
 		  
 		  JLabel lblTituloR = new JLabel("");
 		  this.Titulo = lblTituloR;
 		  lblTituloR.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblTituloR.setBounds(343, 84, 373, 14);
 		  
-		  frmAccionsocialmedPerfil.getContentPane().add(lblTituloR);
+		  getContentPane().add(lblTituloR);
 		  
 		  JLabel lblDNIR = new JLabel("");
 		  this.DNI = lblDNIR;
 		  lblDNIR.setText(UsuarioActivo.getDNI());
 		  lblDNIR.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblDNIR.setBounds(304, 107, 95, 14);
-		  frmAccionsocialmedPerfil.getContentPane().add(lblDNIR);
+		  getContentPane().add(lblDNIR);
 		  
 		  JLabel lblTelefonoR = new JLabel("");
 		  this.Telefono = lblTelefonoR;
 		  lblTelefonoR.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblTelefonoR.setBounds(471, 107, 95, 14);
 		  lblTelefonoR.setText(String.valueOf(UsuarioActivo.getTelf()));
-		  frmAccionsocialmedPerfil.getContentPane().add(lblTelefonoR);
-		  frmAccionsocialmedPerfil.getContentPane().add(user);
+		  getContentPane().add(lblTelefonoR);
+		  getContentPane().add(user);
 		    
 		    JPanel panelEditarPerfil = new JPanel();
 		    panelEditarPerfil.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		    panelEditarPerfil.setBounds(40, 340, 200, 50);
 		    panelEditarPerfil.setBackground(new Color(51,204,204));
-		    frmAccionsocialmedPerfil.getContentPane().add(panelEditarPerfil);
+		    getContentPane().add(panelEditarPerfil);
 		    panelEditarPerfil.setLayout(null);
 		    
 		    JLabel lblEditarPerfil = new JLabel("Editar perfil");
@@ -213,7 +222,7 @@ public class PerfilUsuario2 extends JFrame{
 		    		//Cambiar a editar perfil
 		    		EditarPerfil frame = new EditarPerfil(UsuarioActivo);
 					frame.setVisible(true);
-					frmAccionsocialmedPerfil.dispose();
+					dispose();
 					
 		    	}
 		    });
@@ -230,7 +239,7 @@ public class PerfilUsuario2 extends JFrame{
 		    panelDescripcion.setBackground(Color.WHITE);
 		    panelDescripcion.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Descripci\u00F3n personal", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		    panelDescripcion.setBounds(274, 130, 442, 100);
-		    frmAccionsocialmedPerfil.getContentPane().add(panelDescripcion);
+		    getContentPane().add(panelDescripcion);
 		    panelDescripcion.setLayout(null);
 		    
 		    JLabel lblDescripcion = new JLabel("");
@@ -252,7 +261,7 @@ public class PerfilUsuario2 extends JFrame{
 		    lblFondo.setIcon(new
 		    		  ImageIcon(PerfilUsuario2.class.getResource("/resources/Perfil usuario.png")))
 		    		  ;
-		    frmAccionsocialmedPerfil.getContentPane().add(lblFondo);
+		    getContentPane().add(lblFondo);
 		 
 		  
 		
