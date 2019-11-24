@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
+import controlador.CtrLoginUMA;
 import utilidades.*;
 import java.awt.image.BufferedImage;
 import java.awt.SystemColor;
@@ -32,10 +33,10 @@ import java.awt.SystemColor;
 public class InicioSesion extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField emailuma;
-	private JTextField passuma;
-	private JTextField emailong;
-	private JTextField passong;
+	public JTextField emailuma;
+	public JTextField passuma;
+	public JTextField emailong;
+	public JTextField passong;
 
 	/**
 	 * Launch the application.
@@ -56,7 +57,7 @@ public class InicioSesion extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InicioSesion() {
+	public InicioSesion(JFrame menuinvitado) {
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setUndecorated(true);
@@ -171,6 +172,7 @@ public class InicioSesion extends JFrame {
 		btnEntrar.setBorder(border);
 		btnEntrar.setBackground(Color.WHITE);
 		btnEntrar.setBounds(138, 337, 129, 40);
+		btnEntrar.addMouseListener(new CtrLoginUMA(this, menuinvitado));
 		contentPane.add(btnEntrar);
 		
 		ImageIcon lb  = new ImageIcon(InicioSesion.class.getResource("/resources/lockblanco.png"));

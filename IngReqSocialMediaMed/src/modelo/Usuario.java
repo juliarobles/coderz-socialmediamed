@@ -1,6 +1,6 @@
 package modelo;
 
-public class Usuario {
+public class Usuario{
 	
 	private String DNI;
 	private String nombre;
@@ -14,6 +14,11 @@ public class Usuario {
 	private Disponibilidad disponibilidad;
 	private ZonaAccion zonaAccion;
 	private String descripcion;
+	
+	public Usuario (String email) {
+		correo = email;
+	}
+	
 	public String getCorreo() {
 		return correo;
 	}

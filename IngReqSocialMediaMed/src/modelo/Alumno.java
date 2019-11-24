@@ -2,6 +2,10 @@ package modelo;
 
 public class Alumno extends Usuario{
 	
+	public Alumno(String email) {
+		super(email);
+		// TODO Auto-generated constructor stub
+	}
 	private int idUniv;
 	private Asignatura[] asigCursadas;
 	//Todo lo comentado en principio fuera

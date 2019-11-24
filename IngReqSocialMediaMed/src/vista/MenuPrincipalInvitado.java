@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -15,7 +16,7 @@ import java.awt.Toolkit;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
-public class MenuPrincipal extends JFrame {
+public class MenuPrincipalInvitado extends JFrame {
 
 	private JPanel contentPane;
 
@@ -26,7 +27,7 @@ public class MenuPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenuPrincipal frame = new MenuPrincipal();
+					MenuPrincipalInvitado frame = new MenuPrincipalInvitado();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,8 +39,8 @@ public class MenuPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MenuPrincipal() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/resources/_Logo AccionSocialMed png.png")));
+	public MenuPrincipalInvitado() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipalInvitado.class.getResource("/resources/_Logo AccionSocialMed png.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1321, 715);
 		setLocationRelativeTo(null);
@@ -50,11 +51,12 @@ public class MenuPrincipal extends JFrame {
 		
 		JLabel login = new JLabel("Login");
 		login.setForeground(Color.BLACK);
+		MenuPrincipalInvitado mi = this;
 		login.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				//Abrir ventana login
-				InicioSesion frame = new InicioSesion();
+				InicioSesion frame = new InicioSesion(mi);
 				frame.setVisible(true);
 			}
 			@Override

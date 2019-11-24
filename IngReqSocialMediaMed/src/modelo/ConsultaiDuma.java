@@ -20,7 +20,8 @@ public class ConsultaiDuma {
 		parser = new JsonParser();
 	}
 	
-	public void consultar(String user, String pass) {
+	public boolean consultar(String user, String pass) {
+		Boolean res = null;
 		try {
 			URL consulta = new URL(urlBase + user + "/" + pass);
 			BufferedReader entrada = new BufferedReader(new InputStreamReader(consulta.openStream()));
@@ -32,13 +33,18 @@ public class ConsultaiDuma {
 			}
 
 			datos = parser.parse(codigo).getAsJsonObject();
+			res = datos.get("situation").toString().equals("\"PRESENT\"");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return res;
 	}
 	
+	/*
 	public boolean existe(String user, String pass) {
 		consultar(user, pass);
 		return datos.get("situation").toString().equals("\"PRESENT\"");
 	}
+	*/
 }
