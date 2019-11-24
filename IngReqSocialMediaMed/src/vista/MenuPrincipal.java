@@ -40,6 +40,7 @@ public class MenuPrincipal extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipalUsuario.class.getResource("/resources/_Logo AccionSocialMed png.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1321, 715);
+		setSize(1100, 715);
 		setLocationRelativeTo(null);
 		invitado = new MenuPrincipalInvitado(this);
 		invitado.setVisible(true);

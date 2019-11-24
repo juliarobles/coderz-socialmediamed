@@ -24,13 +24,13 @@ public class MenuPrincipalInvitado extends JPanel {
 	public MenuPrincipalInvitado(MenuPrincipal padre) {
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipalInvitado.class.getResource("/resources/_Logo AccionSocialMed png.png")));
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1321, 715);
+		setBounds(100, 100, padre.getWidth(), padre.getHeight());
 		//setLocationRelativeTo(null);
 		
 		setBackground(Color.WHITE);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(contentPane);
-		
+
 		JLabel login = new JLabel("Login");
 		login.setForeground(Color.BLACK);
 		login.addMouseListener(new MouseAdapter() {
@@ -39,6 +39,8 @@ public class MenuPrincipalInvitado extends JPanel {
 				//Abrir ventana login
 				InicioSesion frame = new InicioSesion(padre);
 				frame.setVisible(true);
+				padre.setEnabled(false);
+				
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {

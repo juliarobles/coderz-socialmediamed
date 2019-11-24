@@ -266,6 +266,7 @@ public class InicioSesion extends JFrame {
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
+				principal.setEnabled(true);
 				dispose();
 			}
 		});

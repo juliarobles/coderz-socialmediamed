@@ -48,7 +48,7 @@ public class MenuPrincipalUsuario extends JPanel {
 	public MenuPrincipalUsuario(MenuPrincipal padre, Usuario usu) {
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipalUsuario.class.getResource("/resources/_Logo AccionSocialMed png.png")));
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1321, 715);
+		setBounds(100, 100, padre.getWidth(), padre.getHeight());
 		//setLocationRelativeTo(null);
 		
 		setBackground(Color.WHITE);

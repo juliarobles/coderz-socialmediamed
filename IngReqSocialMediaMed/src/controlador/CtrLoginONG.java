@@ -40,6 +40,7 @@ public class CtrLoginONG implements MouseListener{
 			List<Object[]> lista = mibd.Select("SELECT * FROM USUARIOONG WHERE email = '" + email + "' and pass = '" + pass + "';");
 			if(!lista.isEmpty()) {
 				ONG ong = new ONG(email);
+				principal.setEnabled(true);
 				principal.cambiarONG(ong);
 				vista.dispose();
 			} //AÑADIR AVISO DE QUE ESTA MAL LA CONTRASEÑA O ALGO

@@ -192,12 +192,13 @@ public class CompletarPerfil extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if(!descripcion.getText().isEmpty() && !telefono.getText().isEmpty()) {
+					principal.setEnabled(true);
+					principal.cambiarUsuario(usu);
 					usu.setTelf(Integer.parseInt(telefono.getText()));
 					usu.setDisponibilidad((Disponibilidad)disponibilidad.getSelectedItem());
 					usu.setDescripcion(descripcion.getText());
 					usu.setTipoOferta((TipoOferta)tipooferta.getSelectedItem());
 					usu.setZonaAccion((ZonaAccion) zona.getSelectedItem());
-					principal.cambiarUsuario(usu);
 					esto.dispose();
 				}
 				//Poner algun aviso de el fallo que tienen

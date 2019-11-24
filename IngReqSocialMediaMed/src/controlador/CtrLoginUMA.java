@@ -78,6 +78,7 @@ public class CtrLoginUMA implements MouseListener{
 						usu = new PAS((String)usuario[0]);
 					}
 					principal.cambiarUsuario(usu);
+					principal.setEnabled(true);
 				}
 				vista.dispose();
 				
