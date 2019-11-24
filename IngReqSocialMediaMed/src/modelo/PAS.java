@@ -1,8 +1,14 @@
 package modelo;
 
+
 public class PAS extends Usuario{
 	
-	private enum ocupacion{ //completar con más
-		Conserje, Secretario
+	private OcupacionPas[] Ocupacion;
+	
+	public OcupacionPas[] getOcupacion() {
+		return Ocupacion;
+	}
+	public void setOcupacion(OcupacionPas[] ocupacion) {
+		this.Ocupacion = ocupacion;
 	}
 }
