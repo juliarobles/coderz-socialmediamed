@@ -57,7 +57,7 @@ public class InicioSesion extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InicioSesion(JFrame menuinvitado) {
+	public InicioSesion(MenuPrincipal principal) {
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setUndecorated(true);
@@ -172,7 +172,7 @@ public class InicioSesion extends JFrame {
 		btnEntrar.setBorder(border);
 		btnEntrar.setBackground(Color.WHITE);
 		btnEntrar.setBounds(138, 337, 129, 40);
-		btnEntrar.addMouseListener(new CtrLoginUMA(this, menuinvitado));
+		btnEntrar.addMouseListener(new CtrLoginUMA(this, principal));
 		contentPane.add(btnEntrar);
 		
 		ImageIcon lb  = new ImageIcon(InicioSesion.class.getResource("/resources/lockblanco.png"));
