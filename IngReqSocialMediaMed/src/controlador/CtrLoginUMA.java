@@ -42,50 +42,49 @@ public class CtrLoginUMA implements MouseListener{
 		String email = vista.emailuma.getText();
 		char[] password = vista.passuma.getPassword();
 		String pass = String.valueOf(password);
-		ConsultaiDuma ci = new ConsultaiDuma();
-		if(ci.consultar(email, pass)) {
-			BD mibd = new BD();
-			List<Object[]> lista = mibd.Select("SELECT * FROM USUARIOSUMA WHERE email = '" + email + "';");
-			Usuario usu;
-			if(lista.isEmpty()) { //El usuario es nuevo en nuestra BD
-				String tipo = ci.dameTipo();
-				if(tipo.equalsIgnoreCase("Estudiante")) {
-					mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 1);");
-					usu = new Alumno(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2());
-				} else if (tipo.equalsIgnoreCase("PDI")) {
-					mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 2);");
-					usu = new PDI(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2());
-				} else {
-					mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 3);");
-					usu = new PAS(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2());
+		if(email != null && pass != null && !email.isEmpty() && !pass.isEmpty()) {
+			ConsultaiDuma ci = new ConsultaiDuma();
+			if(ci.consultar(email, pass)) {
+				BD mibd = new BD();
+				List<Object[]> lista = mibd.Select("SELECT * FROM USUARIOSUMA WHERE email = '" + email + "';");
+				Usuario usu;
+				if(lista.isEmpty()) { //El usuario es nuevo en nuestra BD
+					String tipo = ci.dameTipo();
+					if(tipo.equalsIgnoreCase("Estudiante")) {
+						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 1);");
+						usu = new Alumno(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2());
+					} else if (tipo.equalsIgnoreCase("PDI")) {
+						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 2);");
+						usu = new PDI(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2());
+					} else {
+						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 3);");
+						usu = new PAS(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2());
+					}
+					
+					CompletarPerfil cp = new CompletarPerfil(usu, principal);
+					cp.setVisible(true);
+					
+				} else { //No es usuario nuevo
+					Object[] usuario = lista.get(0);
+					int tipo = (Integer)usuario[1];
+					
+					if(tipo == 0) { //Es un gestor, hacer interfaz de gestor
+						usu = null;
+					} else if (tipo == 1) { //Es alumno
+						usu = new Alumno((String)usuario[0]);
+					} else if (tipo == 2) {
+						usu = new PDI((String)usuario[0]);
+					} else {
+						usu = new PAS((String)usuario[0]);
+					}
+					principal.cambiarUsuario(usu);
 				}
-				
-				CompletarPerfil cp = new CompletarPerfil(usu, principal);
-				cp.setVisible(true);
 				vista.dispose();
 				
-			} else { //No es usuario nuevo
-				Object[] usuario = lista.get(0);
-				int tipo = (Integer)usuario[1];
-				
-				if(tipo == 0) { //Es un gestor, hacer interfaz de gestor
-					usu = null;
-				} else if (tipo == 1) { //Es alumno
-					usu = new Alumno((String)usuario[0]);
-				} else if (tipo == 2) {
-					usu = new PDI((String)usuario[0]);
-				} else {
-					usu = new PAS((String)usuario[0]);
-				}
-				principal.cambiarUsuario(usu);
-				vista.dispose();
+			} else {
+				//Poner un error o algo de que no esta en la uma
 			}
-			
-			
-		} else {
-			//Poner un error o algo de que no esta en la uma
-		}
-				
+		}		
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {

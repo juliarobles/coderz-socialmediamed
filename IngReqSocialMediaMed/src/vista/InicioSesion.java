@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
+import controlador.CtrLoginONG;
 import controlador.CtrLoginUMA;
 import utilidades.*;
 import java.awt.image.BufferedImage;
@@ -39,25 +40,6 @@ public class InicioSesion extends JFrame {
 	public JPasswordField passong;
 	public JPasswordField passuma;
 
-	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InicioSesion frame = new InicioSesion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-*/
-	/**
-	 * Create the frame.
-	 */
 	public InicioSesion(MenuPrincipal principal) {
 		setAlwaysOnTop(true);
 		setResizable(false);
@@ -253,6 +235,7 @@ public class InicioSesion extends JFrame {
 		loginong.setBackground(Color.WHITE);
 		loginong.setBounds(538, 337, 129, 40);
 		loginong.setBorder(border);
+		loginong.addMouseListener(new CtrLoginONG(this, principal, loginong));
 		contentPane.add(loginong);
 		
 		JLabel label = new JLabel("@");

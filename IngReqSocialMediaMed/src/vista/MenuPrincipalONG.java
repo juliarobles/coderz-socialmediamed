@@ -1,51 +1,23 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import modelo.Disponibilidad;
-import modelo.Usuario;
-import modelo.ZonaAccion;
+import modelo.ONG;
 
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
-import java.awt.Toolkit;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class MenuPrincipalUsuario extends JPanel {
+@SuppressWarnings("serial")
+public class MenuPrincipalONG extends JPanel {
 
-
-	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenuPrincipalUsuario frame = new MenuPrincipalUsuario();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * @param usu 
-	 */
-	public MenuPrincipalUsuario(MenuPrincipal padre, Usuario usu) {
+	public MenuPrincipalONG(MenuPrincipal padre,ONG usu) {
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipalUsuario.class.getResource("/resources/_Logo AccionSocialMed png.png")));
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1321, 715);
@@ -81,8 +53,7 @@ public class MenuPrincipalUsuario extends JPanel {
 		lblPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				Perfil pu = new Perfil(usu);
-				pu.setVisible(true);
+				//Implementar perfil ong
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {

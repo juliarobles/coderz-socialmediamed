@@ -21,5 +21,11 @@ public class PAS extends Usuario{
 		super(email);
 	}
 	
+	public void BorrarPAS() {
+		BD mibd = new BD();
+		mibd.Delete("DELETE FROM PAS WHERE email = '" + email + "';");
+		mibd.finalize();
+		this.BorrarUsuario();
+	}
 	
 }

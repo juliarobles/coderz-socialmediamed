@@ -21,5 +21,12 @@ public class PDI extends Usuario{
 
 	}
 	
+	public void BorrarPDI() {
+		BD mibd = new BD();
+		mibd.Delete("DELETE FROM PDI WHERE email = '" + email + "';");
+		mibd.finalize();
+		this.BorrarUsuario();
+	}
+	
 	
 }

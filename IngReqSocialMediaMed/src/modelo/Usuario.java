@@ -60,6 +60,23 @@ public abstract class Usuario{
 		this.descripcion = null;
 	}
 	
+	public void BorrarUsuario() {
+		BD mibd = new BD();
+		mibd.Delete("DELETE FROM PARTICIPANTES WHERE email = '" + email + "';");
+		mibd.Delete("DELETE FROM USUARIOSUMA WHERE email = '" + email + "';");
+		mibd.finalize();
+		this.email = null;
+		this.nombre = null;
+		this.apellido1 = null;
+		this.apellido2 = null;
+		this.telf = -1;
+		this.disponibilidad = null;
+		this.tipoOferta = null;
+		this.zonaAccion = null;
+		this.imagenUrl = null;
+		this.descripcion = null;
+	}
+	
 	public String getEmail() {
 		return email;
 	}

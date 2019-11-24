@@ -8,12 +8,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import modelo.ONG;
 import modelo.Usuario;
 
 public class MenuPrincipal extends JFrame {
 
 	private JPanel invitado;
 	private JPanel usuario;
+	private JPanel ong;
 
 	/**
 	 * Launch the application.
@@ -47,7 +49,14 @@ public class MenuPrincipal extends JFrame {
 	}
 	
 	public void cambiarAInvitado() {
-		usuario.setVisible(false);
+		if(usuario != null) {
+			usuario.setVisible(false);
+			usuario = null;
+		}
+		if(ong != null) {
+			ong.setVisible(false);
+			ong = null;
+		}
 		invitado.setVisible(true);
 		setContentPane(invitado);
 	}
@@ -57,6 +66,13 @@ public class MenuPrincipal extends JFrame {
 		usuario.setVisible(true);
 		invitado.setVisible(false);
 		setContentPane(usuario);
+	}
+	
+	public void cambiarONG(ONG usu) {
+		ong = new MenuPrincipalONG(this, usu);
+		ong.setVisible(true);
+		invitado.setVisible(false);
+		setContentPane(ong);
 	}
 	
 	
