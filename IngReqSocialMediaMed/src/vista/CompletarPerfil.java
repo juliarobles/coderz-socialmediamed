@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -23,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.text.MaskFormatter;
 
 import controlador.CtrLoginUMA;
 import modelo.Disponibilidad;
@@ -35,6 +37,7 @@ import java.awt.SystemColor;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JTextPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -43,7 +46,7 @@ import java.awt.event.KeyEvent;
 public class CompletarPerfil extends JFrame {
 
 	private JPanel contentPane;
-	public JTextField telefono;
+	public JFormattedTextField telefono;
 
 	public CompletarPerfil(Usuario usu, MenuPrincipal principal) {
 		setAlwaysOnTop(true);
@@ -61,11 +64,11 @@ public class CompletarPerfil extends JFrame {
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		
-		JLabel iniciarsesionuma = new JLabel("\u00A1Bienvenido!");
-		iniciarsesionuma.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciarsesionuma.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 21));
-		iniciarsesionuma.setBounds(0, 10, 400, 40);
-		contentPane.add(iniciarsesionuma);
+		JLabel bienvenido = new JLabel("\u00A1Bienvenido " + usu.getNombre() + "!");
+		bienvenido.setHorizontalAlignment(SwingConstants.CENTER);
+		bienvenido.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 21));
+		bienvenido.setBounds(0, 10, 400, 40);
+		contentPane.add(bienvenido);
 		
 		
 		BordeRedondo border = new BordeRedondo(10);
@@ -136,7 +139,19 @@ public class CompletarPerfil extends JFrame {
 		lbltuTelefono.setBounds(0, 476, 400, 40);
 		contentPane.add(lbltuTelefono);
 		
-		telefono = new JTextField();
+		
+		MaskFormatter mask = null;
+        try {
+            // Create a MaskFormatter for accepting phone number, the # symbol accept
+            // only a number. We can also set the empty value with a place holder
+            // character.
+            mask = new MaskFormatter("#########");
+            mask.setPlaceholderCharacter(' ');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+		
+		telefono = new JFormattedTextField(mask);
 		telefono.setBounds(100, 514, 200, 29);
 		contentPane.add(telefono);
 		telefono.setColumns(10);
@@ -189,7 +204,7 @@ public class CompletarPerfil extends JFrame {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				loginong.setForeground(Color.DARK_GRAY);
+				loginong.setForeground(Color.GRAY);
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {

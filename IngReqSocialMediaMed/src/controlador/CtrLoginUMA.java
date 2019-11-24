@@ -99,6 +99,6 @@ public class CtrLoginUMA implements MouseListener{
 	
 	@Override
 	public void mouseExited(MouseEvent e) {
-		miboton.setForeground(Color.BLACK);
+		miboton.setForeground(Color.WHITE);
 	}
 }

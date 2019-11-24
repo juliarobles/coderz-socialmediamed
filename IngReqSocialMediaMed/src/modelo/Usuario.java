@@ -100,6 +100,7 @@ public abstract class Usuario{
 		BD mibd = new BD();
 		mibd.Update("UPDATE PARTICIPANTES SET telefono = " + telf + " WHERE email = '" + this.email + "';");
 		this.telf = telf;
+		mibd.finalize();
 	}
 	public Disponibilidad getDisponibilidad() {
 		return disponibilidad;
@@ -108,6 +109,7 @@ public abstract class Usuario{
 		BD mibd = new BD();
 		mibd.Update("UPDATE PARTICIPANTES SET disponibilidad = '" + disponibilidad.toString() + "' WHERE email = '" + this.email + "';");
 		this.disponibilidad = disponibilidad;
+		mibd.finalize();
 	}
 	public TipoOferta getEtiquetas() {
 		return tipoOferta;
@@ -116,6 +118,7 @@ public abstract class Usuario{
 		BD mibd = new BD();
 		mibd.Update("UPDATE PARTICIPANTES SET tipooferta = '" + etiquetas.toString() + "' WHERE email = '" + this.email + "';");
 		this.tipoOferta = etiquetas;
+		mibd.finalize();
 	}
 	public ZonaAccion getZonaAccion() {
 		return zonaAccion;
@@ -124,6 +127,7 @@ public abstract class Usuario{
 		BD mibd = new BD();
 		mibd.Update("UPDATE PARTICIPANTES SET zonaAccion = '" + zonaAccion.toString() + "' WHERE email = '" + this.email + "';");
 		this.zonaAccion = zonaAccion;
+		mibd.finalize();
 	}
 	public String getImagenUrl() {
 		return imagenUrl;
@@ -141,5 +145,6 @@ public abstract class Usuario{
 		BD mibd = new BD();
 		mibd.Update("UPDATE PARTICIPANTES SET descripcion = '" + descripcion + "' WHERE email = '" + this.email + "';");
 		this.descripcion = descripcion;
+		mibd.finalize();
 	}
 }
