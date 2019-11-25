@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 public class ConsultaiDuma {
 	private String urlBase;
@@ -41,6 +44,17 @@ public class ConsultaiDuma {
 		return res;
 	}
 	
+	public ArrayList<Asignatura> sacarAsignaturas() {
+		ArrayList<Asignatura> asignaturas = new ArrayList<Asignatura>();
+		JsonArray aux = datos.get("courses").getAsJsonArray();
+		for (int i = 0; i < aux.size(); i++) {
+			JsonObject aux2 = parser.parse(aux.get(i).toString()).getAsJsonObject();
+			String asig = aux2.get("name").toString();
+			asignaturas.add(new Asignatura(asig.substring(1,asig.length()-1)));
+		}
+		
+		return asignaturas;
+	}
 	
 	public String dameNombre() {
 		String d = datos.get("nombre").toString();
