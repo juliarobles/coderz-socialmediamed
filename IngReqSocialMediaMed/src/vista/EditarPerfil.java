@@ -208,5 +208,38 @@ public class EditarPerfil extends JPanel{
 		lblGuardarCambios.setBackground(new Color(51, 204, 204));
 		lblGuardarCambios.setBounds(0, 0, 200, 50);
 		panelGuardarCambios.add(lblGuardarCambios);
+		
+		JPanel panelSalir = new JPanel();
+		panelSalir.setLayout(null);
+		panelSalir.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		panelSalir.setBackground(new Color(51, 204, 204));
+		panelSalir.setBounds(412, 398, 200, 50);
+		add(panelSalir);
+		
+		JLabel salirSinGuardar = new JLabel("Salir sin guardar");
+		salirSinGuardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Border bordeArriba = new BevelBorder(0);
+	    		panelSalir.setBorder(bordeArriba);
+	    		padre.cambiarAVer();
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Border bordeAbajo = new BevelBorder(1);
+	    		panelSalir.setBorder(bordeAbajo);
+	    		
+			}
+		});
+		salirSinGuardar.setHorizontalAlignment(SwingConstants.CENTER);
+		salirSinGuardar.setForeground(Color.WHITE);
+		salirSinGuardar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		salirSinGuardar.setBackground(new Color(51, 204, 204));
+		salirSinGuardar.setBounds(0, 0, 200, 50);
+		panelSalir.add(salirSinGuardar);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(383, 239, 120, 147);
+		add(label);
 	}
 }
