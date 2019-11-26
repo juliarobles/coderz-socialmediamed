@@ -43,7 +43,9 @@ public class CtrLoginONG implements MouseListener{
 				principal.setEnabled(true);
 				principal.cambiarONG(ong);
 				vista.dispose();
-			} //AÑADIR AVISO DE QUE ESTA MAL LA CONTRASEÑA O ALGO
+			}
+			vista.errorOng();
+			//Aï¿½ADIR AVISO DE QUE ESTA MAL LA CONTRASEï¿½A O ALGO
 		}
 	}
 

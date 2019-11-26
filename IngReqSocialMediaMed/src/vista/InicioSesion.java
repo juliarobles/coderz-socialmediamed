@@ -40,9 +40,14 @@ public class InicioSesion extends JFrame {
 	public JPasswordField passong;
 	public JPasswordField passuma;
 	
-	JLabel lblNewLabel = new JLabel("");
-	public void error() {
-		lblNewLabel.setText("El email no pertenece a la UMA");
+	public JLabel lblErrorUma = new JLabel("");
+	public JLabel lblErrorOng = new JLabel("");
+	
+	public void errorUma() {
+		lblErrorUma.setText("El email no pertenece a la UMA");
+	}
+	public void errorOng() {
+		lblErrorOng.setText("Email o contraseña incorrectos");
 	}
 
 	public InicioSesion(MenuPrincipal principal) {
@@ -76,9 +81,13 @@ public class InicioSesion extends JFrame {
 	
 		contentPane.add(cerrar);
 		
-		lblNewLabel.setForeground(Color.RED);
-		lblNewLabel.setBounds(120, 388, 190, 14);
-		contentPane.add(lblNewLabel);
+		lblErrorUma.setForeground(Color.RED);
+		lblErrorUma.setBounds(108, 388, 190, 14);
+		contentPane.add(lblErrorUma);
+		
+		lblErrorOng.setForeground(Color.RED);
+		lblErrorOng.setBounds(510, 388, 190, 14);
+		contentPane.add(lblErrorOng);
 		
 		JLabel barra = new JLabel("");
 		barra.setBounds(400, 0, 400, 40);

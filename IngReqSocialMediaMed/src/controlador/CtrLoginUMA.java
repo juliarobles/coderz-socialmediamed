@@ -85,7 +85,7 @@ public class CtrLoginUMA implements MouseListener{
 				vista.dispose();
 				
 			} else {
-				vista.error();
+				vista.errorUma();
 			}
 		}		
 	}
