@@ -2,6 +2,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -10,26 +12,30 @@ import javax.swing.event.ListSelectionListener;
 
 import modelo.ONG;
 import modelo.Propuesta;
+import modelo.Tupla;
 
 public class CtrListaONG implements ListSelectionListener {
 
-	private JList<ONG> ong;
-	private JList<Propuesta> p;
+	private JList<String> ong;
+	private DefaultListModel<Tupla> lista;
+	private Map<String, String> mapa;
 
-	public CtrListaONG(JList<ONG> ong, JList<Propuesta> propuesta) {
-		this.ong = ong;
-		p = propuesta;
+	public CtrListaONG(JList<String> ong2, DefaultListModel<Tupla> listapropuestas, Map<String, String> mapa) {
+		this.ong = ong2;
+		lista = listapropuestas;
+		this.mapa = mapa;
 	}
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		// TODO Auto-generated method stub
-		DefaultListModel<Propuesta> lista = new DefaultListModel<Propuesta>();
-		for(ONG o : ong.getSelectedValuesList()) {
-			for(Propuesta pr : Propuesta.getPropuestasFiltrado(o)) {
+		if(!ong.isSelectionEmpty()) {
+			lista.clear();
+			for(Tupla pr : Propuesta.getPropuestasFiltradoSimple(mapa.get(ong.getSelectedValue()))) {
 				lista.addElement(pr);
 			}
 		}
+			
 	}
 
 }

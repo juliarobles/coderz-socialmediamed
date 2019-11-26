@@ -2,6 +2,8 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ONG {
 	
@@ -19,6 +21,16 @@ public class ONG {
 		return lista;
 	}
 	
+	public static Map<String, String> getNombresONG() {
+		Map<String, String> mapa = new TreeMap<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT nombre, email FROM USUARIOONG")) {
+			mapa.put((String)tupla[0], (String)tupla[1]);
+		}
+		mibd.finalize();
+		return mapa;
+	}
+	
 	@Override
 	public String toString() {
 		return nombre;
@@ -29,8 +41,8 @@ public class ONG {
 		Object[] tupla = mibd.Select("SELECT * FROM USUARIOONG WHERE email = '" + email + "';").get(0);
 		mibd.finalize();
 		this.email = (String) tupla[0];
-		this.nombre = (String) tupla[1];
-		this.descripcion = (String) tupla[2];
+		this.nombre = (String) tupla[2];
+		this.descripcion = (String) tupla[3];
 		
 	}
 	

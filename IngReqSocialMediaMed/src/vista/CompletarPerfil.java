@@ -27,7 +27,12 @@ import javax.swing.border.MatteBorder;
 import javax.swing.text.MaskFormatter;
 
 import controlador.CtrLoginUMA;
+import modelo.Alumno;
+import modelo.BD;
+import modelo.ConsultaiDuma;
 import modelo.Disponibilidad;
+import modelo.PAS;
+import modelo.PDI;
 import modelo.TipoOferta;
 import modelo.Usuario;
 import modelo.ZonaAccion;
@@ -48,7 +53,7 @@ public class CompletarPerfil extends JFrame {
 	private JPanel contentPane;
 	public JFormattedTextField telefono;
 
-	public CompletarPerfil(Usuario usu, MenuPrincipal principal) {
+	public CompletarPerfil(MenuPrincipal principal, ConsultaiDuma ci, String email) {
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setUndecorated(true);
@@ -64,7 +69,7 @@ public class CompletarPerfil extends JFrame {
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		
-		JLabel bienvenido = new JLabel("\u00A1Bienvenido " + usu.getNombre() + "!");
+		JLabel bienvenido = new JLabel("\u00A1Bienvenido " + ci.dameNombre() + "!");
 		bienvenido.setHorizontalAlignment(SwingConstants.CENTER);
 		bienvenido.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 21));
 		bienvenido.setBounds(0, 10, 400, 40);
@@ -192,13 +197,28 @@ public class CompletarPerfil extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if(!descripcion.getText().isEmpty() && !telefono.getText().isEmpty()) {
+					String tipo = ci.dameTipo();
+					Usuario usu;
+					BD mibd = new BD();
+					if(tipo.equalsIgnoreCase("Estudiante")) {
+						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 1);");
+						usu = new Alumno(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
+								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
+								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText());
+					} else if (tipo.equalsIgnoreCase("PDI")) {
+						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 2);");
+						usu = new PDI(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
+								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
+								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText());
+					} else {
+						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 3);");
+						usu = new PAS(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
+								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
+								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText());
+					}
+					
 					principal.setEnabled(true);
 					principal.cambiarUsuario(usu);
-					usu.setTelf(Integer.parseInt(telefono.getText()));
-					usu.setDisponibilidad((Disponibilidad)disponibilidad.getSelectedItem());
-					usu.setDescripcion(descripcion.getText());
-					usu.setTipoOferta((TipoOferta)tipooferta.getSelectedItem());
-					usu.setZonaAccion((ZonaAccion) zona.getSelectedItem());
 					esto.dispose();
 				}
 				//Poner algun aviso de el fallo que tienen

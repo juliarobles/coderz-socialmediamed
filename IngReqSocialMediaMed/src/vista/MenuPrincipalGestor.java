@@ -57,15 +57,16 @@ public class MenuPrincipalGestor extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				//Abrir ventana gestion propuestas
 				padre.cambiarAGestionPropuestas();
+				lblGestionPropuestas.setForeground(Color.BLACK);
 				
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				login.setForeground(new Color(51, 204, 204));
+				lblGestionPropuestas.setForeground(new Color(51, 204, 204));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				login.setForeground(Color.BLACK);
+				lblGestionPropuestas.setForeground(Color.BLACK);
 			}
 		});
 		lblGestionPropuestas.setForeground(Color.BLACK);

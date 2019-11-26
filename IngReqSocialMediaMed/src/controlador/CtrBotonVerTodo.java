@@ -7,20 +7,23 @@ import java.awt.event.MouseListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
+
+import modelo.ONG;
 import modelo.Propuesta;
+import modelo.Tupla;
 
 public class CtrBotonVerTodo implements MouseListener{
 
-	private  JList<Propuesta> p;
+	//private  JList<Propuesta> p;
 	private JLabel boton;
-	private DefaultListModel<Propuesta> lista;
+	private DefaultListModel<Tupla> lista;
+	private JList<String> ong;
 	
-	public CtrBotonVerTodo(JLabel vertodo, JList<Propuesta> propuesta, DefaultListModel<Propuesta> listapropuestas) {
+	public CtrBotonVerTodo(JLabel vertodo, DefaultListModel<Tupla> listapropuestas, JList<String> ong) {
 		// TODO Auto-generated constructor stub
 		boton = vertodo;
-		p = propuesta;
 		lista = listapropuestas;
-		
+		this.ong = ong;
 	}
 
 	@Override
@@ -31,7 +34,15 @@ public class CtrBotonVerTodo implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		p = new JList<Propuesta>(lista);
+		if(!ong.isSelectionEmpty()) {
+			ong.clearSelection();
+		}
+		
+		lista.clear();
+		for(Tupla p : Propuesta.getPropuestasSimple()) {
+				lista.addElement(p);
+		}
+		
 	}
 
 	@Override

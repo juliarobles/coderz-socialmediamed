@@ -47,24 +47,12 @@ public class CtrLoginUMA implements MouseListener{
 			if(ci.consultar(email, pass)) {
 				BD mibd = new BD();
 				List<Object[]> lista = mibd.Select("SELECT * FROM USUARIOSUMA WHERE email = '" + email + "';");
-				Usuario usu;
 				if(lista.isEmpty()) { //El usuario es nuevo en nuestra BD
-					String tipo = ci.dameTipo();
-					if(tipo.equalsIgnoreCase("Estudiante")) {
-						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 1);");
-						usu = new Alumno(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2());
-					} else if (tipo.equalsIgnoreCase("PDI")) {
-						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 2);");
-						usu = new PDI(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2());
-					} else {
-						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 3);");
-						usu = new PAS(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2());
-					}
-					
-					CompletarPerfil cp = new CompletarPerfil(usu, principal);
+					CompletarPerfil cp = new CompletarPerfil(principal, ci, email);
 					cp.setVisible(true);
 					
 				} else { //No es usuario nuevo
+					Usuario usu;
 					Object[] usuario = lista.get(0);
 					int tipo = (Integer)usuario[1];
 					

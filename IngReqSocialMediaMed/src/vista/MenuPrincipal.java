@@ -47,6 +47,7 @@ public class MenuPrincipal extends JFrame {
 		invitado = new MenuPrincipalInvitado(this);
 		invitado.setVisible(true);
 		setContentPane(invitado);
+		setResizable(false);
 		
 		
 	}
@@ -96,7 +97,7 @@ public class MenuPrincipal extends JFrame {
 	}
 	
 	public void cambiarAGestionPropuestas() {
-		gestionPropuestas = new GestionPropuestas();
+		gestionPropuestas = new GestionPropuestas(this);
 		gestionPropuestas.setVisible(true);
 		gestor.setVisible(false);
 		setContentPane(gestionPropuestas);

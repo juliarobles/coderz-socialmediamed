@@ -21,6 +21,16 @@ public class Propuesta {
 		return lista;
 	}
 	
+	public static List<Tupla> getPropuestasSimple() {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM PROPUESTA")) {
+			lista.add(new Tupla(Integer.toString((Integer)tupla[0]), (String)tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
 	@Override
 	public String toString() {
 		return titulo;
@@ -53,6 +63,26 @@ public class Propuesta {
 		BD mibd = new BD();
 		for(Object[] tupla : mibd.Select("SELECT id FROM PROPUESTA WHERE ong = '" + ong.getEmail() +"';")) {
 			lista.add(new Propuesta((Integer)tupla[0]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<Propuesta> getPropuestasFiltrado(String string) {
+		List<Propuesta> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id FROM PROPUESTA WHERE ong = '" + string +"';")) {
+			lista.add(new Propuesta((Integer)tupla[0]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<Tupla> getPropuestasFiltradoSimple(String string) {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM PROPUESTA WHERE ong = '" + string +"';")) {
+			lista.add(new Tupla(Integer.toString((Integer)tupla[0]), (String)tupla[1]));
 		}
 		mibd.finalize();
 		return lista;
@@ -153,5 +183,7 @@ public class Propuesta {
 		mibd.finalize();
 		this.ong = ong;
 	}
+
+	
 }
 
