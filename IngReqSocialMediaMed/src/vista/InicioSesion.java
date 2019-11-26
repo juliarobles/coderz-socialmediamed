@@ -43,11 +43,11 @@ public class InicioSesion extends JFrame {
 	public JLabel lblErrorUma = new JLabel("");
 	public JLabel lblErrorOng = new JLabel("");
 	
-	public void errorUma() {
-		lblErrorUma.setText("El email no pertenece a la UMA");
+	public void errorUma(String mess) {
+		lblErrorUma.setText(mess);
 	}
-	public void errorOng() {
-		lblErrorOng.setText("Email o contraseña incorrectos");
+	public void errorOng(String mess) {
+		lblErrorOng.setText(mess);
 	}
 
 	public InicioSesion(MenuPrincipal principal) {
@@ -82,11 +82,13 @@ public class InicioSesion extends JFrame {
 		contentPane.add(cerrar);
 		
 		lblErrorUma.setForeground(Color.RED);
-		lblErrorUma.setBounds(108, 388, 190, 14);
+		lblErrorUma.setBounds(77, 388, 240, 14);
+		lblErrorUma.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblErrorUma);
 		
 		lblErrorOng.setForeground(Color.RED);
-		lblErrorOng.setBounds(510, 388, 190, 14);
+		lblErrorOng.setBounds(478, 388, 250, 14);
+		lblErrorOng.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblErrorOng);
 		
 		JLabel barra = new JLabel("");

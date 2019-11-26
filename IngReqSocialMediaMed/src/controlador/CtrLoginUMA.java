@@ -42,6 +42,15 @@ public class CtrLoginUMA implements MouseListener{
 		String email = vista.emailuma.getText();
 		char[] password = vista.passuma.getPassword();
 		String pass = String.valueOf(password);
+		
+		if(email.isEmpty() && pass.isEmpty()) {
+			vista.errorUma("Introduzca los datos");
+		}else if(email.isEmpty()) {
+			vista.errorUma("Campo email vacio");
+		}else if(pass.isEmpty()) {
+			vista.errorUma("Campo contraseña vacio");
+		}
+		
 		if(email != null && pass != null && !email.isEmpty() && !pass.isEmpty()) {
 			ConsultaiDuma ci = new ConsultaiDuma();
 			if(ci.consultar(email, pass)) {
@@ -73,7 +82,7 @@ public class CtrLoginUMA implements MouseListener{
 				vista.dispose();
 				
 			} else {
-				vista.errorUma();
+				vista.errorUma("El email y/o la contraseña no son validos");
 			}
 		}		
 	}

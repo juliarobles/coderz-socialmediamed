@@ -34,7 +34,16 @@ public class CtrLoginONG implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		String email = vista.emailong.getText();
 		char[] password = vista.passong.getPassword();
-		String pass = String.valueOf(password);
+		String pass = String.valueOf(password);		
+		
+		if(email.isEmpty() && pass.isEmpty()) {
+			vista.errorOng("Introduzca los datos");
+		}else if(email.isEmpty()) {
+			vista.errorOng("Campo email vacio");
+		}else if(pass.isEmpty()) {
+			vista.errorOng("Campo contraseña vacio");
+		}
+		
 		if(email != null && pass != null && !email.isEmpty() && !pass.isEmpty()) {
 			BD mibd = new BD();
 			List<Object[]> lista = mibd.Select("SELECT * FROM USUARIOONG WHERE email = '" + email + "' and pass = '" + pass + "';");
@@ -44,8 +53,7 @@ public class CtrLoginONG implements MouseListener{
 				principal.cambiarONG(ong);
 				vista.dispose();
 			}
-			vista.errorOng();
-			//A�ADIR AVISO DE QUE ESTA MAL LA CONTRASE�A O ALGO
+			vista.errorOng("El email y/o la contraseña no son validos");
 		}
 	}
 
