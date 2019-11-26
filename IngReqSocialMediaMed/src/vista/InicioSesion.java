@@ -39,6 +39,11 @@ public class InicioSesion extends JFrame {
 	public JTextField emailong;
 	public JPasswordField passong;
 	public JPasswordField passuma;
+	
+	JLabel lblNewLabel = new JLabel("");
+	public void error() {
+		lblNewLabel.setText("El email no pertenece a la UMA");
+	}
 
 	public InicioSesion(MenuPrincipal principal) {
 		setAlwaysOnTop(true);
@@ -70,6 +75,10 @@ public class InicioSesion extends JFrame {
 		cerrar.setBorder(null);
 	
 		contentPane.add(cerrar);
+		
+		lblNewLabel.setForeground(Color.RED);
+		lblNewLabel.setBounds(120, 388, 190, 14);
+		contentPane.add(lblNewLabel);
 		
 		JLabel barra = new JLabel("");
 		barra.setBounds(400, 0, 400, 40);
@@ -140,7 +149,7 @@ public class InicioSesion extends JFrame {
 		passuma.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(255, 255, 255)));
 		passuma.setBounds(127, 278, 190, 30);
 		
-		TextPrompt placeholder2 = new TextPrompt("Contraseña", passuma);
+		TextPrompt placeholder2 = new TextPrompt("Contraseï¿½a", passuma);
 		placeholder2.changeAlpha(0.75f);
 		placeholder2.changeStyle(Font.ITALIC);
 		
@@ -200,7 +209,7 @@ public class InicioSesion extends JFrame {
 		passong.setBackground(new Color(247, 247, 247));
 		passong.setBounds(527, 278, 190, 30);
 		
-		TextPrompt placeholder4 = new TextPrompt("Contraseña", passong);
+		TextPrompt placeholder4 = new TextPrompt("Contraseï¿½a", passong);
 		placeholder4.changeAlpha(0.75f);
 		placeholder4.changeStyle(Font.ITALIC);
 		
@@ -213,7 +222,7 @@ public class InicioSesion extends JFrame {
 		lblhasOlvidadoTu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				//CONTRASEÑA OLVIDADA
+				//CONTRASEï¿½A OLVIDADA
 				
 			}
 			@Override
