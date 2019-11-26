@@ -16,6 +16,8 @@ public class MenuPrincipal extends JFrame {
 	private JPanel invitado;
 	private JPanel usuario;
 	private JPanel ong;
+	private JPanel gestor;
+	private JPanel gestionPropuestas;
 
 	/**
 	 * Launch the application.
@@ -58,6 +60,10 @@ public class MenuPrincipal extends JFrame {
 			ong.setVisible(false);
 			ong = null;
 		}
+		if(gestor != null) {
+			gestor.setVisible(false);
+			gestor = null;
+		}
 		invitado.setVisible(true);
 		setContentPane(invitado);
 	}
@@ -74,6 +80,26 @@ public class MenuPrincipal extends JFrame {
 		ong.setVisible(true);
 		invitado.setVisible(false);
 		setContentPane(ong);
+	}
+
+	public void cambiarGestor() {
+		if(gestor == null) {
+			gestor = new MenuPrincipalGestor(this);
+		}
+		if(gestionPropuestas != null) {
+			gestionPropuestas.setVisible(false);
+			gestionPropuestas = null;
+		}
+		gestor.setVisible(true);
+		invitado.setVisible(false);
+		setContentPane(gestor);
+	}
+	
+	public void cambiarAGestionPropuestas() {
+		gestionPropuestas = new GestionPropuestas();
+		gestionPropuestas.setVisible(true);
+		gestor.setVisible(false);
+		setContentPane(gestionPropuestas);
 	}
 	
 	

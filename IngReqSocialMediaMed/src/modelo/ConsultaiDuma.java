@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 public class ConsultaiDuma {
 	private String urlBase;

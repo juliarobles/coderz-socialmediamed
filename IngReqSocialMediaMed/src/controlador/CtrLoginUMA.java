@@ -69,15 +69,17 @@ public class CtrLoginUMA implements MouseListener{
 					int tipo = (Integer)usuario[1];
 					
 					if(tipo == 0) { //Es un gestor, hacer interfaz de gestor
-						usu = null;
+						principal.cambiarGestor();
 					} else if (tipo == 1) { //Es alumno
 						usu = new Alumno((String)usuario[0]);
+						principal.cambiarUsuario(usu);
 					} else if (tipo == 2) {
 						usu = new PDI((String)usuario[0]);
+						principal.cambiarUsuario(usu);
 					} else {
 						usu = new PAS((String)usuario[0]);
+						principal.cambiarUsuario(usu);
 					}
-					principal.cambiarUsuario(usu);
 					principal.setEnabled(true);
 				}
 				vista.dispose();

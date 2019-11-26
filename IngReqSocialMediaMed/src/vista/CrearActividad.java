@@ -8,30 +8,21 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Window.Type;
-import javax.swing.JEditorPane;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
-import java.awt.GridBagLayout;
+
 import javax.swing.JTextField;
-import java.awt.GridBagConstraints;
-import javax.swing.SwingConstants;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.JButton;
+
 import java.awt.Button;
-import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
+
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DropMode;
-import javax.swing.JTextPane;
+
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-import javax.swing.border.LineBorder;
-import javax.swing.JFormattedTextField;
-import java.awt.Panel;
+
+
+
+import modelo.TipoOferta;
+import modelo.ZonaAccion;
+
 
 public class CrearActividad extends JFrame {
 
@@ -121,9 +112,11 @@ public class CrearActividad extends JFrame {
 		button_1.setBounds(397, 384, 154, 41);
 		getContentPane().add(button_1);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<TipoOferta> comboBox = new JComboBox<TipoOferta>();
 		comboBox.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 11));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Voluntariado", "Aprendizaje-Servicio"}));
+		for(int cont = 0;TipoOferta.values().length>cont; cont++) {
+			comboBox.addItem(TipoOferta.values()[cont]);
+		}
 		comboBox.setBounds(122, 305, 126, 22);
 		getContentPane().add(comboBox);
 		
@@ -134,9 +127,11 @@ public class CrearActividad extends JFrame {
 		JTextArea textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		JComboBox<ZonaAccion> comboBox_1 = new JComboBox<ZonaAccion>();
 		comboBox_1.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 11));
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Local", "Nacional", "Internacional"}));
+		for(int cont = 0;ZonaAccion.values().length>cont; cont++) {
+			comboBox_1.addItem(ZonaAccion.values()[cont]);
+		}
 		comboBox_1.setBounds(397, 305, 96, 22);
 		getContentPane().add(comboBox_1);
 		

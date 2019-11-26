@@ -99,22 +99,14 @@ public class PerfilUsuario {
 		lblHola.setIcon(ajustarImagen(path, lblHola));
 		panlFondo.add(lblHola);
 		
-		JLabel Diseño1 = new JLabel("");
+		JLabel Disenio1 = new JLabel("");
 		//label.setIcon(new ImageIcon(PerfilUsuario.class.getResource("/resources/Perfil dise\u00F1o 2.png")));
-		Diseño1.setBounds(0, -10, 640, 154);
+		Disenio1.setBounds(0, -10, 640, 154);
 		path = "/resources/Perfil dise\u00F1o 2.png";
-		Diseño1.setIcon(ajustarImagen(path,Diseño1 ));
-		panlFondo.add(Diseño1);
+		Disenio1.setIcon(ajustarImagen(path,Disenio1 ));
+		panlFondo.add(Disenio1);
 		
-		
-		
-		/*
-		 * ImageIcon diseño2 = new
-		 * ImageIcon(PerfilUsuario.class.getResource("/resources/Perfil diseño 2.png"));
-		 * JPictureBox pictureBoxDiseño2 = new JPictureBox();
-		 * pictureBoxDiseño2.setIcon(diseño2); pictureBoxDiseño2.setBounds(20, 11, 100,
-		 * 100); panlFondo.add(pictureBoxDiseño2);
-		 */
+	
 	}
 	public ImageIcon ajustarImagen (String path, JLabel lbl ) {
 
@@ -126,3 +118,4 @@ public class PerfilUsuario {
 		return imgfinal;
 	}
 }
+

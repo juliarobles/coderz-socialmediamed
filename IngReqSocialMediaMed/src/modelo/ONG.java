@@ -1,10 +1,28 @@
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ONG {
 	
 	private String email;
 	private String nombre;
 	private String descripcion;
+	
+	public static List<ONG> getTodasONG() {
+		List<ONG> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT email FROM USUARIOONG")) {
+			lista.add(new ONG((String)tupla[0]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	@Override
+	public String toString() {
+		return nombre;
+	}
 	
 	public ONG(String email) {
 		BD mibd = new BD();
@@ -59,6 +77,31 @@ public class ONG {
 		mibd.Update("UPDATE USUARIOONG SET descripcion = '" + descripcion + "' WHERE email = '" + this.email +"';");
 		mibd.finalize();
 		this.descripcion = descripcion;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ONG other = (ONG) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		return true;
 	}
 	
 }
