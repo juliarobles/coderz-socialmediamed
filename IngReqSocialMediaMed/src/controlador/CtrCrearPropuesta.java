@@ -8,12 +8,14 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import modelo.*;
 import vista.CrearPropuesta;
+import vista.ErrorVista;
 import vista.MenuPrincipal;
 import vista.MenuPrincipalONG;
 
@@ -40,28 +42,29 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 				
 			}else if(a.equals(panel.getBtnCrear())) {
 				System.out.println(panel.getCampoExplicacion());
-				if(todoCorrecto()==0) {
+				if(todoCorrecto().equals(" ")) {
 					
 					new Propuesta( panel.getCampoTitulo(), panel.getCampoExplicacion(),Inicio.toString() , Fin.toString(), ong);
 					System.out.println("propuesta creada correctamente");
 				}else {
-					
+					JFrame error = new ErrorVista(todoCorrecto());
+					error.setVisible(true);
 				}
 			
 			}
 		}
 	}
 
-	private int todoCorrecto() {
-		int res = 0;
+	private String todoCorrecto() {
+		String res = " ";
 		
 	
-		if(panel.getAnyoFin().getText().trim().isEmpty())res++;
-		if(panel.getAnyoInicio().getText().trim().isEmpty())res++;
-		if(res ==0) {
+		if(panel.getAnyoFin().getText().trim().isEmpty()) res += "El campo año final está vacío" + "\n";
+		if(panel.getAnyoInicio().getText().trim().isEmpty())res+= "El campo año inicio está vacío\n";
+		if(res.equals(" ")) {
 			Inicio = new Fecha ((Integer)panel.getdIni().getSelectedItem(), (Meses)panel.getmIni().getSelectedItem(), Integer.valueOf(panel.getAnyoInicio().getText()));
 			Fin = new Fecha ((Integer)panel.getdFin().getSelectedItem(), (Meses)panel.getmFin().getSelectedItem(), Integer.valueOf(panel.getAnyoFin().getText()));
-			if(! Inicio.igualOAnterior(Fin))res++;
+			if(! Inicio.igualOAnterior(Fin))res+= "La fecha de inicio es posterior a la fecha de finalización.";
 		}
 		
 		System.out.println(res);
