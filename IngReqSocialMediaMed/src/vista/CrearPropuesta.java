@@ -35,6 +35,7 @@ import javax.swing.JTextPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class CrearPropuesta extends JPanel {
 	
@@ -235,11 +236,6 @@ public class CrearPropuesta extends JPanel {
 		add(DiaFin);
 		add(mesInicio);
 		add(mesFin);
-		
-		JScrollBar BarraDescripcion = new JScrollBar();
-		BarraDescripcion.setBounds(832, 102, 17, 161);
-		
-		add(BarraDescripcion);
 		add(anyoInicio);
 		add(anyoFin);
 		
@@ -311,6 +307,10 @@ public class CrearPropuesta extends JPanel {
 		campoExplicacion.setWrapStyleWord(true);
 		
 		add(cmpExplicacion);
+		
+		JScrollPane scrollPane = new JScrollPane(campoExplicacion);
+		scrollPane.setBounds(172, 102, 677, 161);
+		add(scrollPane);
 		
 	
 		
