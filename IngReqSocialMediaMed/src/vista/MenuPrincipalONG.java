@@ -1,6 +1,7 @@
 package vista;
 
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import modelo.ONG;
@@ -106,6 +107,14 @@ public class MenuPrincipalONG extends JPanel {
 					.addContainerGap(633, Short.MAX_VALUE))
 		);
 		setLayout(gl_contentPane);
+		
+		
+		JLabel lblBienvenida = new JLabel("");
+		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBienvenida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 67));
+		lblBienvenida.setBounds(-33, 8, 1166, 699);
+		add(lblBienvenida);
+		lblBienvenida.setText("¡Bienvenid@ "+usu.getNombre()+"!");
 	}
 
 }
