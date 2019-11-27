@@ -80,7 +80,7 @@ public class CrearPropuesta extends JPanel {
 		
 		JLabel lblLimiteCaracteres = new JLabel("");
 		lblLimiteCaracteres.setForeground(Color.GRAY);
-		lblLimiteCaracteres.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 8));
+		lblLimiteCaracteres.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 11));
 		lblLimiteCaracteres.setBounds(859, 77, 46, 14);
 		add(lblLimiteCaracteres);
 		lblLimiteCaracteres.setText( 0+ "/" + 100);
@@ -93,7 +93,7 @@ public class CrearPropuesta extends JPanel {
 		lblTitulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		
 		JLabel lblSolicitud = new JLabel("Solicitud de actividad");
-		lblSolicitud.setBounds(170, 27, 210, 31);
+		lblSolicitud.setBounds(170, 27, 679, 31);
 		lblSolicitud.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 23));
 		
 		campoTitulo = new JTextField();
@@ -137,25 +137,26 @@ public class CrearPropuesta extends JPanel {
 		BarraExplicacion.setBounds(1703, 102, 17, 48);
 		
 		JLabel lblFechaInicio = new JLabel("Fecha inicio:");
-		lblFechaInicio.setBounds(95, 345, 73, 28);
+		lblFechaInicio.setBounds(91, 345, 77, 28);
 		lblFechaInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		
 		JLabel lblDia = new JLabel("D\u00EDa");
-		lblDia.setBounds(240, 290, 42, 20);
+		lblDia.setBounds(240, 315, 42, 20);
 		lblDia.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDia.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		
 		JLabel lblMes = new JLabel("Mes");
-		lblMes.setBounds(352, 290, 124, 20);
+		lblMes.setBounds(352, 315, 133, 20);
 		lblMes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		
 		JLabel lblAnyo = new JLabel("A\u00F1o");
-		lblAnyo.setBounds(576, 290, 25, 20);
+		lblAnyo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAnyo.setBounds(546, 315, 86, 20);
 		lblAnyo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		
 		JLabel lblFechaFin = new JLabel("Fecha fin:");
-		lblFechaFin.setBounds(95, 416, 73, 28);
+		lblFechaFin.setBounds(93, 416, 73, 28);
 		lblFechaFin.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblFechaFin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		
@@ -259,7 +260,7 @@ public class CrearPropuesta extends JPanel {
 		
 		JLabel lblLimiteCaracteresDescripcion = new JLabel("9/100");
 		lblLimiteCaracteresDescripcion.setForeground(Color.GRAY);
-		lblLimiteCaracteresDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 8));
+		lblLimiteCaracteresDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 11));
 		lblLimiteCaracteresDescripcion.setBounds(859, 249, 46, 14);
 		add(lblLimiteCaracteresDescripcion);
 		 lblLimiteCaracteresDescripcion.setText( 0+ "/" + 255);

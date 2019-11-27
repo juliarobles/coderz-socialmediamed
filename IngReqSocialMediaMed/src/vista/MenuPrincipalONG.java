@@ -76,11 +76,11 @@ public class MenuPrincipalONG extends JPanel {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblPerfil.setForeground(new Color(51, 204, 204));
+				lblEnviarPropuesta.setForeground(new Color(51, 204, 204));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				lblPerfil.setForeground(Color.BLACK);
+				lblEnviarPropuesta.setForeground(Color.BLACK);
 			}
 		});
 		lblEnviarPropuesta.setForeground(Color.BLACK);

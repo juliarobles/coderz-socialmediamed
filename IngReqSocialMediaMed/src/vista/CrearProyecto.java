@@ -160,7 +160,7 @@ public class CrearProyecto extends JPanel {
 				try {
 					if(titulo.getText().isEmpty()) {
 						info.setForeground(Color.RED);
-						info.setText("Email y nombre son campos obligatorios");
+						info.setText("El titulo es obligatorio");
 						info.setVisible(true);
 					} else {
 						Proyecto p = new Proyecto(titulo.getText(), new PDI(((Tupla)boxProfesor.getSelectedItem()).elemento1));
