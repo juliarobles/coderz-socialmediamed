@@ -50,14 +50,6 @@ public class CrearPropuesta extends JPanel {
 	private JButton btnCrear, btnCancelar;
 	private JTextArea campoExplicacion;
 	
-
-
-
-	
-
-
-	
-	
 	//private Propuesta propuestaActiva;
 	
 

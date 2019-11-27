@@ -101,5 +101,28 @@ public class MenuPrincipalGestor extends JPanel {
 		add(lblGestionPropuestas);
 		add(login);
 		
+		JLabel lblCrearProyectoNuevo = new JLabel("Crear proyecto nuevo");
+		lblCrearProyectoNuevo.setForeground(Color.BLACK);
+		lblCrearProyectoNuevo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblCrearProyectoNuevo.setBounds(438, 5, 193, 62);
+		lblCrearProyectoNuevo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//Abrir ventana gestion propuestas
+				padre.cambiarACrearProyecto();
+				lblCrearProyectoNuevo.setForeground(Color.BLACK);
+				
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblCrearProyectoNuevo.setForeground(new Color(51, 204, 204));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCrearProyectoNuevo.setForeground(Color.BLACK);
+			}
+		});
+		add(lblCrearProyectoNuevo);
+		
 	}
 }

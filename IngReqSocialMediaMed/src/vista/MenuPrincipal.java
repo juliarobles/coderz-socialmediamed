@@ -22,6 +22,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel registroong;
 	private JPanel crearactividad;
 	private JPanel crearPropuesta;
+	private CrearProyecto crearproyecto;
 
 	/**
 	 * Launch the application.
@@ -115,6 +116,10 @@ public class MenuPrincipal extends JFrame {
 			crearactividad.setVisible(false);
 			crearactividad = null;
 		}
+		if(crearproyecto != null) {
+			crearproyecto.setVisible(false);
+			crearproyecto = null;
+		}
 		gestor.setVisible(true);
 		invitado.setVisible(false);
 		setContentPane(gestor);
@@ -151,6 +156,14 @@ public class MenuPrincipal extends JFrame {
 	public void volverAPropuestasModificado() {
 		gestionPropuestas = new GestionPropuestas(this);
 		volverAPropuestas();
+		
+	}
+
+	public void cambiarACrearProyecto() {
+		crearproyecto = new CrearProyecto(this);
+		gestor.setVisible(false);
+		crearproyecto.setVisible(true);
+		setContentPane(crearproyecto);
 		
 	}
 

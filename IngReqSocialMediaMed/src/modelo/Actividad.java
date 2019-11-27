@@ -1,5 +1,8 @@
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Actividad {
 	//Quizás sea conveniente crear dos subclases que ereden de esta,
 	//ApreServ y Voluntariado
@@ -15,6 +18,16 @@ public class Actividad {
 	private Asignatura asignatura;
 	private Proyecto proyecto;
 	private ONG ong;
+	
+	public static List<Tupla> getActividadesDisponiblesSimple(){
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES WHERE proyecto IS NULL")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
 	
 	public Actividad(int id) {
 		BD mibd = new BD();
