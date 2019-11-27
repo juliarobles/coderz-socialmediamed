@@ -32,7 +32,10 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 			if(a.equals(panel.getBtnCancelar())) {
 				
 			}else if(a.equals(panel.getBtnCrear())) {
-				new Propuesta(0, null, null, null, null, ong);
+				Fecha inicio = new Fecha ((Integer)panel.getdIni().getSelectedItem(), (Meses)panel.getmIni().getSelectedItem(), panel.getAnyoInicio());
+				Fecha fin = new Fecha ((Integer)panel.getdFin().getSelectedItem(), (Meses)panel.getmFin().getSelectedItem(), panel.getAnyoFin());
+				new Propuesta( panel.getCampoTitulo(), panel.getCampoExplicacion(),inicio.toString() , fin.toString(), ong);
+				System.out.println("propuesta creada correctamente");
 			}
 		}
 	}
