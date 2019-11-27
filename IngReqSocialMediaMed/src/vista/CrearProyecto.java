@@ -114,12 +114,12 @@ public class CrearProyecto extends JPanel {
 
 		scroll.setViewportView(list);
 		add(scroll);
-		
+		/*
 		JLabel lblAadirActividad = new JLabel("A\u00F1adir nueva actividad");
 		lblAadirActividad.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
+				padre.cambiarACrearActividad(p);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -130,12 +130,14 @@ public class CrearProyecto extends JPanel {
 				lblAadirActividad.setForeground(Color.BLACK);
 			}
 		});
+		
 		lblAadirActividad.setBounds(703, 226, 188, 51);
 		add(lblAadirActividad);
 		lblAadirActividad.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAadirActividad.setForeground(Color.BLACK);
 		lblAadirActividad.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblAadirActividad.setBackground(Color.WHITE);
+		*/
 		
 		JLabel lblActividades = new JLabel("A\u00F1ade actividades existentes a este proyecto:");
 		lblActividades.setBounds(196, 238, 424, 39);

@@ -28,7 +28,9 @@ import javax.swing.text.MaskFormatter;
 
 import controlador.CtrLoginUMA;
 import modelo.Alumno;
+import modelo.Asignatura;
 import modelo.BD;
+import modelo.BDException;
 import modelo.ConsultaiDuma;
 import modelo.Disponibilidad;
 import modelo.PAS;
@@ -205,11 +207,13 @@ public class CompletarPerfil extends JFrame {
 						usu = new Alumno(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
 								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
 								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText());
+						cursarasignaturas(email, ci, mibd);
 					} else if (tipo.equalsIgnoreCase("PDI")) {
 						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 2);");
 						usu = new PDI(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
 								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
 								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText());
+						impartirasignaturas(email, ci, mibd);
 					} else {
 						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 3);");
 						usu = new PAS(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
@@ -223,6 +227,34 @@ public class CompletarPerfil extends JFrame {
 				}
 				//Poner algun aviso de el fallo que tienen
 			}
+			private void cursarasignaturas(String email, ConsultaiDuma ci, BD mibd) {
+				//Cursa las asignaturas
+					int idAsig;
+					for(String asig : ci.sacarAsignaturas()) {
+						try {
+							idAsig = (new Asignatura(asig)).getId(); 
+						} catch (BDException e) {
+							System.out.println(e.getMessage());
+							idAsig = Asignatura.getId(asig);
+						}
+						mibd.Insert("INSERT INTO ESTUDIA VALUES('" + email + "', " + idAsig + ");");
+					}
+				
+			}
+			
+			private void impartirasignaturas(String email, ConsultaiDuma ci, BD mibd) {
+				//Impartir las asignaturas
+					int idAsig;
+					for(String asig : ci.sacarAsignaturas()) {
+						try {
+							idAsig = (new Asignatura(asig)).getId(); 
+						} catch (BDException e) {
+							idAsig = Asignatura.getId(asig);
+						}
+						mibd.Insert("INSERT INTO IMPARTIR VALUES('" + email + "', " + idAsig + ");");
+					}
+			}
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				loginong.setForeground(Color.GRAY);

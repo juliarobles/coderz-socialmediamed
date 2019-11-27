@@ -53,7 +53,6 @@ public class InicioSesion extends JFrame {
 
 
 	public InicioSesion(MenuPrincipal principal) {
-		setAlwaysOnTop(true);
 		setResizable(false);
 		setUndecorated(true);
 		setForeground(new Color(255, 255, 255));
