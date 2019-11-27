@@ -36,13 +36,14 @@ public class Actividad {
 	public Actividad(String titulo, String descripcion, String imagen, String fechainicio, String fechafinal,
 			ZonaAccion zonaaccion, TipoOferta tipooferta, Asignatura asignatura, Proyecto proyecto, ONG ong) {
 		
-		int asig = (asignatura != null)? asignatura.getId() : -1;
-		int proy = (proyecto != null)? proyecto.getId() : -1;
+		String asig = (asignatura != null)? Integer.toString(asignatura.getId()) : "NULL";
+		String proy = (proyecto != null)? Integer.toString(proyecto.getId()) : "NULL";
 	
 		BD mibd = new BD();
-		mibd.Insert("INSERT INTO ACTIVIDADES VALUES('" + titulo + "', '" + descripcion + "', NULL, '" + fechainicio + "', '" 
+		mibd.Insert("INSERT INTO ACTIVIDADES (titulo, descripcion, imagen, fechainicio, fechafinal, zonaaccion, tipooferta, asignatura, proyecto, ong) "
+				+ "VALUES('" + titulo + "', '" + descripcion + "', NULL, '" + fechainicio + "', '" 
 				+ fechafinal + "', '" + zonaaccion.toString() + "', '" + tipooferta.toString() + "', " + asig + ", " 
-				+ proy + ", " + ong.getEmail() + ");");
+				+ proy + ", '" + ong.getEmail() + "');");
 		
 		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM ACTIVIDADES;");
 		mibd.finalize();

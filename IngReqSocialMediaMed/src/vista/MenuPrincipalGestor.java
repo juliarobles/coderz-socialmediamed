@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JOptionPane;
 
 public class MenuPrincipalGestor extends JPanel {
 
@@ -32,6 +33,7 @@ public class MenuPrincipalGestor extends JPanel {
 		//setContentPane(contentPane);
 
 		JLabel login = new JLabel("Logout");
+		login.setBounds(990, 5, 105, 62);
 		login.setForeground(Color.BLACK);
 		login.addMouseListener(new MouseAdapter() {
 			@Override
@@ -52,6 +54,7 @@ public class MenuPrincipalGestor extends JPanel {
 		login.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		
 		JLabel lblGestionPropuestas = new JLabel("Gestion propuestas");
+		lblGestionPropuestas.setBounds(804, 5, 168, 62);
 		lblGestionPropuestas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -71,23 +74,32 @@ public class MenuPrincipalGestor extends JPanel {
 		});
 		lblGestionPropuestas.setForeground(Color.BLACK);
 		lblGestionPropuestas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		GroupLayout gl_contentPane = new GroupLayout(this);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(799, Short.MAX_VALUE)
-					.addComponent(lblGestionPropuestas, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(login, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(login, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblGestionPropuestas, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(643, Short.MAX_VALUE))
-		);
-		setLayout(gl_contentPane);
+		
+		JLabel lblRegistroOng = new JLabel("Registro ONG");
+		lblRegistroOng.setBounds(657, 5, 129, 62);
+		lblRegistroOng.setForeground(Color.BLACK);
+		lblRegistroOng.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblRegistroOng.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//Abrir ventana gestion propuestas
+				padre.cambiarARegistroONG();
+				lblRegistroOng.setForeground(Color.BLACK);
+				
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblRegistroOng.setForeground(new Color(51, 204, 204));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblRegistroOng.setForeground(Color.BLACK);
+			}
+		});
+		setLayout(null);
+		add(lblRegistroOng);
+		add(lblGestionPropuestas);
+		add(login);
+		
 	}
 }

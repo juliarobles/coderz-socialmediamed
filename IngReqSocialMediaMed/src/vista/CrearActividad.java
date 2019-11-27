@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,137 +20,206 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
-
-
+import modelo.Actividad;
+import modelo.Propuesta;
 import modelo.TipoOferta;
 import modelo.ZonaAccion;
+import javax.swing.border.LineBorder;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
-public class CrearActividad extends JFrame {
+public class CrearActividad extends JPanel {
 
 	private JPanel contentPane;
-	private JTextField textField_3;
-	private JTextField textField_1;
-	private JTextField textField;
+	private JTextField fechafin;
+	private JTextField fechainicio;
+	private JTextField titulo;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CrearActividad frame = new CrearActividad();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
+	
+	public CrearActividad(MenuPrincipal padre, Propuesta p) {
+		setBounds(100, 100, 1100, 750);
+		setLayout(null);
+		
+		JLabel lblCrearActividad = new JLabel("Crear Actividad");
+		lblCrearActividad.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCrearActividad.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 29));
+		lblCrearActividad.setBounds(10, 47, 1080, 48);
+		add(lblCrearActividad);
+		
+		JLabel lblTitulo = new JLabel("Titulo:");
+		lblTitulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblTitulo.setBounds(511, 155, 70, 31);
+		add(lblTitulo);
+		
+		JLabel lblDescripcion = new JLabel("Descripcion:");
+		lblDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblDescripcion.setBounds(511, 212, 104, 31);
+		add(lblDescripcion);
+		
+		JLabel lblFechaInicio = new JLabel("Fecha Inicio: ");
+		lblFechaInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblFechaInicio.setBounds(511, 420, 126, 31);
+		add(lblFechaInicio);
+		
+		JLabel lblFecha = new JLabel("Fecha Fin: ");
+		lblFecha.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblFecha.setBounds(785, 423, 104, 24);
+		add(lblFecha);
+		
+		fechafin = new JTextField();
+		fechafin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		fechafin.setBorder(new LineBorder(new Color(0, 0, 0)));
+		fechafin.setBounds(873, 420, 136, 31);
+		fechafin.setText(p.getFechafinal());
+		add(fechafin);
+		fechafin.setColumns(10);
+		
+		JLabel lblImagen = new JLabel("Imagen:");
+		lblImagen.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblImagen.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		lblImagen.setBounds(42, 153, 401, 270);
+		add(lblImagen);
+		
+		JLabel lblTipoOferta = new JLabel("Tipo Oferta:");
+		lblTipoOferta.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblTipoOferta.setBounds(511, 539, 126, 31);
+		add(lblTipoOferta);
+		
+		JComboBox<TipoOferta> tipooferta = new JComboBox<TipoOferta>();
+		tipooferta.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 11));
+		for(int cont = 0;TipoOferta.values().length>cont; cont++) {
+			tipooferta.addItem(TipoOferta.values()[cont]);
+		}
+		tipooferta.setSelectedIndex(0);
+		tipooferta.setBounds(651, 542, 203, 31);
+		add(tipooferta);
+	
+		JLabel num = new JLabel("255");
+		num.setHorizontalAlignment(SwingConstants.CENTER);
+		num.setForeground(Color.BLACK);
+		num.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 11));
+		num.setBounds(964, 370, 43, 20);
+		add(num);
+		
+		JTextArea descripcion = new JTextArea();
+		descripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		descripcion.setBorder(new LineBorder(new Color(0, 0, 0)));
+		descripcion.setBounds(511, 253, 496, 116);
+		descripcion.setWrapStyleWord(true);
+		descripcion.setLineWrap(true);
+		descripcion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (descripcion.getText().length() == 255) {
+			         e.consume(); 
+			    }
+				num.setText(Integer.toString(255 - descripcion.getText().length()));
+			}
+		});
+		descripcion.setText(p.getDescripcion());
+		add(descripcion);
+		
+		JComboBox<ZonaAccion> zonaaccion = new JComboBox<ZonaAccion>();
+		zonaaccion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		for(int cont = 0;ZonaAccion.values().length>cont; cont++) {
+			zonaaccion.addItem(ZonaAccion.values()[cont]);
+		}
+		zonaaccion.setSelectedIndex(0);
+		zonaaccion.setBounds(651, 482, 203, 31);
+		add(zonaaccion);
+		
+		JLabel lblZonaDeAccion = new JLabel("Zona de Accion:");
+		lblZonaDeAccion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblZonaDeAccion.setBounds(511, 481, 142, 28);
+		add(lblZonaDeAccion);
+		
+		fechainicio = new JTextField();
+		fechainicio.setBorder(new LineBorder(new Color(0, 0, 0)));
+		fechainicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		fechainicio.setBounds(617, 420, 136, 31);
+		fechainicio.setText(p.getFechainicial());
+		add(fechainicio);
+		fechainicio.setColumns(10);
+		
+		titulo = new JTextField();
+		titulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		titulo.setBorder(new LineBorder(new Color(0, 0, 0)));
+		titulo.setBounds(591, 155, 418, 30);
+		titulo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (titulo.getText().length() == 100) {
+			         e.consume(); 
+			    }
+			}
+		});
+		titulo.setText(p.getTitulo());
+		add(titulo);
+		titulo.setColumns(10);
+		
+		JButton btnSubirActividad = new JButton("Subir actividad");
+		btnSubirActividad.setForeground(new Color(255, 255, 255));
+		btnSubirActividad.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(!titulo.getText().isEmpty()) {
+					try {
+						Actividad a = new Actividad(titulo.getText(), descripcion.getText(), "", fechainicio.getText(), fechafin.getText(), 
+								(ZonaAccion)zonaaccion.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), null, null, p.getOng());
+						p.eliminarPropuesta();
+						padre.volverAPropuestasModificado();
+						
+					} catch (Exception ex) {
+						System.out.println(ex.getMessage());
+					}
+					
+				} else {
+					//mostrar error
 				}
 			}
 		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public CrearActividad() {
-		setType(Type.UTILITY);
-		setTitle("AccionSocialMed - Crear Actividad\r\n");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 500);
-		getContentPane().setLayout(null);
+		btnSubirActividad.setBackground(new Color(51, 204, 204));
+		btnSubirActividad.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		btnSubirActividad.setBounds(573, 627, 159, 41);
+		add(btnSubirActividad);
 		
-		JLabel lblCrearActividad = new JLabel("Crear Actividad");
-		lblCrearActividad.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 29));
-		lblCrearActividad.setBounds(255, 11, 214, 48);
-		getContentPane().add(lblCrearActividad);
+		JButton btnCancelar = new JButton("Cancelar\r\n");
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				padre.volverAPropuestas();
+			}
+		});
+		btnCancelar.setForeground(new Color(255, 255, 255));
+		btnCancelar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		btnCancelar.setBackground(new Color(51, 204, 204));
+		btnCancelar.setBounds(802, 627, 159, 41);
+		add(btnCancelar);
 		
-		JLabel lblTitulo = new JLabel("Titulo:");
-		lblTitulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		lblTitulo.setBounds(67, 93, 45, 14);
-		getContentPane().add(lblTitulo);
+		JLabel lblAsignaturaRelacionada = new JLabel("Asignatura relacionada:");
+		lblAsignaturaRelacionada.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblAsignaturaRelacionada.setBounds(42, 460, 225, 28);
+		add(lblAsignaturaRelacionada);
 		
-		JLabel lblDescripcion = new JLabel("Descripcion:");
-		lblDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		lblDescripcion.setBounds(31, 118, 81, 20);
-		getContentPane().add(lblDescripcion);
+		JComboBox<ZonaAccion> comboBox = new JComboBox<ZonaAccion>();
+		comboBox.setEnabled(false);
+		comboBox.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		comboBox.setBounds(42, 498, 401, 31);
+		add(comboBox);
 		
-		JLabel lblFechaInicio = new JLabel("Fecha Inicio: ");
-		lblFechaInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		lblFechaInicio.setBounds(31, 249, 81, 14);
-		getContentPane().add(lblFechaInicio);
-		
-		JLabel lblFecha = new JLabel("Fecha Fin: ");
-		lblFecha.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		lblFecha.setBounds(326, 249, 70, 14);
-		getContentPane().add(lblFecha);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(397, 248, 96, 20);
-		getContentPane().add(textField_3);
-		textField_3.setColumns(10);
-		
-		JLabel lblImagen = new JLabel("Imagen:");
-		lblImagen.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		lblImagen.setBounds(570, 249, 48, 19);
-		getContentPane().add(lblImagen);
-		
-		JLabel lblTipoOferta = new JLabel("Tipo Oferta:");
-		lblTipoOferta.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		lblTipoOferta.setBounds(31, 307, 81, 14);
-		getContentPane().add(lblTipoOferta);
-		
-		Button button = new Button("Enviar Solicitud");
-		button.setFont(new Font("Dialog", Font.BOLD, 14));
-		button.setForeground(Color.WHITE);
-		button.setBackground(new Color(51, 204, 204));
-		button.setActionCommand("Enviar Solicitud");
-		button.setBounds(122, 384, 154, 41);
-		getContentPane().add(button);
-		
-		Button button_1 = new Button("Atras");
-		button_1.setFont(new Font("Dialog", Font.BOLD, 14));
-		button_1.setBackground(new Color(51, 204, 204));
-		button_1.setForeground(Color.WHITE);
-		button_1.setBounds(397, 384, 154, 41);
-		getContentPane().add(button_1);
-		
-		JComboBox<TipoOferta> comboBox = new JComboBox<TipoOferta>();
-		comboBox.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 11));
-		for(int cont = 0;TipoOferta.values().length>cont; cont++) {
-			comboBox.addItem(TipoOferta.values()[cont]);
-		}
-		comboBox.setBounds(122, 305, 126, 22);
-		getContentPane().add(comboBox);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(122, 121, 496, 116);
-		getContentPane().add(scrollPane);
-		
-		JTextArea textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
+		JLabel lblProyectoEnEl = new JLabel("Proyecto en el que se incluye:");
+		lblProyectoEnEl.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblProyectoEnEl.setBounds(42, 539, 364, 28);
+		add(lblProyectoEnEl);
 		
 		JComboBox<ZonaAccion> comboBox_1 = new JComboBox<ZonaAccion>();
-		comboBox_1.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 11));
-		for(int cont = 0;ZonaAccion.values().length>cont; cont++) {
-			comboBox_1.addItem(ZonaAccion.values()[cont]);
-		}
-		comboBox_1.setBounds(397, 305, 96, 22);
-		getContentPane().add(comboBox_1);
-		
-		JLabel lblZonaDeAccion = new JLabel("Zona de Accion:");
-		lblZonaDeAccion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		lblZonaDeAccion.setBounds(292, 309, 104, 14);
-		getContentPane().add(lblZonaDeAccion);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(122, 248, 96, 20);
-		getContentPane().add(textField_1);
-		textField_1.setColumns(10);
-		
-		textField = new JTextField();
-		textField.setBounds(122, 92, 254, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		comboBox_1.setEnabled(false);
+		comboBox_1.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		comboBox_1.setBounds(42, 577, 401, 31);
+		add(comboBox_1);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 	}

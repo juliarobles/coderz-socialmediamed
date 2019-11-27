@@ -32,7 +32,7 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 			if(a.equals(panel.getBtnCancelar())) {
 				
 			}else if(a.equals(panel.getBtnCrear())) {
-				new Propuesta(0, null, null, null, null, ong);
+				new Propuesta(null, null, null, null, ong);
 			}
 		}
 	}
