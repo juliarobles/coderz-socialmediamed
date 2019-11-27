@@ -6,10 +6,18 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.regex.*;
+import java.util.regex.Pattern;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.DocumentFilter.FilterBypass;
 
 import controlador.CtrCrearPropuesta;
 import modelo.Meses;
@@ -67,7 +75,8 @@ public class CrearPropuesta extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CrearPropuesta(ONG ong) {
+	public CrearPropuesta(ONG ong, MenuPrincipal padre) {
+		setForeground(Color.WHITE);
 		this.ong = ong;
 		
 		this.setSize(1100,715);
@@ -136,12 +145,34 @@ public class CrearPropuesta extends JPanel {
 		mesFin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		mesFin.setBounds(352, 417, 133, 28);
 		
-		anyoInicio = new JTextField();
+		anyoInicio = new JTextField(4);
+		((AbstractDocument)anyoInicio.getDocument()).setDocumentFilter(new DocumentFilter(){
+	        Pattern regEx = Pattern.compile("\\d*");
+	        @Override
+	        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {          
+	            Matcher matcher = regEx.matcher(text);
+	            if(!matcher.matches()){
+	                return;
+	            }
+	            super.replace(fb, offset, length, text, attrs);
+	        }
+	    });
 		anyoInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		anyoInicio.setBounds(546, 345, 86, 28);
 		anyoInicio.setColumns(10);
 		
-		anyoFin = new JTextField();
+		anyoFin = new JTextField(4);
+		((AbstractDocument)anyoFin.getDocument()).setDocumentFilter(new DocumentFilter(){
+	        Pattern regEx = Pattern.compile("\\d*");
+	        @Override
+	        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {          
+	            Matcher matcher = regEx.matcher(text);
+	            if(!matcher.matches()){
+	                return;
+	            }
+	            super.replace(fb, offset, length, text, attrs);
+	        }
+	    });
 		anyoFin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		anyoFin.setBounds(546, 416, 86, 28);
 		anyoFin.setColumns(10);
@@ -165,14 +196,20 @@ public class CrearPropuesta extends JPanel {
 		add(anyoFin);
 		
 		JButton btnEnviarSolicitud = new JButton("Enviar solicitud");
-		btnEnviarSolicitud.setBounds(815, 333, 124, 23);
+		btnEnviarSolicitud.setForeground(Color.WHITE);
+		btnEnviarSolicitud.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 17));
+		btnEnviarSolicitud.setBounds(779, 290, 160, 63);
 		add(btnEnviarSolicitud);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(815, 401, 124, 23);
+		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 17));
+		btnCancelar.setBounds(779, 401, 160, 62);
 		add(btnCancelar);
 		
-		control = new CtrCrearPropuesta(this, ong);
+		btnEnviarSolicitud.setBackground(new Color(51,204,204));
+		btnCancelar.setBackground(new Color(51,204,204));
+		control = new CtrCrearPropuesta(this, ong, padre);
 		this.dIni = DiaInicio;
 		this.dFin = DiaFin;
 		this.mFin = mesFin;
@@ -255,19 +292,21 @@ public class CrearPropuesta extends JPanel {
 		this.campoExplicacion.setText(campoExplicacion);;
 	}
 
-	public int getAnyoInicio() {
-		return Integer.valueOf(this.anyoInicio.getText());
+	public JTextField getAnyoInicio() {
+		return anyoInicio;
 	}
 
-	public void setAnyoInicio(int anyoInicio) {
-		this.anyoInicio.setText(String.valueOf(anyoInicio));;
+	public void setAnyoInicio(JTextField anyoInicio) {
+		this.anyoInicio = anyoInicio;
 	}
 
-	public int getAnyoFin() {
-		return Integer.valueOf(this.anyoFin.getText());
+	public JTextField getAnyoFin() {
+		return anyoFin;
 	}
 
-	public void setAnyoFin(int anyoFin) {
-		this.anyoInicio.setText(String.valueOf(anyoFin));;
+	public void setAnyoFin(JTextField anyoFin) {
+		this.anyoFin = anyoFin;
 	}
+
+	
 }

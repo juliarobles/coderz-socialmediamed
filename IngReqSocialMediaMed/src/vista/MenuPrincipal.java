@@ -57,7 +57,7 @@ public class MenuPrincipal extends JFrame {
 		
 	}
 	public void cambiarACrearPropuesta(ONG ong) {
-		crearPropuesta = new CrearPropuesta(ong);
+		crearPropuesta = new CrearPropuesta(ong, this);
 		crearPropuesta.setVisible(true);
 		this.ong.setVisible(false);
 		setContentPane(crearPropuesta);
@@ -86,7 +86,12 @@ public class MenuPrincipal extends JFrame {
 		invitado.setVisible(false);
 		setContentPane(usuario);
 	}
-	
+	public void cambiardePropuestaAONG(ONG usu) {
+		ong = new MenuPrincipalONG(this,usu);
+		ong.setVisible(true);
+		this.crearPropuesta.setVisible(false);
+		setContentPane(ong);
+	}
 	public void cambiarONG(ONG usu) {
 		ong = new MenuPrincipalONG(this, usu);
 		ong.setVisible(true);

@@ -34,7 +34,7 @@ public class CtrListaPropuesta implements ListSelectionListener {
 		this.ong = ong;
 		this.vista = vista;
 	}
-
+	//Importante para controlar el tamaño de los campos que escribimos
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if(!lista.isSelectionEmpty()) {

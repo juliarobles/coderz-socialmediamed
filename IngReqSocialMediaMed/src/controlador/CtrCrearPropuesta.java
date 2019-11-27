@@ -11,17 +11,19 @@ import javax.swing.JPanel;
 
 import modelo.*;
 import vista.CrearPropuesta;
+import vista.MenuPrincipal;
+import vista.MenuPrincipalONG;
 
 public class CtrCrearPropuesta implements MouseListener, ItemListener{
 	private CrearPropuesta panel;
 	private Fecha Inicio;
 	private Fecha Fin;
 	private ONG ong;
-
-	public  CtrCrearPropuesta (CrearPropuesta panel, ONG ong) {
+	private MenuPrincipal padre;
+	public  CtrCrearPropuesta (CrearPropuesta panel, ONG ong, MenuPrincipal padre) {
 		this.panel = panel;
 		this.ong = ong;
-		
+		this.padre = padre;
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -30,16 +32,38 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 		if(((JButton) o ) instanceof JButton) {
 			JButton a = (JButton) o;
 			if(a.equals(panel.getBtnCancelar())) {
-				 
+				 JPanel menuONG = new MenuPrincipalONG(padre, ong);
+				 padre.cambiardePropuestaAONG(ong);
 				
 			}else if(a.equals(panel.getBtnCrear())) {
-				Fecha inicio = new Fecha ((Integer)panel.getdIni().getSelectedItem(), (Meses)panel.getmIni().getSelectedItem(), panel.getAnyoInicio());
-				Fecha fin = new Fecha ((Integer)panel.getdFin().getSelectedItem(), (Meses)panel.getmFin().getSelectedItem(), panel.getAnyoFin());
-				new Propuesta( panel.getCampoTitulo(), panel.getCampoExplicacion(),inicio.toString() , fin.toString(), ong);
-				System.out.println("propuesta creada correctamente");
+
+				if(todoCorrecto()==0) {
+					
+					new Propuesta( panel.getCampoTitulo(), panel.getCampoExplicacion(),Inicio.toString() , Fin.toString(), ong);
+					System.out.println("propuesta creada correctamente");
+				}else {
+					
+				}
+			
 			}
 		}
 	}
+
+	private int todoCorrecto() {
+		int res = 0;
+		
+	
+		if(panel.getAnyoFin().getText().trim().isEmpty())res++;
+		if(panel.getAnyoInicio().getText().trim().isEmpty())res++;
+		if(res ==0) {
+			Inicio = new Fecha ((Integer)panel.getdIni().getSelectedItem(), (Meses)panel.getmIni().getSelectedItem(), Integer.valueOf(panel.getAnyoInicio().getText()));
+			Fin = new Fecha ((Integer)panel.getdFin().getSelectedItem(), (Meses)panel.getmFin().getSelectedItem(), Integer.valueOf(panel.getAnyoFin().getText()));
+			if(! Inicio.igualOAnterior(Fin))res++;
+		}
+		System.out.println(res);
+		return res;
+	}
+	
 
 	@Override
 	public void mousePressed(MouseEvent e) {
