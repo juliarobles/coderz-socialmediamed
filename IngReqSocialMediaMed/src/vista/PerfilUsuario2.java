@@ -88,6 +88,7 @@ public class PerfilUsuario2 extends JPanel{
 		int width, height;
 		width = 800;
 		height = 500;
+		ImageIcon imgasm = new ImageIcon(PerfilUsuario2.class.getResource("/resources/_Logo AccionSocialMed png.png"));
 		ImageIcon imgus = new ImageIcon(PerfilUsuario2.class.getResource("/resources/user.png"));
 		//frmAccionsocialmedPerfil = new JFrame();
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilUsuario2.class.getResource("/resources/_Logo AccionSocialMed png.png")));
@@ -101,6 +102,16 @@ public class PerfilUsuario2 extends JPanel{
 		user.setIcon(imgus);
 		user.repaint();
 		setLayout(null);
+		 setLayout(null);
+		  
+		  JPictureBox asm = new JPictureBox();
+		  asm.setBounds(139, 213, 60, 60);
+		  asm.setIcon(imgasm);
+		  add(asm);
+		  asm.repaint();
+		  
+		
+		
 		  
 		  JLabel lblTelfono = new JLabel("Tel\u00E9fono:");
 		  lblTelfono.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -188,6 +199,11 @@ public class PerfilUsuario2 extends JPanel{
 		  lblDNIR.setBounds(304, 107, 95, 14);
 		  add(lblDNIR);
 		  */
+		  
+		  JLabel lblIdiomas = new JLabel("Idiomas");
+		  lblIdiomas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		  lblIdiomas.setBounds(650, 250, 66, 14);
+		  add(lblIdiomas);
 		  JLabel lblTelefonoR = new JLabel("");
 		  this.Telefono = lblTelefonoR;
 		  lblTelefonoR.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -263,6 +279,8 @@ public class PerfilUsuario2 extends JPanel{
 		    		  ImageIcon(PerfilUsuario2.class.getResource("/resources/Perfil usuario.png")))
 		    		  ;
 		    add(lblFondo);
+		    
+		    
 		 
 		  
 		

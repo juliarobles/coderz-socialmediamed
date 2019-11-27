@@ -18,6 +18,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel ong;
 	private JPanel gestor;
 	private JPanel gestionPropuestas;
+	private JPanel crearPropuesta;
 
 	/**
 	 * Launch the application.
@@ -50,6 +51,13 @@ public class MenuPrincipal extends JFrame {
 		setResizable(false);
 		
 		
+		
+	}
+	public void cambiarACrearPropuesta(ONG ong) {
+		crearPropuesta = new CrearPropuesta(ong);
+		crearPropuesta.setVisible(true);
+		this.ong.setVisible(false);
+		setContentPane(crearPropuesta);
 	}
 	
 	public void cambiarAInvitado() {

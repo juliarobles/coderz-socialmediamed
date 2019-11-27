@@ -100,7 +100,7 @@ public class Propuesta {
 		this.ong = new ONG((String) tupla[5]);
 	}
 
-	public Propuesta(int id, String titulo, String descripcion, String fechainicial, String fechafinal, ONG ong) {
+	public Propuesta( String titulo, String descripcion, String fechainicial, String fechafinal, ONG ong) {
 		BD mibd = new BD();
 		mibd.Insert("INSERT INTO PROPUESTA VALUES('" + titulo + "', '" + descripcion + "', '" + fechainicial 
 				+ "', '" + fechafinal + "', '" + ong.getEmail() + "');");

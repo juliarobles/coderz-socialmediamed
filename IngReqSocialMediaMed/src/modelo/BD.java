@@ -5,7 +5,8 @@ import java.util.*;
 
 //USER:tY4NcDDTGP
 //PASS:L3P846ILrv
-
+//https://remotemysql.com/phpmyadmin/db_structure.php?db=tY4NcDDTGP
+//Para acceder a la base de datos y realizr comprobaciones
 public class BD 
 {
 	
