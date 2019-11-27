@@ -26,6 +26,9 @@ import javax.swing.border.Border;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JTextArea;
 
 public class PerfilUsuario2 extends JPanel{
 	
@@ -115,20 +118,8 @@ public class PerfilUsuario2 extends JPanel{
 		  
 		  JLabel lblTelfono = new JLabel("Tel\u00E9fono:");
 		  lblTelfono.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblTelfono.setBounds(407, 107, 61, 14);
+		  lblTelfono.setBounds(274, 82, 61, 14);
 		  add(lblTelfono);
-		  
-		  JLabel lblTitulacion = new JLabel("Titulaci\u00F3n:");
-		  Titulo = lblTitulacion;
-		  lblTitulacion.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblTitulacion.setBounds(274, 82, 73, 14);
-		  add(lblTitulacion);
-		  
-		  JLabel lblDni = new JLabel("DNI:");
-		  DNI = lblDni;
-		  lblDni.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblDni.setBounds(274, 107, 33, 14);
-		  add(lblDni);
 		  
 		  JPanel panelDispo = new JPanel();
 		  
@@ -184,13 +175,6 @@ public class PerfilUsuario2 extends JPanel{
 		  lblNombreR.setBounds(333, 57, 383, 14);
 		  lblNombreR.setText(UsuarioActivo.getNombre() + " " + UsuarioActivo.getApellido1()+ " " + UsuarioActivo.getApellido2());
 		  add(lblNombreR);
-		  
-		  JLabel lblTituloR = new JLabel("");
-		  this.Titulo = lblTituloR;
-		  lblTituloR.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblTituloR.setBounds(343, 84, 373, 14);
-		  
-		  add(lblTituloR);
 		  /*
 		  JLabel lblDNIR = new JLabel("");
 		  this.DNI = lblDNIR;
@@ -207,7 +191,7 @@ public class PerfilUsuario2 extends JPanel{
 		  JLabel lblTelefonoR = new JLabel("");
 		  this.Telefono = lblTelefonoR;
 		  lblTelefonoR.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblTelefonoR.setBounds(471, 107, 95, 14);
+		  lblTelefonoR.setBounds(333, 82, 150, 14);
 		  lblTelefonoR.setText(String.valueOf(UsuarioActivo.getTelf()));
 		  add(lblTelefonoR);
 		  add(user);
@@ -255,21 +239,34 @@ public class PerfilUsuario2 extends JPanel{
 		    panelDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 11));
 		    panelDescripcion.setBackground(Color.WHITE);
 		    panelDescripcion.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Descripci\u00F3n personal", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		    panelDescripcion.setBounds(274, 130, 442, 100);
+		    panelDescripcion.setBounds(274, 107, 442, 123);
 		    add(panelDescripcion);
 		    panelDescripcion.setLayout(null);
-		    
-		    JLabel lblDescripcion = new JLabel("");
-		    lblDescripcion.setBounds(6, 16, 430, 73);
-		    this.Descripcion = lblDescripcion;
-		    lblDescripcion.setText(UsuarioActivo.getDescripcion());
-		    panelDescripcion.add(lblDescripcion);
-		    lblDescripcion.setHorizontalAlignment(SwingConstants.LEFT);
-		    lblDescripcion.setVerticalAlignment(SwingConstants.TOP);
-		    lblDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		   
 		  
 		    
-		  
+		    JScrollPane sclDescripcion = new JScrollPane();
+		    sclDescripcion.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		    sclDescripcion.setBounds(10, 14, 422, 98);
+		    panelDescripcion.add(sclDescripcion);
+		    
+		     
+		       JTextArea txtDescripcion = new JTextArea("");
+		       txtDescripcion.setEditable(false);
+		       txtDescripcion.setOpaque(true);
+		       txtDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		       
+		       txtDescripcion.setBackground(Color.WHITE);
+		      
+		       txtDescripcion.setBounds(383, 11, 0, 59);
+		       txtDescripcion.setLineWrap(true);
+		       txtDescripcion.setWrapStyleWord(true);
+		       sclDescripcion.setViewportView(txtDescripcion);
+		       sclDescripcion.setBackground(Color.white);
+		       txtDescripcion.setText(this.UsuarioActivo.getDescripcion());
+		      
+		       
+		    
 		  
 		  
 		    JLabel lblFondo = new JLabel("");
@@ -281,7 +278,7 @@ public class PerfilUsuario2 extends JPanel{
 		    add(lblFondo);
 		    
 		    
-		 
+		 lblTelfono.setBackground(Color.red);
 		  
 		
 	}

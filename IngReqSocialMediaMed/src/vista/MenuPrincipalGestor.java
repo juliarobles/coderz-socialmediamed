@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import javax.swing.JLabel;
@@ -123,6 +124,14 @@ public class MenuPrincipalGestor extends JPanel {
 			}
 		});
 		add(lblCrearProyectoNuevo);
+		
+		JLabel lblBienvenida = new JLabel("");
+		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBienvenida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 67));
+		lblBienvenida.setBounds(-33, 8, 1166, 699);
+		add(lblBienvenida);
+		lblBienvenida.setText("¡Bienvenid@ administrador!");
+		
 		
 	}
 }

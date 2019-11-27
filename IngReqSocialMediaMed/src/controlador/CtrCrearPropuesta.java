@@ -60,7 +60,11 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 		
 	
 		if(panel.getAnyoFin().getText().trim().isEmpty()) res += "El campo año final está vacío<br>";
+		else if(Integer.parseInt(panel.getAnyoFin().getText())> 2099) res += "No te pases de gracioso<br>";
 		if(panel.getAnyoInicio().getText().trim().isEmpty())res+= "El campo año inicio está vacío<br>";
+		else 		if(Integer.parseInt(panel.getAnyoInicio().getText())> 2099) res += "No te pases de gracioso 2<br>";
+		if(panel.getCampoExplicacion().trim().isEmpty()) res += "La descripción está vacía<br>";
+		if(panel.getCampoTitulo().trim().isEmpty()) res += "El título está vacío<br>";
 		if(res.equals(" ")) {
 			Inicio = new Fecha ((Integer)panel.getdIni().getSelectedItem(), (Meses)panel.getmIni().getSelectedItem(), Integer.valueOf(panel.getAnyoInicio().getText()));
 			Fin = new Fecha ((Integer)panel.getdFin().getSelectedItem(), (Meses)panel.getmFin().getSelectedItem(), Integer.valueOf(panel.getAnyoFin().getText()));
