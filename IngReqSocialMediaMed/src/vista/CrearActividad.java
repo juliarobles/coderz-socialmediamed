@@ -22,7 +22,9 @@ import javax.swing.JScrollPane;
 
 import modelo.Actividad;
 import modelo.Propuesta;
+import modelo.Proyecto;
 import modelo.TipoOferta;
+import modelo.Tupla;
 import modelo.ZonaAccion;
 import javax.swing.border.LineBorder;
 import javax.swing.SwingConstants;
@@ -204,22 +206,24 @@ public class CrearActividad extends JPanel {
 		lblAsignaturaRelacionada.setBounds(42, 460, 225, 28);
 		add(lblAsignaturaRelacionada);
 		
-		JComboBox<ZonaAccion> comboBox = new JComboBox<ZonaAccion>();
-		comboBox.setEnabled(false);
-		comboBox.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		comboBox.setBounds(42, 498, 401, 31);
-		add(comboBox);
+		JComboBox<ZonaAccion> asignatura = new JComboBox<ZonaAccion>();
+		asignatura.setEnabled(false);
+		asignatura.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		asignatura.setBounds(42, 498, 401, 31);
+		add(asignatura);
 		
 		JLabel lblProyectoEnEl = new JLabel("Proyecto en el que se incluye:");
 		lblProyectoEnEl.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblProyectoEnEl.setBounds(42, 539, 364, 28);
 		add(lblProyectoEnEl);
 		
-		JComboBox<ZonaAccion> comboBox_1 = new JComboBox<ZonaAccion>();
-		comboBox_1.setEnabled(false);
-		comboBox_1.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		comboBox_1.setBounds(42, 577, 401, 31);
-		add(comboBox_1);
+		JComboBox<Tupla> proyecto = new JComboBox<Tupla>();
+		for(Tupla t : Proyecto.getProyectosSimple()) {
+			proyecto.addItem(t);
+		}
+		proyecto.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		proyecto.setBounds(42, 577, 401, 31);
+		add(proyecto);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 	}

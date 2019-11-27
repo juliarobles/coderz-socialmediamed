@@ -208,6 +208,16 @@ public class Actividad {
 		
 	}
 	
+	public static void setProyectoSimple(Proyecto proyecto, int id) {
+		BD mibd = new BD();
+		if(proyecto == null) {
+			mibd.Update("UPDATE ACTIVIDADES SET proyecto = NULL WHERE id = " + id + ";");
+		} else {
+			mibd.Update("UPDATE ACTIVIDADES SET proyecto = " + proyecto.getId() + " WHERE id = " + id + ";");
+		}
+		mibd.finalize();
+	}
+	
 	public ONG getOng() {
 		return ong;
 	}

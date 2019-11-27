@@ -141,12 +141,12 @@ public class RegistroONG extends JPanel {
 		lblEmail.setBounds(531, 184, 145, 46);
 		add(lblEmail);
 		
-		JLabel lblHey = new JLabel("hey");
-		lblHey.setVisible(false);
-		lblHey.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHey.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblHey.setBounds(10, 107, 1080, 46);
-		add(lblHey);
+		JLabel info = new JLabel("info");
+		info.setVisible(false);
+		info.setHorizontalAlignment(SwingConstants.CENTER);
+		info.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		info.setBounds(10, 107, 1080, 46);
+		add(info);
 		
 		JButton btnRegistrar = new JButton("Registrar");
 		btnRegistrar.addMouseListener(new MouseAdapter() {
@@ -154,21 +154,21 @@ public class RegistroONG extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				try {
 					if(email.getText().isEmpty() || nombre.getText().isEmpty()) {
-						lblHey.setForeground(Color.RED);
-						lblHey.setText("Email y nombre son campos obligatorios");
-						lblHey.setVisible(true);
+						info.setForeground(Color.RED);
+						info.setText("Email y nombre son campos obligatorios");
+						info.setVisible(true);
 					} else if (ONG.getTodosNombres().contains(nombre.getText())) {
-						lblHey.setForeground(Color.RED);
-						lblHey.setText("El nombre introducido ya está registrado en nuestro sistema");
-						lblHey.setVisible(true);
+						info.setForeground(Color.RED);
+						info.setText("El nombre introducido ya está registrado en nuestro sistema");
+						info.setVisible(true);
 					} else if (!email.getText().contains("@") || !email.getText().contains(".")) {
-						lblHey.setForeground(Color.RED);
-						lblHey.setText("Introduzca un email válido");
-						lblHey.setVisible(true);
+						info.setForeground(Color.RED);
+						info.setText("Introduzca un email válido");
+						info.setVisible(true);
 					} else if (ONG.getTodosEmail().contains(email.getText())) {
-						lblHey.setForeground(Color.RED);
-						lblHey.setText("El email introducido ya está registrado en nuestro sistema");
-						lblHey.setVisible(true);
+						info.setForeground(Color.RED);
+						info.setText("El email introducido ya está registrado en nuestro sistema");
+						info.setVisible(true);
 					} else {
 						String pass = PasswordGenerator.getPassword(PasswordGenerator.MINUSCULAS+PasswordGenerator.MAYUSCULAS+PasswordGenerator.NUMEROS,10);
 						ONG ong = new ONG(email.getText(), pass, nombre.getText(), descripcion.getText());
@@ -178,17 +178,17 @@ public class RegistroONG extends JPanel {
 						descripcion.setText("");
 						
 						//Informo al gestor
-						lblHey.setForeground(new Color(46, 139, 87));
-						lblHey.setText("La ONG se ha registrado correctamente");
-						lblHey.setVisible(true);
-						Timer timer = new Timer (10000, new ActionListener () 
+						info.setForeground(new Color(46, 139, 87));
+						info.setText("La ONG se ha registrado correctamente");
+						info.setVisible(true);
+						Timer timer = new Timer (8000, new ActionListener () 
 						{ 
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								if(e.getWhen() >= 9000) {
-									lblHey.setVisible(false);
+									info.setVisible(false);
 								} else {
-									lblHey.setVisible(true);
+									info.setVisible(true);
 								}
 							} 
 						}); 
@@ -196,9 +196,9 @@ public class RegistroONG extends JPanel {
 						timer.setRepeats(false);	
 					}
 				} catch (Exception ex){
-					lblHey.setForeground(Color.RED);
-					lblHey.setText("Error: la ONG no se ha registrado correctamente");
-					lblHey.setVisible(true);
+					info.setForeground(Color.RED);
+					info.setText("Error: la ONG no se ha registrado correctamente");
+					info.setVisible(true);
 				}
 				
 			}

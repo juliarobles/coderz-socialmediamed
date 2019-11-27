@@ -1,9 +1,23 @@
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Proyecto {
 	
 	private int id;
 	private String nombre;
+	private PDI pdi;
+	
+	public static List<Tupla> getProyectosSimple(){
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, nombre FROM PROYECTO")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
 	
 	public Proyecto(int id) { //Saca un proyecto de la BD y lo guarda en un objeto
 		BD mibd = new BD();
@@ -11,14 +25,16 @@ public class Proyecto {
 		mibd.finalize();
 		this.id = (Integer) tupla[0];
 		this.nombre = (String) tupla[1];
+		this.pdi = new PDI((String) tupla[2]);
 	}
 	
-	public Proyecto(String nombre) {
+	public Proyecto(String nombre, PDI pdi) {
 		BD mibd = new BD();
-		mibd.Insert("INSERT INTO PROYECTO VALUES('" + nombre + "');");
+		mibd.Insert("INSERT INTO PROYECTO (nombre, pdi) VALUES('" + nombre + "', '" + pdi.getEmail() + "');");
+		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM PROYECTO;");
 		mibd.finalize();
-		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM PROYECTO;");;
 		this.nombre = nombre;
+		this.pdi = pdi;
 	}
 	
 	public int getId() {
@@ -34,6 +50,44 @@ public class Proyecto {
 		mibd.finalize();
 		this.nombre = nombre;
 	}
+	
+	public PDI getPDI() {
+		return pdi;
+	}
+	public void setPDI(PDI pdi) {
+		BD mibd = new BD();
+		mibd.Update("UPDATE PROYECTO SET pdi = '" + pdi + "' WHERE id = " + id + ";");
+		mibd.finalize();
+		this.pdi = pdi;
+	}
+
+	@Override
+	public String toString() {
+		return nombre;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Proyecto other = (Proyecto) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
 	
 	
 }
