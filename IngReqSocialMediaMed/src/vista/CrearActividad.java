@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -21,6 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 import modelo.Actividad;
+import modelo.Asignatura;
 import modelo.Propuesta;
 import modelo.Proyecto;
 import modelo.TipoOferta;
@@ -31,6 +34,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JCheckBox;
 
 
 public class CrearActividad extends JPanel {
@@ -162,6 +166,73 @@ public class CrearActividad extends JPanel {
 		add(titulo);
 		titulo.setColumns(10);
 		
+		
+		
+		JButton btnCancelar = new JButton("Cancelar\r\n");
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				padre.volverAPropuestas();
+			}
+		});
+		btnCancelar.setForeground(new Color(255, 255, 255));
+		btnCancelar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		btnCancelar.setBackground(new Color(51, 204, 204));
+		btnCancelar.setBounds(802, 627, 159, 41);
+		add(btnCancelar);
+		
+		JComboBox<Asignatura> asignatura = new JComboBox<Asignatura>();
+		for(Asignatura a : Asignatura.getAsignaturasSimple()) {
+			asignatura.addItem(a);
+		}
+		asignatura.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		asignatura.setBounds(42, 485, 401, 31);
+		asignatura.setEnabled(false);
+		add(asignatura);
+		
+		JComboBox<Tupla> proyecto = new JComboBox<Tupla>();
+		for(Tupla t : Proyecto.getProyectosSimple()) {
+			proyecto.addItem(t);
+		}
+		proyecto.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		proyecto.setBounds(42, 571, 401, 31);
+		proyecto.setEnabled(false);
+		add(proyecto);
+		
+		JCheckBox proyectosi = new JCheckBox("Actividad incluida en un proyecto");
+		proyectosi.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		proyectosi.setBounds(42, 544, 335, 21);
+		proyectosi.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent event) {
+		        JCheckBox cb = (JCheckBox) event.getSource();
+		        if (cb.isSelected()) {
+		        	proyecto.setEnabled(true);
+		        } else {
+		        	proyecto.setEnabled(false);
+		        }
+		    }
+		});
+		proyectosi.setSelected(false);
+		add(proyectosi);
+		
+		JCheckBox asignaturasi = new JCheckBox("Actividad relacionada con una asignatura");
+		asignaturasi.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		asignaturasi.setBounds(42, 458, 401, 21);
+		asignaturasi.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent event) {
+		        JCheckBox cb = (JCheckBox) event.getSource();
+		        if (cb.isSelected()) {
+		        	asignatura.setEnabled(true);
+		        } else {
+		        	asignatura.setEnabled(false);
+		        }
+		    }
+		});
+		asignaturasi.setSelected(false);
+		add(asignaturasi);
+		
 		JButton btnSubirActividad = new JButton("Subir actividad");
 		btnSubirActividad.setForeground(new Color(255, 255, 255));
 		btnSubirActividad.addMouseListener(new MouseAdapter() {
@@ -169,8 +240,11 @@ public class CrearActividad extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				if(!titulo.getText().isEmpty()) {
 					try {
+						Asignatura asig = ( asignaturasi.isSelected())? (Asignatura) asignatura.getSelectedItem() : null;
+						Proyecto proy = (proyectosi.isSelected())? new Proyecto(Integer.parseInt(((Tupla) proyecto.getSelectedItem()).elemento1)) : null;
+						
 						Actividad a = new Actividad(titulo.getText(), descripcion.getText(), "", fechainicio.getText(), fechafin.getText(), 
-								(ZonaAccion)zonaaccion.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), null, null, p.getOng());
+								(ZonaAccion)zonaaccion.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), asig, proy, p.getOng());
 						p.eliminarPropuesta();
 						padre.volverAPropuestasModificado();
 						
@@ -188,42 +262,6 @@ public class CrearActividad extends JPanel {
 		btnSubirActividad.setBounds(573, 627, 159, 41);
 		add(btnSubirActividad);
 		
-		JButton btnCancelar = new JButton("Cancelar\r\n");
-		btnCancelar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				padre.volverAPropuestas();
-			}
-		});
-		btnCancelar.setForeground(new Color(255, 255, 255));
-		btnCancelar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		btnCancelar.setBackground(new Color(51, 204, 204));
-		btnCancelar.setBounds(802, 627, 159, 41);
-		add(btnCancelar);
-		
-		JLabel lblAsignaturaRelacionada = new JLabel("Asignatura relacionada:");
-		lblAsignaturaRelacionada.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblAsignaturaRelacionada.setBounds(42, 460, 225, 28);
-		add(lblAsignaturaRelacionada);
-		
-		JComboBox<ZonaAccion> asignatura = new JComboBox<ZonaAccion>();
-		asignatura.setEnabled(false);
-		asignatura.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		asignatura.setBounds(42, 498, 401, 31);
-		add(asignatura);
-		
-		JLabel lblProyectoEnEl = new JLabel("Proyecto en el que se incluye:");
-		lblProyectoEnEl.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblProyectoEnEl.setBounds(42, 539, 364, 28);
-		add(lblProyectoEnEl);
-		
-		JComboBox<Tupla> proyecto = new JComboBox<Tupla>();
-		for(Tupla t : Proyecto.getProyectosSimple()) {
-			proyecto.addItem(t);
-		}
-		proyecto.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		proyecto.setBounds(42, 577, 401, 31);
-		add(proyecto);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 	}

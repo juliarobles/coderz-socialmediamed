@@ -31,6 +31,7 @@ import javax.swing.JList;
 import javax.swing.border.LineBorder;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.UIManager;
 
 @SuppressWarnings("serial")
 public class CrearProyecto extends JPanel {
@@ -107,6 +108,7 @@ public class CrearProyecto extends JPanel {
 		}
 		JScrollPane scroll = new JScrollPane();
 		JList<Tupla> list = new JList<Tupla>(actividades);
+		list.setBackground(UIManager.getColor("Button.background"));
 		list.setSelectionModel(new ToggleSelectionModel());
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));

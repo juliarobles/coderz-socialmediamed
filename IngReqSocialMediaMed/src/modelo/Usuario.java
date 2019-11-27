@@ -62,6 +62,7 @@ public abstract class Usuario{
 	
 	public void BorrarUsuario() {
 		BD mibd = new BD();
+		mibd.Delete("DELETE FROM PARTICIPAR WHERE usuario = '" + email + "';");
 		mibd.Delete("DELETE FROM PARTICIPANTES WHERE email = '" + email + "';");
 		mibd.Delete("DELETE FROM USUARIOSUMA WHERE email = '" + email + "';");
 		mibd.finalize();

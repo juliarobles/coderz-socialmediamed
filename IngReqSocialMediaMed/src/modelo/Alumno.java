@@ -24,6 +24,7 @@ public class Alumno extends Usuario {
 	
 	public void BorrarAlumno() {
 		BD mibd = new BD();
+		mibd.Delete("DELETE FROM ESTUDIA WHERE alumno = '" + email + "';");
 		mibd.Delete("DELETE FROM ALUMNOS WHERE email = '" + email + "';");
 		mibd.finalize();
 		this.BorrarUsuario();
