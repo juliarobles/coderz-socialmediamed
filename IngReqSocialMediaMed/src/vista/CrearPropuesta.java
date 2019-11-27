@@ -31,6 +31,10 @@ import javax.swing.JTextField;
 import javax.swing.JScrollBar;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JTextPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JTextArea;
 
 public class CrearPropuesta extends JPanel {
 	
@@ -38,12 +42,12 @@ public class CrearPropuesta extends JPanel {
 	private ONG ong;
 	private CtrCrearPropuesta control;
 	private JTextField campoTitulo;
-	private JTextField campoExplicacion;
 	private JTextField anyoInicio;
 	private JTextField anyoFin;
 	private JComboBox <Integer>dIni, dFin;
 	private JComboBox <Meses>mIni, mFin;
 	private JButton btnCrear, btnCancelar;
+	private JTextArea campoExplicacion;
 	
 
 
@@ -81,6 +85,15 @@ public class CrearPropuesta extends JPanel {
 		
 		this.setSize(1100,715);
 		
+		JLabel lblLimiteCaracteres = new JLabel("");
+		lblLimiteCaracteres.setForeground(Color.GRAY);
+		lblLimiteCaracteres.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 8));
+		lblLimiteCaracteres.setBounds(859, 77, 46, 14);
+		add(lblLimiteCaracteres);
+		lblLimiteCaracteres.setText( 0+ "/" + 100);
+		
+		
+		
 		JLabel lblTitulo = new JLabel("T\u00EDtulo:");
 		lblTitulo.setBounds(91, 69, 75, 20);
 		lblTitulo.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -91,17 +104,41 @@ public class CrearPropuesta extends JPanel {
 		lblSolicitud.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 23));
 		
 		campoTitulo = new JTextField();
-		campoTitulo.setBounds(172, 71, 277, 20);
+		campoTitulo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				 int limite  = 100;
+				
+					if (campoTitulo.getText().length()== limite)
+					     e.consume();
+					
+					
+				if(campoTitulo.getText().length()>limite) {
+					campoTitulo.setText(campoTitulo.getText().substring(0, limite));
+					e.consume();
+				}
+				 lblLimiteCaracteres.setText( (campoTitulo.getText().length())+ "/" + limite);
+				
+				
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int limite = 100;
+				lblLimiteCaracteres.setText( (campoTitulo.getText().length())+ "/" + limite);
+				if(e.getKeyCode()==8) {
+					
+				}else
+				if (campoTitulo.getText().length()>= limite) e.consume();
+				
+			}
+		});
+		campoTitulo.setBounds(172, 71, 677, 20);
 		campoTitulo.setColumns(10);
 		
 		JLabel lblExplicacin = new JLabel("Explicaci\u00F3n:");
 		lblExplicacin.setBounds(93, 97, 75, 20);
 		lblExplicacin.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblExplicacin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		
-		campoExplicacion = new JTextField();
-		campoExplicacion.setBounds(172, 97, 704, 145);
-		campoExplicacion.setColumns(10);
 		
 		JScrollBar BarraExplicacion = new JScrollBar();
 		BarraExplicacion.setBounds(1703, 102, 17, 48);
@@ -145,6 +182,13 @@ public class CrearPropuesta extends JPanel {
 		mesFin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		mesFin.setBounds(352, 417, 133, 28);
 		
+		
+		
+		
+		//Aquí tenemos un trozo de codigo para que en los jtextfield solo se puedan poner números//
+		
+		
+		
 		anyoInicio = new JTextField(4);
 		((AbstractDocument)anyoInicio.getDocument()).setDocumentFilter(new DocumentFilter(){
 	        Pattern regEx = Pattern.compile("\\d*");
@@ -185,25 +229,29 @@ public class CrearPropuesta extends JPanel {
 		add(lblExplicacin);
 		add(lblFechaInicio);
 		add(lblFechaFin);
-		add(campoExplicacion);
 		add(lblSolicitud);
 		add(BarraExplicacion);
 		add(DiaInicio);
 		add(DiaFin);
 		add(mesInicio);
 		add(mesFin);
+		
+		JScrollBar BarraDescripcion = new JScrollBar();
+		BarraDescripcion.setBounds(832, 102, 17, 161);
+		
+		add(BarraDescripcion);
 		add(anyoInicio);
 		add(anyoFin);
 		
 		JButton btnEnviarSolicitud = new JButton("Enviar solicitud");
 		btnEnviarSolicitud.setForeground(Color.WHITE);
-		btnEnviarSolicitud.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 17));
+		btnEnviarSolicitud.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 17));
 		btnEnviarSolicitud.setBounds(779, 290, 160, 63);
 		add(btnEnviarSolicitud);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 17));
+		btnCancelar.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 17));
 		btnCancelar.setBounds(779, 401, 160, 62);
 		add(btnCancelar);
 		
@@ -220,6 +268,53 @@ public class CrearPropuesta extends JPanel {
 		llenarMeses(mFin);
 		llenarDias(dIni);
 		llenarDias(dFin);
+		
+		JLabel lblLimiteCaracteresDescripcion = new JLabel("9/100");
+		lblLimiteCaracteresDescripcion.setForeground(Color.GRAY);
+		lblLimiteCaracteresDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 8));
+		lblLimiteCaracteresDescripcion.setBounds(859, 249, 46, 14);
+		add(lblLimiteCaracteresDescripcion);
+		 lblLimiteCaracteresDescripcion.setText( 0+ "/" + 255);
+		
+		JTextArea cmpExplicacion = new JTextArea();
+		cmpExplicacion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				 int limite  = 255;
+				 
+					
+				 lblLimiteCaracteresDescripcion.setText( (campoExplicacion.getText().length())+ "/" + limite);
+					if(e.getKeyCode()==8) {
+						
+					}else if (campoExplicacion.getText().length()>= limite)
+					     e.consume();
+					
+					
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				 int limite  = 255;
+				 lblLimiteCaracteresDescripcion.setText( (campoExplicacion.getText().length())+ "/" + limite);
+					{if (campoExplicacion.getText().length()>= limite)
+					     e.consume();
+					
+					}
+				if(campoExplicacion.getText().length()>limite) {
+					campoExplicacion.setText(campoExplicacion.getText().substring(0, 254));
+				}
+			}
+		});
+	
+		cmpExplicacion.setBounds(172, 102, 677, 163);
+		campoExplicacion = cmpExplicacion;
+		campoExplicacion.setLineWrap(true);
+		campoExplicacion.setWrapStyleWord(true);
+		
+		add(cmpExplicacion);
+		
+	
+		
+
 		this.btnCancelar.addMouseListener(control);
 		this.btnCrear.addMouseListener(control);
 		
@@ -307,6 +402,4 @@ public class CrearPropuesta extends JPanel {
 	public void setAnyoFin(JTextField anyoFin) {
 		this.anyoFin = anyoFin;
 	}
-
-	
 }

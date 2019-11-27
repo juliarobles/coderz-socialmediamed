@@ -1,5 +1,6 @@
 package controlador;
 
+import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
@@ -8,6 +9,8 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import modelo.*;
 import vista.CrearPropuesta;
@@ -36,7 +39,7 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 				 padre.cambiardePropuestaAONG(ong);
 				
 			}else if(a.equals(panel.getBtnCrear())) {
-
+				System.out.println(panel.getCampoExplicacion());
 				if(todoCorrecto()==0) {
 					
 					new Propuesta( panel.getCampoTitulo(), panel.getCampoExplicacion(),Inicio.toString() , Fin.toString(), ong);
@@ -60,6 +63,7 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 			Fin = new Fecha ((Integer)panel.getdFin().getSelectedItem(), (Meses)panel.getmFin().getSelectedItem(), Integer.valueOf(panel.getAnyoFin().getText()));
 			if(! Inicio.igualOAnterior(Fin))res++;
 		}
+		
 		System.out.println(res);
 		return res;
 	}
@@ -121,4 +125,7 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 		}
 		
 	}
+	
+		
+	
 }
