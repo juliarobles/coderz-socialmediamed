@@ -185,6 +185,7 @@ public class CrearPropuesta extends JPanel {
 		llenarDias(dFin);
 		this.btnCancelar.addMouseListener(control);
 		this.btnCrear.addMouseListener(control);
+		
 		this.dIni.addItemListener(control);
 		this.dFin.addItemListener(control);
 		this.mFin.addItemListener(control);
