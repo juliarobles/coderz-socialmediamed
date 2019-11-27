@@ -21,6 +21,26 @@ public class ONG {
 		return lista;
 	}
 	
+	public static List<String> getTodosEmail(){
+		List<String> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT email FROM USUARIOONG")) {
+			lista.add((String)tupla[0]);
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<String> getTodosNombres(){
+		List<String> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT nombre FROM USUARIOONG")) {
+			lista.add((String)tupla[0]);
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
 	public static Map<String, String> getNombresONG() {
 		Map<String, String> mapa = new TreeMap<>();
 		BD mibd = new BD();

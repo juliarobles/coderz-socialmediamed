@@ -1,6 +1,7 @@
 package vista;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -40,13 +41,15 @@ import javax.swing.JButton;
 public class GestionPropuestas extends JPanel {
 	
 	public Map<String, String> mapa;
-	public Propuesta propuesta;
+	public Propuesta prop;
+	public JList<String> ong;
 	/**
 	 * Create the panel.
 	 * @param padre 
 	 */
 	public GestionPropuestas(MenuPrincipal padre) {
-		propuesta = null;
+		setBackground(Color.WHITE);
+		prop = null;
 		
 		setSize(new Dimension(1100, 715));
 		
@@ -55,26 +58,32 @@ public class GestionPropuestas extends JPanel {
 		lblGestinDePropuestas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGestinDePropuestas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 31));
 		
-		
+		JScrollPane scrollPropuestas = new JScrollPane();
 		DefaultListModel<Tupla> listapropuestas = new DefaultListModel<Tupla>();
 		JList<Tupla> propuesta = new JList<Tupla>(listapropuestas);
+		propuesta.setBackground(UIManager.getColor("Button.background"));
 		propuesta.setBorder(new LineBorder(new Color(0, 0, 0)));
 		propuesta.setBounds(40, 317, 574, 304);
-		propuesta.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		propuesta.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		propuesta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		propuesta.setLayoutOrientation(JList.VERTICAL);
+		scrollPropuestas.setViewportView(propuesta);
+		scrollPropuestas.setBounds(40, 317, 443, 304);
 		
 		DefaultListModel<String> listaong = new DefaultListModel<String>();
 		mapa = ONG.getNombresONG();
 		for(String o : mapa.keySet()) {
 			listaong.addElement(o);
 		}
-		
-		JList<String> ong = new JList<String>(listaong);
+		JScrollPane scrollONG = new JScrollPane();
+		ong = new JList<String>(listaong);
+		ong.setBackground(UIManager.getColor("Button.background"));
 		ong.setBorder(new LineBorder(new Color(0, 0, 0)));
 		ong.setBounds(40, 134, 574, 117);
 		ong.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		ong.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		ong.setLayoutOrientation(JList.VERTICAL);
 		ong.addListSelectionListener(new CtrListaONG(ong, listapropuestas, mapa));
+		scrollONG.setViewportView(ong);
+		scrollONG.setBounds(40, 134, 443, 117);
 		
 		JLabel lblPropuestas = new JLabel("Filtra por ONG");
 		lblPropuestas.setBounds(40, 94, 321, 42);
@@ -115,28 +124,30 @@ public class GestionPropuestas extends JPanel {
 		add(lblPropuestas);
 		add(lbldpropuesta);
 		add(vertodo);
-		add(ong);
-		add(propuesta);
+		//add(ong);
+		//add(propuesta);
 		add(lblxb);
 		add(lblGestinDePropuestas);
+		add(scrollONG);
+		add(scrollPropuestas);
 		
 		JPanel propuestapanel = new JPanel();
-		propuestapanel.setBackground(UIManager.getColor("Button.light"));
+		propuestapanel.setBackground(UIManager.getColor("Button.background"));
 		propuestapanel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		propuestapanel.setBounds(652, 134, 409, 482);
+		propuestapanel.setBounds(534, 134, 517, 482);
 		add(propuestapanel);
 		propuestapanel.setLayout(null);
 		
 		JLabel lblTitulo = new JLabel("Titulo:");
 		lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTitulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblTitulo.setBounds(10, 10, 389, 31);
+		lblTitulo.setBounds(10, 10, 64, 31);
 		propuestapanel.add(lblTitulo);
 		
 		JLabel titulo = new JLabel("<html>" + "<html>");
 		titulo.setHorizontalAlignment(SwingConstants.LEFT);
 		titulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
-		titulo.setBounds(10, 38, 389, 36);
+		titulo.setBounds(10, 38, 497, 36);
 		propuestapanel.add(titulo);
 		
 		JLabel lbldescripcion = new JLabel("Descripcion:");
@@ -148,43 +159,62 @@ public class GestionPropuestas extends JPanel {
 		JLabel descripcion = new JLabel("");
 		descripcion.setHorizontalAlignment(SwingConstants.LEFT);
 		descripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		descripcion.setBounds(10, 114, 389, 170);
+		descripcion.setBounds(10, 114, 497, 135);
 		propuestapanel.add(descripcion);
 		
 		JLabel lblFechaInicial = new JLabel("Fecha inicial:");
 		lblFechaInicial.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaInicial.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblFechaInicial.setBounds(10, 295, 107, 31);
+		lblFechaInicial.setBounds(10, 270, 107, 31);
 		propuestapanel.add(lblFechaInicial);
 		
 		JLabel lblFechaFinal = new JLabel("Fecha final:");
 		lblFechaFinal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaFinal.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblFechaFinal.setBounds(10, 330, 107, 31);
+		lblFechaFinal.setBounds(10, 311, 107, 31);
 		propuestapanel.add(lblFechaFinal);
 		
 		JLabel fechaini = new JLabel("");
 		fechaini.setHorizontalAlignment(SwingConstants.LEFT);
 		fechaini.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		fechaini.setBounds(137, 294, 244, 31);
+		fechaini.setBounds(155, 270, 334, 31);
 		propuestapanel.add(fechaini);
 		
 		JLabel fechafin = new JLabel("");
 		fechafin.setHorizontalAlignment(SwingConstants.LEFT);
 		fechafin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		fechafin.setBounds(137, 330, 244, 31);
+		fechafin.setBounds(155, 311, 334, 31);
 		propuestapanel.add(fechafin);
 		
 		JButton btnAceptarYCrear = new JButton("Aceptar y crear");
+		btnAceptarYCrear.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(prop != null) {
+					padre.cambiarACrearActividad(prop);
+				}
+			}
+		});
+		btnAceptarYCrear.setForeground(Color.WHITE);
 		btnAceptarYCrear.setBackground(new Color(51, 204, 204));
 		btnAceptarYCrear.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 15));
-		btnAceptarYCrear.setBounds(30, 416, 151, 43);
+		btnAceptarYCrear.setBounds(83, 416, 151, 43);
 		propuestapanel.add(btnAceptarYCrear);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				prop.eliminarPropuesta();
+				prop = null;
+				listapropuestas.clear();
+				ponerpanelvisible(propuestapanel, false);
+			}
+		});
+		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBackground(new Color(51, 204, 204));
 		btnCancelar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 15));
-		btnCancelar.setBounds(230, 416, 151, 43);
+		btnCancelar.setBounds(274, 416, 151, 43);
 		propuestapanel.add(btnCancelar);
 		
 		
@@ -192,22 +222,22 @@ public class GestionPropuestas extends JPanel {
 		JLabel lblPropuestaSeleccionada = new JLabel("Propuesta seleccionada");
 		lblPropuestaSeleccionada.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPropuestaSeleccionada.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblPropuestaSeleccionada.setBounds(652, 94, 321, 42);
+		lblPropuestaSeleccionada.setBounds(534, 94, 321, 42);
 		add(lblPropuestaSeleccionada);
 		
 		JLabel lblNombreOng = new JLabel("Nombre ONG:");
 		lblNombreOng.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreOng.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblNombreOng.setBounds(10, 363, 125, 31);
+		lblNombreOng.setBounds(10, 352, 125, 31);
 		propuestapanel.add(lblNombreOng);
 		
 		JLabel nomong = new JLabel("");
 		nomong.setHorizontalAlignment(SwingConstants.LEFT);
 		nomong.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		nomong.setBounds(137, 363, 244, 31);
+		nomong.setBounds(155, 352, 334, 31);
 		propuestapanel.add(nomong);
 
-		propuesta.addListSelectionListener(new CtrListaPropuesta(propuestapanel, propuesta, titulo, descripcion, fechaini, fechafin, nomong));
+		propuesta.addListSelectionListener(new CtrListaPropuesta(propuestapanel, propuesta, titulo, descripcion, fechaini, fechafin, nomong, this));
 		ponerpanelvisible(propuestapanel, false);
 	}
 	
@@ -215,5 +245,9 @@ public class GestionPropuestas extends JPanel {
 		for(Component c : propuestapanel.getComponents()) {
 			c.setVisible(b);
 		}
+	}
+	
+	public void setPropuesta(Propuesta p) {
+		prop = p;
 	}
 }

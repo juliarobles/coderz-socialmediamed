@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 
 import modelo.Propuesta;
 import modelo.Tupla;
+import vista.GestionPropuestas;
 
 public class CtrListaPropuesta implements ListSelectionListener {
 
@@ -20,9 +21,10 @@ public class CtrListaPropuesta implements ListSelectionListener {
 	private JLabel fechaini;
 	private JLabel fechafin;
 	private JLabel ong;
+	private GestionPropuestas vista;
 	
 	public CtrListaPropuesta(JPanel panel, JList<Tupla> lista, JLabel titulo, JLabel descripcion, JLabel fechaini,
-			JLabel fechafin, JLabel ong) {
+			JLabel fechafin, JLabel ong, GestionPropuestas vista) {
 		this.panel = panel;
 		this.lista = lista;
 		this.titulo = titulo;
@@ -30,6 +32,7 @@ public class CtrListaPropuesta implements ListSelectionListener {
 		this.fechaini = fechaini;
 		this.fechafin = fechafin;
 		this.ong = ong;
+		this.vista = vista;
 	}
 
 	@Override
@@ -41,6 +44,7 @@ public class CtrListaPropuesta implements ListSelectionListener {
 			fechaini.setText(p.getFechainicial());
 			fechafin.setText(p.getFechafinal());
 			ong.setText(p.getOng().getNombre());
+			vista.setPropuesta(p);
 			for(Component c : panel.getComponents()) {
 				c.setVisible(true);
 			}
@@ -50,6 +54,7 @@ public class CtrListaPropuesta implements ListSelectionListener {
 			fechaini.setText("");
 			fechafin.setText("");
 			ong.setText("");
+			vista.setPropuesta(null);
 			for(Component c : panel.getComponents()) {
 				c.setVisible(false);
 			}
