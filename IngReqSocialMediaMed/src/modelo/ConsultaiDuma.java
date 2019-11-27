@@ -43,13 +43,13 @@ public class ConsultaiDuma {
 		return res;
 	}
 	
-	public ArrayList<Asignatura> sacarAsignaturas() {
-		ArrayList<Asignatura> asignaturas = new ArrayList<Asignatura>();
+	public ArrayList<String> sacarAsignaturas() {
+		ArrayList<String> asignaturas = new ArrayList<String>();
 		JsonArray aux = datos.get("courses").getAsJsonArray();
 		for (int i = 0; i < aux.size(); i++) {
 			JsonObject aux2 = parser.parse(aux.get(i).toString()).getAsJsonObject();
 			String asig = aux2.get("name").toString();
-			asignaturas.add(new Asignatura(asig.substring(1,asig.length()-1)));
+			asignaturas.add((asig.substring(1,asig.length()-1)));
 		}
 		
 		return asignaturas;

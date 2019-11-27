@@ -12,11 +12,17 @@ public class Asignatura {
 		this.id = (Integer) tupla[0];
 		this.nombre = (String) tupla[1];
 	}
-
+	
+	public static int getId(String nombre) { //Saca de la BD una asignatura
+		BD mibd = new BD();
+		Object[] tupla = mibd.Select("SELECT id FROM ASIGNATURAS WHERE nombre = '" + nombre + "';").get(0);
+		mibd.finalize();
+		return (Integer) tupla[0];
+	}
 
 	public Asignatura(String nombre) { //Añade a la BD una nueva asignatura y crea el objeto correspondiente
 		BD mibd = new BD();
-		mibd.Insert("INSERT INTO ASIGNATURAS VALUES ('" + nombre + "');");
+		mibd.Insert("INSERT INTO ASIGNATURAS (nombre) VALUES ('" + nombre + "');");
 		mibd.finalize();
 		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM ASIGNATURAS;");;
 		this.nombre = nombre;
