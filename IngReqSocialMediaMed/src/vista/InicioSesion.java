@@ -46,9 +46,11 @@ public class InicioSesion extends JFrame {
 	public void errorUma(String mess) {
 		lblErrorUma.setText(mess);
 	}
+
 	public void errorOng(String mess) {
 		lblErrorOng.setText(mess);
 	}
+
 
 	public InicioSesion(MenuPrincipal principal) {
 		setAlwaysOnTop(true);
@@ -85,6 +87,7 @@ public class InicioSesion extends JFrame {
 		lblErrorUma.setBounds(77, 388, 240, 14);
 		lblErrorUma.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblErrorUma);
+		lblErrorOng.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		lblErrorOng.setForeground(Color.RED);
 		lblErrorOng.setBounds(478, 388, 250, 14);
@@ -160,7 +163,7 @@ public class InicioSesion extends JFrame {
 		passuma.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(255, 255, 255)));
 		passuma.setBounds(127, 278, 190, 30);
 		
-		TextPrompt placeholder2 = new TextPrompt("Contrase�a", passuma);
+		TextPrompt placeholder2 = new TextPrompt("Password", passuma);
 		placeholder2.changeAlpha(0.75f);
 		placeholder2.changeStyle(Font.ITALIC);
 		
@@ -220,7 +223,7 @@ public class InicioSesion extends JFrame {
 		passong.setBackground(new Color(247, 247, 247));
 		passong.setBounds(527, 278, 190, 30);
 		
-		TextPrompt placeholder4 = new TextPrompt("Contrase�a", passong);
+		TextPrompt placeholder4 = new TextPrompt("Password", passong);
 		placeholder4.changeAlpha(0.75f);
 		placeholder4.changeStyle(Font.ITALIC);
 		

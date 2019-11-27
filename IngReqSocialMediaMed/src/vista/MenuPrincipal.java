@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import modelo.ONG;
+import modelo.Propuesta;
 import modelo.Usuario;
 
 public class MenuPrincipal extends JFrame {
@@ -17,7 +18,9 @@ public class MenuPrincipal extends JFrame {
 	private JPanel usuario;
 	private JPanel ong;
 	private JPanel gestor;
-	private JPanel gestionPropuestas;
+	private GestionPropuestas gestionPropuestas;
+	private JPanel registroong;
+	private JPanel crearactividad;
 	private JPanel crearPropuesta;
 
 	/**
@@ -99,6 +102,14 @@ public class MenuPrincipal extends JFrame {
 			gestionPropuestas.setVisible(false);
 			gestionPropuestas = null;
 		}
+		if(registroong != null) {
+			registroong.setVisible(false);
+			registroong = null;
+		}
+		if(crearactividad != null) {
+			crearactividad.setVisible(false);
+			crearactividad = null;
+		}
 		gestor.setVisible(true);
 		invitado.setVisible(false);
 		setContentPane(gestor);
@@ -110,7 +121,32 @@ public class MenuPrincipal extends JFrame {
 		gestor.setVisible(false);
 		setContentPane(gestionPropuestas);
 	}
+
+	public void cambiarARegistroONG() {
+		registroong = new RegistroONG(this);
+		registroong.setVisible(true);
+		gestor.setVisible(false);
+		setContentPane(registroong);
+	}
 	
+	public void cambiarACrearActividad(Propuesta p) {
+		crearactividad = new CrearActividad(this, p);
+		gestionPropuestas.setVisible(false);
+		crearactividad.setVisible(true);
+		setContentPane(crearactividad);
+	}
 	
+	public void volverAPropuestas() {
+		gestionPropuestas.setVisible(true);
+		crearactividad.setVisible(false);
+		crearactividad = null;
+		setContentPane(gestionPropuestas);
+	}
+
+	public void volverAPropuestasModificado() {
+		gestionPropuestas = new GestionPropuestas(this);
+		volverAPropuestas();
+		
+	}
 
 }

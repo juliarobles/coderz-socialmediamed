@@ -197,7 +197,7 @@ public class RegistroONG extends JPanel {
 					}
 				} catch (Exception ex){
 					lblHey.setForeground(Color.RED);
-					lblHey.setText("Ha ocurrido un error" + ex.getMessage());
+					lblHey.setText("Error: la ONG no se ha registrado correctamente");
 					lblHey.setVisible(true);
 				}
 				

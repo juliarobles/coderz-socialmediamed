@@ -82,7 +82,7 @@ public class CtrLoginUMA implements MouseListener{
 				vista.dispose();
 				
 			} else {
-				vista.errorUma("El email y/o la contraseña no son validos");
+				vista.errorUma("El email y/o la pass no son validos");
 			}
 		}		
 	}
