@@ -102,7 +102,7 @@ public class Propuesta {
 
 	public Propuesta( String titulo, String descripcion, String fechainicial, String fechafinal, ONG ong) {
 		BD mibd = new BD();
-		mibd.Insert("INSERT INTO PROPUESTA VALUES('" + titulo + "', '" + descripcion + "', '" + fechainicial 
+		mibd.Insert("INSERT INTO PROPUESTA (titulo, descripcion, fechainicial, fechafinal, ong) VALUES('" + titulo + "', '" + descripcion + "', '" + fechainicial 
 				+ "', '" + fechafinal + "', '" + ong.getEmail() + "');");
 		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM PROPUESTA;");
 		mibd.finalize();
