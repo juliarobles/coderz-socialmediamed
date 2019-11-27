@@ -16,17 +16,17 @@ import java.awt.Component;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Toolkit;
 
-public class ErrorVista extends JFrame {
+public class Toast extends JFrame {
 
 	/**
 	 * Create the panel.
 	 */
-	public ErrorVista(String prob) {
+	public Toast(String prob) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setTitle("Error");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ErrorVista.class.getResource("/resources/error.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Toast.class.getResource("/resources/error.png")));
 		ImageIcon error = new ImageIcon(PerfilUsuario2.class.getResource("/resources/error.png"));
 		JPictureBox imagenError = new JPictureBox();
 		imagenError.setIcon(error);
@@ -70,11 +70,11 @@ public class ErrorVista extends JFrame {
 					.addContainerGap(17, Short.MAX_VALUE))
 		);
 		
-		JLabel lblProblema = new JLabel("");
+		JLabel lblProblema = new JLabel("<html>" + prob +"</html>");
 		sclProblema.setViewportView(lblProblema);
 		getContentPane().setLayout(groupLayout);
 		
-		lblProblema.setText(prob);
+		//lblProblema.setText(prob);
 
 	}
 }

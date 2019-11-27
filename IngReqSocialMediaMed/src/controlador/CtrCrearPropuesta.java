@@ -15,7 +15,7 @@ import javax.swing.event.ListSelectionListener;
 
 import modelo.*;
 import vista.CrearPropuesta;
-import vista.ErrorVista;
+import vista.Toast;
 import vista.MenuPrincipal;
 import vista.MenuPrincipalONG;
 
@@ -47,7 +47,7 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 					new Propuesta( panel.getCampoTitulo(), panel.getCampoExplicacion(),Inicio.toString() , Fin.toString(), ong);
 					System.out.println("propuesta creada correctamente");
 				}else {
-					JFrame error = new ErrorVista(todoCorrecto());
+					JFrame error = new Toast(todoCorrecto());
 					error.setVisible(true);
 				}
 			
@@ -59,12 +59,12 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 		String res = " ";
 		
 	
-		if(panel.getAnyoFin().getText().trim().isEmpty()) res += "El campo año final está vacío" + "\n";
-		if(panel.getAnyoInicio().getText().trim().isEmpty())res+= "El campo año inicio está vacío\n";
+		if(panel.getAnyoFin().getText().trim().isEmpty()) res += "El campo año final está vacío<br>";
+		if(panel.getAnyoInicio().getText().trim().isEmpty())res+= "El campo año inicio está vacío<br>";
 		if(res.equals(" ")) {
 			Inicio = new Fecha ((Integer)panel.getdIni().getSelectedItem(), (Meses)panel.getmIni().getSelectedItem(), Integer.valueOf(panel.getAnyoInicio().getText()));
 			Fin = new Fecha ((Integer)panel.getdFin().getSelectedItem(), (Meses)panel.getmFin().getSelectedItem(), Integer.valueOf(panel.getAnyoFin().getText()));
-			if(! Inicio.igualOAnterior(Fin))res+= "La fecha de inicio es posterior a la fecha de finalización.";
+			if(! Inicio.igualOAnterior(Fin))res+= "La fecha de inicio es posterior a la fecha de finalización.<br>";
 		}
 		
 		System.out.println(res);
