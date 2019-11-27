@@ -30,7 +30,7 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 		if(((JButton) o ) instanceof JButton) {
 			JButton a = (JButton) o;
 			if(a.equals(panel.getBtnCancelar())) {
-				
+				 
 				
 			}else if(a.equals(panel.getBtnCrear())) {
 				Fecha inicio = new Fecha ((Integer)panel.getdIni().getSelectedItem(), (Meses)panel.getmIni().getSelectedItem(), panel.getAnyoInicio());
