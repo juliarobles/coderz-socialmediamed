@@ -35,18 +35,13 @@ import javax.swing.JPasswordField;
 public class InicioSesion extends JFrame {
 
 	private JPanel contentPane;
+	private JFrame yo;
 	public JTextField emailuma;
 	public JTextField emailong;
 	public JPasswordField passong;
 	public JPasswordField passuma;
-	
-	public JLabel lblErrorUma = new JLabel("");
 	public JLabel lblErrorOng = new JLabel("");
 	
-	public void errorUma(String mess) {
-		lblErrorUma.setText(mess);
-	}
-
 	public void errorOng(String mess) {
 		lblErrorOng.setText(mess);
 	}
@@ -66,6 +61,7 @@ public class InicioSesion extends JFrame {
 		setContentPane(contentPane);
 		setSize(800,430);
 		contentPane.setLayout(null);
+		yo = this;
 	
 		JButton cerrar = new JButton("<html>&#10005;<html>");
 		cerrar.setBounds(770, 0, 30, 30);
@@ -81,11 +77,6 @@ public class InicioSesion extends JFrame {
 		cerrar.setBorder(null);
 	
 		contentPane.add(cerrar);
-		
-		lblErrorUma.setForeground(Color.RED);
-		lblErrorUma.setBounds(77, 388, 240, 14);
-		lblErrorUma.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblErrorUma);
 		lblErrorOng.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		lblErrorOng.setForeground(Color.RED);
@@ -137,55 +128,32 @@ public class InicioSesion extends JFrame {
 		contentPane.add(iconong);
 		iconong.repaint();
 		
-		emailuma = new JTextField();
-		emailuma.setForeground(new Color(255, 255, 255));
-		emailuma.setBackground(new Color(28, 47, 87));
-		emailuma.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(255, 255, 255)));
-		emailuma.setBounds(127, 228, 190, 30);
-		
-		TextPrompt placeholder = new TextPrompt("Email", emailuma);
-		placeholder.changeAlpha(0.75f);
-		placeholder.changeStyle(Font.ITALIC);
-		
-		JLabel label_1 = new JLabel("@");
-		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 30));
-		label_1.setBounds(88, 218, 58, 40);
-		contentPane.add(label_1);
-		
-		contentPane.add(emailuma);
-		emailuma.setColumns(10);
-		
-		passuma = new JPasswordField();
-		passuma.setForeground(new Color(255, 255, 255));
-		passuma.setBackground(new Color(28, 47, 87));
-		passuma.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(255, 255, 255)));
-		passuma.setBounds(127, 278, 190, 30);
-		
-		TextPrompt placeholder2 = new TextPrompt("Password", passuma);
-		placeholder2.changeAlpha(0.75f);
-		placeholder2.changeStyle(Font.ITALIC);
-		
-		contentPane.add(passuma);
-		passuma.setColumns(10);
 		
 		BordeRedondo border = new BordeRedondo(10);
 		JButton btnEntrar = new JButton("LOGIN");
+		btnEntrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				iDuma frame = new iDuma(principal, yo);
+				frame.setVisible(true);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnEntrar.setForeground(Color.DARK_GRAY);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnEntrar.setForeground(Color.WHITE);
+			}
+		});
 		btnEntrar.setOpaque(false);
 		btnEntrar.setForeground(Color.WHITE);
 		btnEntrar.setFocusPainted(false);
 		btnEntrar.setBorder(border);
 		btnEntrar.setBackground(Color.WHITE);
-		btnEntrar.setBounds(138, 337, 129, 40);
-		btnEntrar.addMouseListener(new CtrLoginUMA(this, principal, btnEntrar));
+		btnEntrar.setBounds(138, 272, 129, 40);
 		contentPane.add(btnEntrar);
 		
-		ImageIcon lb  = new ImageIcon(InicioSesion.class.getResource("/resources/lockblanco.png"));
-		JPictureBox lockblanco = new JPictureBox();
-		lockblanco.setSize(64, 64);
-		lockblanco.setBounds(88, 278, 29, 30);
-		lockblanco.setIcon(lb);
-		contentPane.add(lockblanco);
 		
 		JLabel fondoazul = new JLabel("");
 		fondoazul.setBorder(null);

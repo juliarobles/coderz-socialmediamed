@@ -7,6 +7,8 @@ import java.util.*;
 //PASS:L3P846ILrv
 //https://remotemysql.com/phpmyadmin/db_structure.php?db=tY4NcDDTGP
 //Para acceder a la base de datos y realizr comprobaciones
+
+//GESTOR: mjruiz@uma.es PASS: 444444
 public class BD 
 {
 	

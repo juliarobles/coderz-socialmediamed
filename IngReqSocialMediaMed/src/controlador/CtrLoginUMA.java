@@ -18,17 +18,20 @@ import vista.CompletarPerfil;
 import vista.InicioSesion;
 import vista.MenuPrincipal;
 import vista.MenuPrincipalUsuario;
+import vista.iDuma;
 
 public class CtrLoginUMA implements MouseListener{
 	
-	private InicioSesion vista;
+	private iDuma vista;
 	private MenuPrincipal principal;
+	private JFrame login;
 	private JButton miboton;
 		  
-	public CtrLoginUMA (InicioSesion vista, MenuPrincipal principal, JButton btn) {
+	public CtrLoginUMA (iDuma vista, MenuPrincipal principal, JButton btn, JFrame inicioSesion) {
 		  this.vista = vista;
 		  this.principal = principal;
 		  miboton = btn;
+		  login = inicioSesion;
 	}  
 
 	@Override
@@ -79,6 +82,7 @@ public class CtrLoginUMA implements MouseListener{
 					}
 					principal.setEnabled(true);
 				}
+				login.dispose();
 				vista.dispose();
 				
 			} else {
