@@ -23,6 +23,8 @@ public class MenuPrincipal extends JFrame {
 	private JPanel crearactividad;
 	private JPanel crearPropuesta;
 	private CrearProyecto crearproyecto;
+	private JPanel perfilong;
+	private JPanel editarong;
 
 	/**
 	 * Launch the application.
@@ -166,5 +168,18 @@ public class MenuPrincipal extends JFrame {
 		setContentPane(crearproyecto);
 		
 	}
-
+	public void cambiarAPerfilONG(ONG ong) {
+		perfilong = new PerfilONG (this, ong);
+		this.ong.setVisible(false);
+		perfilong.setVisible(true);
+		setContentPane(perfilong);
+		
+	}
+	public void cambiarAEditarONG (ONG ong) {
+		editarong = new EditarPerfilONG(ong);
+		this.perfilong.setVisible(false);
+		this.editarong.setVisible(true);
+		setContentPane(editarong);
+		
+	}
 }
