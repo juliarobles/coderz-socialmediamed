@@ -86,11 +86,13 @@ public class ONG {
 	public String getEmail() {
 		return email;
 	}
-	/*
-	public void setEmail(String email) {
-		this.email = email; //No puede cambiar su email
+	
+	public String getPassword() {
+		BD mibd = new BD();
+		String s = (String)mibd.SelectEscalar("SELECT pass FROM USUARIOONG WHERE email = '" + this.email + "';");
+		mibd.finalize();
+		return s;
 	}
-	*/
 	
 	public String getNombre() {
 		return nombre;

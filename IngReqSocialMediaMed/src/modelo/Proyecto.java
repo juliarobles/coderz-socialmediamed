@@ -19,6 +19,19 @@ public class Proyecto {
 		return lista;
 	}
 	
+	public static List<Tupla> getActividadesSimple(int id) {
+		List<Tupla> lista = new ArrayList<>();
+		if(id > 0) {
+			BD mibd = new BD();
+			for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES WHERE proyecto = " + id + ";")) {
+				lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+			}
+			mibd.finalize();
+		}
+		return lista;
+	}
+	
+	
 	public Proyecto(int id) { //Saca un proyecto de la BD y lo guarda en un objeto
 		BD mibd = new BD();
 		Object[] tupla = mibd.Select("SELECT * FROM PROYECTO WHERE id = " + id + ";").get(0);
@@ -87,6 +100,8 @@ public class Proyecto {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 	
