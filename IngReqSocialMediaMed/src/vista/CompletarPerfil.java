@@ -207,13 +207,13 @@ public class CompletarPerfil extends JFrame {
 						usu = new Alumno(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
 								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
 								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText());
-						Asignatura.cursar(email, ci);
+						//Asignatura.cursar(email, ci);
 					} else if (tipo.equalsIgnoreCase("PDI")) {
 						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 2);");
 						usu = new PDI(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
 								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
 								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText());
-						Asignatura.impartir(email, ci);
+						//Asignatura.impartir(email, ci);
 					} else {
 						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 3);");
 						usu = new PAS(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 

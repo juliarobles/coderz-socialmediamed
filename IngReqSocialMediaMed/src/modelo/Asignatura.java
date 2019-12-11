@@ -7,20 +7,22 @@ public class Asignatura {
 	
 	private int id;
 	private String nombre;
+	private PDI PDICargo;
 	
 	public static List<Asignatura> getAsignaturasSimple() {
 		List<Asignatura> lista = new ArrayList<>();
 		BD mibd = new BD();
 		for(Object[] tupla : mibd.Select("SELECT * FROM ASIGNATURAS")) {
-			lista.add(new Asignatura((Integer)tupla[0], (String)tupla[1]));
+			lista.add(new Asignatura((Integer)tupla[0], (String)tupla[1], (String)tupla[2]));
 		}
 		mibd.finalize();
 		return lista;
 	}
 	
-	private Asignatura(int id, String nombre) { 
+	private Asignatura(int id, String nombre, String pdi) { 
 		this.id = id;
 		this.nombre = nombre;
+		this.PDICargo = new PDI(pdi);
 	}
 	
 	public Asignatura(int id) { //Saca de la BD una asignatura
@@ -29,6 +31,7 @@ public class Asignatura {
 		mibd.finalize();
 		this.id = (Integer) tupla[0];
 		this.nombre = (String) tupla[1];
+		this.PDICargo = new PDI((String) tupla[2]);
 	}
 	
 	public static int getId(String nombre) { //Saca de la BD una asignatura
@@ -38,12 +41,13 @@ public class Asignatura {
 		return (Integer) tupla[0];
 	}
 
-	public Asignatura(String nombre) { //Añade a la BD una nueva asignatura y crea el objeto correspondiente
+	public Asignatura(String nombre, PDI pdi) { //Añade a la BD una nueva asignatura y crea el objeto correspondiente
 		BD mibd = new BD();
-		mibd.Insert("INSERT INTO ASIGNATURAS (nombre) VALUES ('" + nombre + "');");
+		mibd.Insert("INSERT INTO ASIGNATURAS (nombre, PDICargo) VALUES ('" + nombre + "', '" + pdi.getEmail() + "');");
 		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM ASIGNATURAS;");
 		mibd.finalize();
 		this.nombre = nombre;
+		this.PDICargo = pdi;
 	}
 
 	public String getNombre() {
@@ -60,6 +64,17 @@ public class Asignatura {
 	public int getId() {
 		// TODO Auto-generated method stub
 		return id;
+	}
+	
+	public PDI getPDICargo() {
+		return PDICargo;
+	}
+
+	public void setPDICargo(PDI pDICargo) {
+		BD mibd = new BD();
+		mibd.Update("UPDATE ASIGNATURAS SET PDICargo = '" + pDICargo.getEmail() + "' WHERE id = " + this.id + ";");
+		mibd.finalize();
+		this.PDICargo = pDICargo;
 	}
 
 	@Override
@@ -95,7 +110,7 @@ public class Asignatura {
 			return false;
 		return true;
 	}
-
+/*
 	public static void cursar(String email, ConsultaiDuma ci) {
 		int idAsig;
 		for(String asig : ci.sacarAsignaturas()) {
@@ -126,6 +141,6 @@ public class Asignatura {
 			mibd.finalize();
 		}
 	}
-	
+	*/
 	
 }

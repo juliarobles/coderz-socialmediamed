@@ -18,6 +18,7 @@ public class Actividad {
 	private Asignatura asignatura;
 	private Proyecto proyecto;
 	private ONG ong;
+	private PDI investigador;
 	
 	public static List<Tupla> getActividadesDisponiblesSimple(){
 		List<Tupla> lista = new ArrayList<>();
@@ -41,22 +42,25 @@ public class Actividad {
 		this.fechafinal = (String)tupla[5];
 		this.zonaaccion = ZonaAccion.valueOf((String)tupla[6]);
 		this.tipooferta = TipoOferta.valueOf((String)tupla[7]);
-		this.asignatura = new Asignatura((Integer)tupla[8]);
-		this.proyecto = new Proyecto((Integer)tupla[9]);
+		//this.asignatura = new Asignatura((Integer)tupla[8]);
+		this.asignatura = (((String)tupla[8]).equals("NULL"))? null : new Asignatura((Integer)tupla[8]);
+		//this.proyecto = new Proyecto((Integer)tupla[9]);
+		this.proyecto = (((String)tupla[9]).equals("NULL"))? null : new Proyecto((Integer)tupla[9]);
 		this.ong = new ONG((String)tupla[10]);
+		this.investigador = (((String)tupla[11]).equals("NULL"))? null : new PDI((String)tupla[11]);
 	}
 
 	public Actividad(String titulo, String descripcion, String imagen, String fechainicio, String fechafinal,
-			ZonaAccion zonaaccion, TipoOferta tipooferta, Asignatura asignatura, Proyecto proyecto, ONG ong) {
+			ZonaAccion zonaaccion, TipoOferta tipooferta, Asignatura asignatura, Proyecto proyecto, ONG ong, PDI pdi) {
 		
 		String asig = (asignatura != null)? Integer.toString(asignatura.getId()) : "NULL";
 		String proy = (proyecto != null)? Integer.toString(proyecto.getId()) : "NULL";
 	
 		BD mibd = new BD();
-		mibd.Insert("INSERT INTO ACTIVIDADES (titulo, descripcion, imagen, fechainicio, fechafinal, zonaaccion, tipooferta, asignatura, proyecto, ong) "
+		mibd.Insert("INSERT INTO ACTIVIDADES (titulo, descripcion, imagen, fechainicio, fechafinal, zonaaccion, tipooferta, asignatura, proyecto, ong, investigador) "
 				+ "VALUES('" + titulo + "', '" + descripcion + "', NULL, '" + fechainicio + "', '" 
 				+ fechafinal + "', '" + zonaaccion.toString() + "', '" + tipooferta.toString() + "', " + asig + ", " 
-				+ proy + ", '" + ong.getEmail() + "');");
+				+ proy + ", '" + ong.getEmail() + "', '" + pdi.getEmail() + "');");
 		
 		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM ACTIVIDADES;");
 		mibd.finalize();
@@ -70,6 +74,7 @@ public class Actividad {
 		this.asignatura = asignatura;
 		this.proyecto = proyecto;
 		this.ong = ong;
+		this.investigador = pdi;
 	}
 	
 	public void borrarActividad() {
@@ -89,6 +94,7 @@ public class Actividad {
 		this.asignatura = null;
 		this.proyecto = null;
 		this.ong = null;
+		this.investigador = null;
 	}
 	
 	public int getId() {
@@ -228,4 +234,24 @@ public class Actividad {
 		mibd.finalize();
 		this.ong = ong;
 	}
+
+	public PDI getInvestigador() {
+		return investigador;
+	}
+
+	public void setInvestigador(PDI investigador) {
+		BD mibd = new BD();
+		if(investigador == null) {
+			mibd.Update("UPDATE ACTIVIDADES SET investigador = NULL WHERE id = " + this.id + ";");
+			mibd.finalize();
+			this.investigador = null;
+		} else {
+			mibd.Update("UPDATE ACTIVIDADES SET investigador = '" + investigador.getEmail() + "' WHERE id = " + this.id + ";");
+			mibd.finalize();
+			this.investigador = investigador;
+		}
+		
+	}
+	
+	
 }
