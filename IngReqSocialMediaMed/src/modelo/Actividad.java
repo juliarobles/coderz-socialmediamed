@@ -30,6 +30,16 @@ public class Actividad {
 		return lista;
 	}
 	
+	public static List<Tupla> getActividadesSimple(){
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
 	public Actividad(int id) {
 		BD mibd = new BD();
 		Object[] tupla = mibd.Select("SELECT * FROM ACTIVIDADES WHERE id = " + id + ";").get(0);

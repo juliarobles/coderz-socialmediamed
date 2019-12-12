@@ -88,7 +88,7 @@ public class PerfilUsuario2 extends JPanel{
 	private void initialize() {
 		
 		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
-		lblCopyright.setBounds(10, 450, 537, 14);
+		lblCopyright.setBounds(10, 440, 537, 14);
 		add(lblCopyright);
 		int width, height;
 		

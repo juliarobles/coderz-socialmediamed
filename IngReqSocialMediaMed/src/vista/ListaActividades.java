@@ -33,7 +33,7 @@ public class ListaActividades extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				//Abrir ventana gestion
 				//padre.cambiarGestor();
-				
+				padre.cambiarUsuario(usu);
 				
 			}
 			@Override
@@ -57,19 +57,18 @@ public class ListaActividades extends JPanel {
 		add(lblNewLabel);
 		
 		JScrollPane sclActividades = new JScrollPane();
-		sclActividades.setBounds(65, 131, 965, 544);
+		sclActividades.setBounds(65, 131, 965, 530);
 		add(sclActividades);
 		
 		
 		
-		List<Tupla> lista = Actividad.getActividadesDisponiblesSimple();
-		Iterator <Tupla> iter = lista.iterator();
-		DefaultListModel <String> listmodel = new DefaultListModel<String>();
-		while(iter.hasNext()) {
-			String a = iter.next().elemento1;
-			listmodel.addElement(a);
+		DefaultListModel <Tupla> listmodel = new DefaultListModel<Tupla>();
+		System.out.println("Hola??????????????????????");
+		for(Tupla t : Actividad.getActividadesSimple()) {
+			System.out.println("Añadido elemento");
+			listmodel.addElement(t);
 		}
-		JList<String> listaActividades = new JList<String>(listmodel);
+		JList<Tupla> listaActividades = new JList<Tupla>(listmodel);
 		sclActividades.setViewportView(listaActividades);
 	}
 }

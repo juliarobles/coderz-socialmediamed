@@ -86,8 +86,16 @@ public class MenuPrincipal extends JFrame {
 	
 	public void cambiarUsuario(Usuario usu) {
 		usuario = new MenuPrincipalUsuario(this, usu);
+		if(listaActividades != null) {
+			listaActividades.setVisible(false);
+			listaActividades = null;
+		}
+		if(invitado != null) {
+			invitado.setVisible(false);
+			invitado = null;
+		}
 		usuario.setVisible(true);
-		invitado.setVisible(false);
+		
 		setContentPane(usuario);
 	}
 	public void cambiardePropuestaAONG(ONG usu) {
