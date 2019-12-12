@@ -51,6 +51,9 @@ public class GestionPropuestas extends JPanel {
 		setBackground(Color.WHITE);
 		prop = null;
 		
+		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
+		lblCopyright.setBounds(10, 660, 537, 14);
+		add(lblCopyright);
 		setSize(new Dimension(1100, 715));
 		
 		JLabel lblGestinDePropuestas = new JLabel("Gesti\u00F3n de propuestas");

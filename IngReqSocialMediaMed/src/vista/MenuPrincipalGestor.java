@@ -33,6 +33,9 @@ public class MenuPrincipalGestor extends JPanel {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(contentPane);
 
+		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
+		lblCopyright.setBounds(10, 660, 537, 14);
+		add(lblCopyright);
 		JLabel login = new JLabel("Logout");
 		login.setBounds(990, 5, 105, 62);
 		login.setForeground(Color.BLACK);

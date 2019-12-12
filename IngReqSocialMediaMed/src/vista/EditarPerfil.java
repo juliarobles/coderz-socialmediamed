@@ -81,6 +81,10 @@ public class EditarPerfil extends JPanel{
 		lblDescripcion.setBounds(46, 76, 134, 20);
 		add(lblDescripcion);
 		
+		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
+		lblCopyright.setBounds(10, 460, 537, 14);
+		add(lblCopyright);
+		
 		JLabel lblEditarPerfil = new JLabel("Editar perfil");
 		lblEditarPerfil.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 29));
 		lblEditarPerfil.setBounds(316, 11, 162, 47);

@@ -25,6 +25,9 @@ public class MenuPrincipalONG extends JPanel {
 		setBounds(100, 100, 1100, 715);
 		//setLocationRelativeTo(null);
 		
+		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
+		lblCopyright.setBounds(10, 660, 537, 14);
+		add(lblCopyright);
 		setBackground(Color.WHITE);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(contentPane);

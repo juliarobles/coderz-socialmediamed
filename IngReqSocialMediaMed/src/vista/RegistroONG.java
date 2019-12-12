@@ -38,6 +38,9 @@ public class RegistroONG extends JPanel {
 		setSize(new Dimension(1100, 715));
 		setLayout(null);
 		
+		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
+		lblCopyright.setBounds(10, 660, 537, 14);
+		add(lblCopyright);
 		JLabel lblxb = new JLabel("<html>&larr;<html>");
 		lblxb.addMouseListener(new MouseAdapter() {
 			@Override

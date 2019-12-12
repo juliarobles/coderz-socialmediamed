@@ -97,8 +97,18 @@ public class MenuPrincipal extends JFrame {
 	}
 	public void cambiarONG(ONG usu) {
 		ong = new MenuPrincipalONG(this, usu);
+		
+		
 		ong.setVisible(true);
-		invitado.setVisible(false);
+		if(invitado != null) {
+			invitado.setVisible(false);
+			invitado = null;
+		}
+		if(perfilong != null) {
+			perfilong.setVisible(false);;
+			perfilong = null;
+		}
+		
 		setContentPane(ong);
 	}
 
@@ -170,13 +180,21 @@ public class MenuPrincipal extends JFrame {
 	}
 	public void cambiarAPerfilONG(ONG ong) {
 		perfilong = new PerfilONG (this, ong);
-		this.ong.setVisible(false);
+		if(ong != null)
+		{
+			this.ong.setVisible(false);
+			ong = null;
+		}
+		if(editarong != null) {
+			editarong.setVisible(false);
+			editarong= null;
+		}
 		perfilong.setVisible(true);
 		setContentPane(perfilong);
 		
 	}
 	public void cambiarAEditarONG (ONG ong) {
-		editarong = new EditarPerfilONG(ong);
+		editarong = new EditarPerfilONG(this, ong);
 		this.perfilong.setVisible(false);
 		this.editarong.setVisible(true);
 		setContentPane(editarong);

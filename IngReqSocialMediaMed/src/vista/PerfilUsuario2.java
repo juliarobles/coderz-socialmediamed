@@ -87,8 +87,11 @@ public class PerfilUsuario2 extends JPanel{
 	 */
 	private void initialize() {
 		
-	
+		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
+		lblCopyright.setBounds(10, 450, 537, 14);
+		add(lblCopyright);
 		int width, height;
+		
 		width = 800;
 		height = 500;
 		ImageIcon imgasm = new ImageIcon(PerfilUsuario2.class.getResource("/resources/_Logo AccionSocialMed png.png"));
@@ -270,7 +273,7 @@ public class PerfilUsuario2 extends JPanel{
 		  
 		  
 		    JLabel lblFondo = new JLabel("");
-		    lblFondo.setBounds(0, 0, 794, 471);
+		    lblFondo.setBounds(0, 0, 800, 500);
 		    lblFondo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		    lblFondo.setIcon(new
 		    		  ImageIcon(PerfilUsuario2.class.getResource("/resources/Perfil usuario.png")))

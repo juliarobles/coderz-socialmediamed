@@ -49,6 +49,9 @@ public class MenuPrincipalUsuario extends JPanel {
 	public MenuPrincipalUsuario(MenuPrincipal padre, Usuario usu) {
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipalUsuario.class.getResource("/resources/_Logo AccionSocialMed png.png")));
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
+		lblCopyright.setBounds(10, 660, 537, 14);
+		add(lblCopyright);
 		setBounds(100, 100, padre.getWidth(), padre.getHeight());
 		//setLocationRelativeTo(null);
 		

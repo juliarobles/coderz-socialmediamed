@@ -33,12 +33,17 @@ public class PerfilONG extends JPanel {
 		this.setSize(1100,715);
 		//fondo.setVisible(false);
 		
+		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
+		lblCopyright.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblCopyright.setBounds(10, 654, 620, 14);
+		lblCopyright.setVisible(true);
+		add(lblCopyright);
 		JLabel lblxb = new JLabel("<html>&larr;<html>");
 		lblxb.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				//Abrir ventana gestion
-				padre.cambiarGestor();
+				padre.cambiarONG(ong);
 				
 			}
 			@Override
@@ -90,6 +95,11 @@ public class PerfilONG extends JPanel {
 	    lblEditarPerfil.setForeground(Color.WHITE);
 	    lblEditarPerfil.setHorizontalAlignment(SwingConstants.CENTER);
 	    lblEditarPerfil.setBackground(new Color(93,103,175));
+	    
+	    
+	    
+	    //Aqui continua la flecha para volver atrás --- Todo lo que tiene lblxb
+	    
 		lblxb.setForeground(Color.BLACK);
 		lblxb.setBounds(40, 10, 52, 51);
 		lblxb.setFont(new Font("Tahoma", Font.PLAIN, 46));
@@ -98,7 +108,7 @@ public class PerfilONG extends JPanel {
 		JLabel lblNombreONG = new JLabel("");
 		lblNombreONG.setForeground(Color.WHITE);
 		lblNombreONG.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombreONG.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 41));
+		lblNombreONG.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 41));
 		lblNombreONG.setBounds(180, 30, 733, 150);
 		add(lblNombreONG);
 		lblNombreONG.setText("<html>" + ong.getNombre() + "</html>");
@@ -115,7 +125,11 @@ public class PerfilONG extends JPanel {
 		panelDescripcion.setBounds(6, 16, 550, 161);
 		bordeDescripcion.add(panelDescripcion);
 		
-		JLabel textoDescripcion = new JLabel();
+		JTextArea textoDescripcion = new JTextArea();
+		textoDescripcion.setOpaque(false);
+		textoDescripcion.setEditable(false);
+		//textoDescripcion.setVerticalAlignment(SwingConstants.TOP);
+		textoDescripcion.setText( ong.getDescripcion());
 		panelDescripcion.setViewportView(textoDescripcion);
 		
 		
@@ -139,6 +153,7 @@ public class PerfilONG extends JPanel {
 		 */
 		
 		JLabel fondo = new JLabel("");
+		fondo.setFont(new Font("Tahoma", Font.BOLD, 11));
 		fondo.setIcon(new ImageIcon(PerfilONG.class.getResource("/resources/fondo 2.png")));
 		fondo.setBounds(0, 0, 1100, 715);
 		add(fondo);

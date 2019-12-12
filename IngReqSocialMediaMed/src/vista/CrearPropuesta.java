@@ -36,6 +36,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CrearPropuesta extends JPanel {
 	
@@ -85,7 +87,9 @@ public class CrearPropuesta extends JPanel {
 		add(lblLimiteCaracteres);
 		lblLimiteCaracteres.setText( 0+ "/" + 100);
 		
-		
+		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
+		lblCopyright.setBounds(10, 660, 537, 14);
+		add(lblCopyright);
 		
 		JLabel lblTitulo = new JLabel("T\u00EDtulo:");
 		lblTitulo.setBounds(91, 69, 75, 20);
@@ -233,12 +237,20 @@ public class CrearPropuesta extends JPanel {
 		add(anyoFin);
 		
 		JButton btnEnviarSolicitud = new JButton("Enviar solicitud");
+		btnEnviarSolicitud.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnEnviarSolicitud.setForeground(Color.WHITE);
 		btnEnviarSolicitud.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 17));
 		btnEnviarSolicitud.setBounds(779, 290, 160, 63);
 		add(btnEnviarSolicitud);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 17));
 		btnCancelar.setBounds(779, 401, 160, 62);
