@@ -21,9 +21,7 @@ public class CtrListaProyectos  implements ListSelectionListener  {
 	
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		if(lista.isSelectionEmpty()) {
-			vista.establecerConsultado(null);
-		} else {
+		if(!lista.isSelectionEmpty()) {
 			vista.establecerConsultado(new Proyecto(Integer.parseInt(lista.getSelectedValue().elemento1)));
 		}
 		

@@ -238,11 +238,16 @@ public class CrearActividad extends JPanel {
 				if(!titulo.getText().isEmpty()) {
 					try {
 						Asignatura asig = (asignatura.isEnabled())? (Asignatura) asignatura.getSelectedItem() : null;
+						System.out.println("que");
 						Proyecto proy = (proyectosi.isSelected())? new Proyecto(Integer.parseInt(((Tupla) proyecto.getSelectedItem()).elemento1)) : null;
+						System.out.println("estaque");
 						PDI pdi = (profesores.isEnabled())? new PDI(((Tupla)profesores.getSelectedItem()).elemento1) : null;
+						System.out.println("quxsse");
 						Actividad a = new Actividad(titulo.getText(), descripcion.getText(), "", fechainicio.getText(), fechafin.getText(), 
 								(ZonaAccion)zonaaccion.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), asig, proy, p.getOng(), pdi);
+						System.out.println("qusdsae");
 						p.eliminarPropuesta();
+						System.out.println("quedsad");
 						padre.volverAPropuestasModificado();
 						
 					} catch (Exception ex) {
