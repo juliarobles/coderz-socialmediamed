@@ -47,6 +47,8 @@ public class CrearProyecto extends JPanel {
 	private JLabel aquipdi;
 	private JPanel creareditar;
 	private DefaultListModel<Tupla> actividadesProyecto;
+	private DefaultListModel<Tupla> proyectos;
+	private JList<Tupla> listaProyectos;
 
 	public void establecerConsultado(Proyecto p) {
 		if(p != null) {

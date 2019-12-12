@@ -69,7 +69,7 @@ public class Proyecto {
 	}
 	public void setPDI(PDI pdi) {
 		BD mibd = new BD();
-		mibd.Update("UPDATE PROYECTO SET pdi = '" + pdi + "' WHERE id = " + id + ";");
+		mibd.Update("UPDATE PROYECTO SET pdi = '" + pdi.getEmail() + "' WHERE id = " + id + ";");
 		mibd.finalize();
 		this.pdi = pdi;
 	}
