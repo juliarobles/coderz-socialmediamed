@@ -56,6 +56,7 @@ public class MenuPrincipalONG extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				//Implementar perfil ong
+				padre.cambiarAPerfilONG(usu);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
