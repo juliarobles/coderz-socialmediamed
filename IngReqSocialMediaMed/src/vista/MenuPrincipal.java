@@ -25,6 +25,7 @@ public class MenuPrincipal extends JFrame {
 	private CrearProyecto crearproyecto;
 	private JPanel perfilong;
 	private JPanel editarong;
+	private JPanel listaActividades;
 
 	/**
 	 * Launch the application.
@@ -198,6 +199,14 @@ public class MenuPrincipal extends JFrame {
 		this.perfilong.setVisible(false);
 		this.editarong.setVisible(true);
 		setContentPane(editarong);
+		
+	}
+
+	public void cambiarAListaActividades(MenuPrincipal padre, Usuario usu) {
+		listaActividades = new ListaActividades(this, usu);
+		this.listaActividades.setVisible(true);
+		this.usuario.setVisible(false);
+		setContentPane(listaActividades);
 		
 	}
 }
