@@ -105,7 +105,7 @@ public class MenuPrincipalGestor extends JPanel {
 		add(lblGestionPropuestas);
 		add(login);
 		
-		JLabel lblCrearProyectoNuevo = new JLabel("Crear proyecto nuevo");
+		JLabel lblCrearProyectoNuevo = new JLabel("Gesti\u00F3n de proyectos");
 		lblCrearProyectoNuevo.setForeground(Color.BLACK);
 		lblCrearProyectoNuevo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblCrearProyectoNuevo.setBounds(438, 5, 193, 62);

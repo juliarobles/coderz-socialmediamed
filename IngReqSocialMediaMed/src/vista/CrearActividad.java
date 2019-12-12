@@ -234,6 +234,16 @@ public class CrearActividad extends JPanel {
 		proyectosi.setSelected(false);
 		add(proyectosi);
 		
+		JComboBox<Ambito> ambito = new JComboBox<Ambito>();
+		ambito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		for(int cont = 0;Ambito.values().length>cont; cont++) {
+			ambito.addItem(Ambito.values()[cont]);
+		}
+		ambito.setSelectedIndex(0);
+		ambito.setBounds(661, 461, 348, 31);
+		add(ambito);
+		
+		
 		JButton btnSubirActividad = new JButton("Subir actividad");
 		btnSubirActividad.setForeground(new Color(255, 255, 255));
 		btnSubirActividad.addMouseListener(new MouseAdapter() {
@@ -248,7 +258,8 @@ public class CrearActividad extends JPanel {
 						PDI pdi = (profesores.isEnabled())? new PDI(((Tupla)profesores.getSelectedItem()).elemento1) : null;
 						System.out.println("quxsse");
 						Actividad a = new Actividad(titulo.getText(), descripcion.getText(), "", fechainicio.getText(), fechafin.getText(), 
-								(ZonaAccion)zonaaccion.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), asig, proy, p.getOng(), pdi);
+								(ZonaAccion)zonaaccion.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), asig, proy, p.getOng(), 
+								pdi, (Ambito)ambito.getSelectedItem());
 						System.out.println("qusdsae");
 						p.eliminarPropuesta();
 						System.out.println("quedsad");
@@ -306,14 +317,7 @@ public class CrearActividad extends JPanel {
 		lblmbito.setBounds(512, 459, 142, 28);
 		add(lblmbito);
 		
-		JComboBox<Ambito> ambito = new JComboBox<Ambito>();
-		ambito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		for(int cont = 0;Ambito.values().length>cont; cont++) {
-			ambito.addItem(Ambito.values()[cont]);
-		}
-		ambito.setSelectedIndex(0);
-		ambito.setBounds(661, 461, 348, 31);
-		add(ambito);
+	
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);

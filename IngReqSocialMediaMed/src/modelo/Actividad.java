@@ -3,6 +3,8 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import utilidades.DiaSemana;
+
 public class Actividad {
 	//Quizás sea conveniente crear dos subclases que ereden de esta,
 	//ApreServ y Voluntariado
@@ -19,7 +21,29 @@ public class Actividad {
 	private Proyecto proyecto;
 	private ONG ong;
 	private PDI investigador;
+	private Ambito ambito;
 	
+	/*
+	public static List<Tupla> getMatch(Usuario u){
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		String[] fecha;
+		String f;
+		
+		if(u != null) {
+			for(Object[] tupla : mibd.Select("SELECT id, titulo, fechainicio FROM ACTIVIDADES WHERE tipooferta = '" + u.tipoOferta + "' and zonaaccion = '" + u.zonaAccion + "';")) {
+				fecha = ((String) tupla[2]).split("/");
+				f = DiaSemana.diaSemana(Integer.parseInt(fecha[0]), Integer.parseInt(fecha[1]), Integer.parseInt(fecha[2]));
+				if(u.disponibilidad.equals(Disponibilidad.FindeSemana) && f.equals("S") && f.equals("D")) {
+					
+				}
+			}
+		}
+		
+		mibd.finalize();
+		return lista;
+	}
+	*/
 	public static List<Tupla> getActividadesDisponiblesSimple(){
 		List<Tupla> lista = new ArrayList<>();
 		BD mibd = new BD();
@@ -58,19 +82,20 @@ public class Actividad {
 		this.proyecto = (((String)tupla[9]).equals("NULL"))? null : new Proyecto((Integer)tupla[9]);
 		this.ong = new ONG((String)tupla[10]);
 		this.investigador = (((String)tupla[11]).equals("NULL"))? null : new PDI((String)tupla[11]);
+		this.ambito = Ambito.valueOf((String)tupla[12]);
 	}
 
 	public Actividad(String titulo, String descripcion, String imagen, String fechainicio, String fechafinal,
-			ZonaAccion zonaaccion, TipoOferta tipooferta, Asignatura asignatura, Proyecto proyecto, ONG ong, PDI pdi) {
+			ZonaAccion zonaaccion, TipoOferta tipooferta, Asignatura asignatura, Proyecto proyecto, ONG ong, PDI pdi, Ambito ambito) {
 		
 		String asig = (asignatura != null)? Integer.toString(asignatura.getId()) : "NULL";
 		String proy = (proyecto != null)? Integer.toString(proyecto.getId()) : "NULL";
 	
 		BD mibd = new BD();
-		mibd.Insert("INSERT INTO ACTIVIDADES (titulo, descripcion, imagen, fechainicio, fechafinal, zonaaccion, tipooferta, asignatura, proyecto, ong, investigador) "
+		mibd.Insert("INSERT INTO ACTIVIDADES (titulo, descripcion, imagen, fechainicio, fechafinal, zonaaccion, tipooferta, asignatura, proyecto, ong, investigador, ambito) "
 				+ "VALUES('" + titulo + "', '" + descripcion + "', NULL, '" + fechainicio + "', '" 
 				+ fechafinal + "', '" + zonaaccion.toString() + "', '" + tipooferta.toString() + "', " + asig + ", " 
-				+ proy + ", '" + ong.getEmail() + "', '" + pdi.getEmail() + "');");
+				+ proy + ", '" + ong.getEmail() + "', '" + pdi.getEmail() + "', '" + ambito.toString() + "');");
 		
 		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM ACTIVIDADES;");
 		mibd.finalize();
@@ -85,6 +110,7 @@ public class Actividad {
 		this.proyecto = proyecto;
 		this.ong = ong;
 		this.investigador = pdi;
+		this.ambito = ambito;
 	}
 	
 	public void borrarActividad() {
@@ -105,6 +131,7 @@ public class Actividad {
 		this.proyecto = null;
 		this.ong = null;
 		this.investigador = null;
+		this.ambito = null;
 	}
 	
 	public int getId() {
@@ -261,6 +288,17 @@ public class Actividad {
 			this.investigador = investigador;
 		}
 		
+	}
+
+	public Ambito getAmbito() {
+		return ambito;
+	}
+
+	public void setAmbito(Ambito ambito) {
+		BD mibd = new BD();
+		mibd.Update("UPDATE ACTIVIDADES SET ambito = '" + ambito.toString() + "' WHERE id = " + this.id + ";");
+		mibd.finalize();
+		this.ambito = ambito;
 	}
 	
 	
