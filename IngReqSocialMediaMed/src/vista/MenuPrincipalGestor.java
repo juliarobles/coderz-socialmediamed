@@ -143,11 +143,34 @@ public class MenuPrincipalGestor extends JPanel {
 		add(lblCrearProyectoNuevo);
 		
 		JLabel lblBienvenida = new JLabel("");
-		lblBienvenida.setBounds(-33, 8, 1166, 699);
+		lblBienvenida.setBounds(-22, 182, 1166, 368);
 		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBienvenida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 67));
 		add(lblBienvenida);
 		lblBienvenida.setText("¡Bienvenid@ administrador!");
+		
+		JLabel lblGestinDeActividades = new JLabel("Gesti\u00F3n de actividades");
+		lblGestinDeActividades.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//Abrir ventana gestion propuestas
+				padre.cambiarAGestionActividades(null, null);
+				lblGestinDeActividades.setForeground(Color.BLACK);
+				
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblGestinDeActividades.setForeground(new Color(51, 204, 204));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblGestinDeActividades.setForeground(Color.BLACK);
+			}
+		});
+		lblGestinDeActividades.setForeground(Color.BLACK);
+		lblGestinDeActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblGestinDeActividades.setBounds(517, 96, 193, 62);
+		add(lblGestinDeActividades);
 		
 		
 	}

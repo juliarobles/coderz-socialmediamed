@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import modelo.ONG;
+import modelo.PDI;
 import modelo.Propuesta;
 import modelo.Usuario;
 
@@ -23,6 +24,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel crearactividad;
 	private JPanel crearPropuesta;
 	private GestionProyectos crearproyecto;
+	private GestionActividades gestionActividades;
 	private JPanel perfilong;
 	private JPanel editarong;
 	private JPanel listaActividades;
@@ -96,6 +98,10 @@ public class MenuPrincipal extends JFrame {
 			listaActividades.setVisible(false);
 			listaActividades = null;
 		}
+		if(gestionActividades != null) {
+			gestionActividades.setVisible(false);
+			gestionActividades = null;
+		}
 		if(invitado != null) {
 			invitado.setVisible(false);
 		}
@@ -121,7 +127,10 @@ public class MenuPrincipal extends JFrame {
 			perfilong.setVisible(false);;
 			perfilong = null;
 		}
-		
+		if(gestionActividades != null) {
+			gestionActividades.setVisible(false);
+			gestionActividades = null;
+		}
 		setContentPane(ong);
 	}
 
@@ -144,6 +153,10 @@ public class MenuPrincipal extends JFrame {
 		if(crearproyecto != null) {
 			crearproyecto.setVisible(false);
 			crearproyecto = null;
+		}
+		if(gestionActividades != null) {
+			gestionActividades.setVisible(false);
+			gestionActividades = null;
 		}
 		gestor.setVisible(true);
 		invitado.setVisible(false);
@@ -219,6 +232,22 @@ public class MenuPrincipal extends JFrame {
 		this.listaActividades.setVisible(true);
 		this.usuario.setVisible(false);
 		setContentPane(listaActividades);
+		
+	}
+
+	public void cambiarAGestionActividades(ONG ong, PDI pdi) {
+		gestionActividades = new GestionActividades(this, ong, pdi);
+		this.gestionActividades.setVisible(true);
+		if(usuario != null) {
+			usuario.setVisible(false);
+		}
+		if(gestor != null) {
+			gestor.setVisible(false);
+		}
+		if(this.ong != null) {
+			this.ong.setVisible(false);
+		}
+		setContentPane(gestionActividades);
 		
 	}
 }

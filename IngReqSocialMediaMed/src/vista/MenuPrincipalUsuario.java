@@ -6,6 +6,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import modelo.Actividad;
+import modelo.PDI;
 import modelo.Tupla;
 import modelo.Usuario;
 
@@ -183,6 +184,29 @@ public class MenuPrincipalUsuario extends JPanel {
 		list.setLayoutOrientation(JList.VERTICAL);
 		scroll3.setViewportView(list);
 		
+		
+		if(usu.getClass().equals(PDI.class)) {
+			JLabel lblGestionActividades = new JLabel("Gestion Actividades");
+			lblGestionActividades.setForeground(Color.BLACK);
+			lblGestionActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+			lblGestionActividades.setBounds(533, 26, 171, 62);
+			add(lblGestionActividades);
+			
+			lblGestionActividades.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					padre.cambiarAGestionActividades(null, (PDI)usu);
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lblGestionActividades.setForeground(new Color(51, 204, 204));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lblGestionActividades.setForeground(Color.BLACK);
+				}
+			});
+		}
 	}
 	
 	public void actualizarMatch(){

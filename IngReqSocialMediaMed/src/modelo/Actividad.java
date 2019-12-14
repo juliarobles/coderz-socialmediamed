@@ -110,6 +110,27 @@ public class Actividad {
 		return lista;
 	}
 	
+	public static List<Tupla> getActividadesSimpleConAccesoPDI(String emailpdi) {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT DISTINCT a.id, a.titulo FROM ACTIVIDADES a LEFT OUTER JOIN PROYECTO p ON a.proyecto = p.id LEFT OUTER JOIN ASIGNATURAS s ON a.asignatura = s.id WHERE a.investigador = '" + 
+				emailpdi + "' OR p.pdi = '" + emailpdi + "' OR s.PDICargo = '" + emailpdi + "';")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<Tupla> getActividadesSimpleConAccesoONG(String emailong) {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES WHERE ong = '" + emailong + "';")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
 	public Actividad(int id) {
 		BD mibd = new BD();
 		Object[] tupla = mibd.Select("SELECT * FROM ACTIVIDADES WHERE id = " + id + ";").get(0);
@@ -346,5 +367,7 @@ public class Actividad {
 		mibd.finalize();
 		this.ambito = ambito;
 	}
+
+	
 	
 }
