@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import utilidades.JPictureBox;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -15,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 
 public class MenuPrincipalInvitado extends JPanel {
@@ -25,14 +28,26 @@ public class MenuPrincipalInvitado extends JPanel {
 	public MenuPrincipalInvitado(MenuPrincipal padre) {
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipalInvitado.class.getResource("/resources/_Logo AccionSocialMed png.png")));
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, padre.getWidth(), padre.getHeight());
+		setBounds(100, 100, 1100, 715);
 		//setLocationRelativeTo(null);
 		
 		setBackground(Color.WHITE);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(contentPane);
 
+		JLabel lblSocialmediamed = new JLabel("SocialMediaMed");
+		lblSocialmediamed.setBounds(110, 26, 199, 52);
+		lblSocialmediamed.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 24));
+		add(lblSocialmediamed);
+		
+		ImageIcon logo = new ImageIcon(InicioSesion.class.getResource("/resources/_Logo AccionSocialMed png.png"));
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setBounds(44, 26, 56, 52);
+		pictureBox.setIcon(logo);
+		add(pictureBox);
+		
 		JLabel login = new JLabel("Login");
+		login.setBounds(985, 24, 105, 62);
 		login.setForeground(Color.BLACK);
 		login.addMouseListener(new MouseAdapter() {
 			@Override
@@ -53,26 +68,17 @@ public class MenuPrincipalInvitado extends JPanel {
 			}
 		});
 		login.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		GroupLayout gl_contentPane = new GroupLayout(this);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(1192, Short.MAX_VALUE)
-					.addComponent(login, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(login, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(690, Short.MAX_VALUE))
-		);
-		setLayout(gl_contentPane);
 		JLabel lblBienvenida = new JLabel("");
 		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBienvenida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 67));
-		lblBienvenida.setBounds(-33, 8, 1166, 699);
+		lblBienvenida.setBounds(-34, 135, 1166, 452);
 		add(lblBienvenida);
 		lblBienvenida.setText("¡Bienvenid@!");
+		setLayout(null);
+		add(lblSocialmediamed);
+		add(pictureBox);
+		add(lblBienvenida);
+		add(login);
 	}
 
 }

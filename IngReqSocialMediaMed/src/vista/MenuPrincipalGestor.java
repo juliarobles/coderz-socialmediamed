@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import utilidades.JPictureBox;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -15,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JOptionPane;
 
@@ -31,13 +34,25 @@ public class MenuPrincipalGestor extends JPanel {
 		
 		setBackground(Color.WHITE);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLayout(null);
 		//setContentPane(contentPane);
 
+		JLabel lblSocialmediamed = new JLabel("SocialMediaMed");
+		lblSocialmediamed.setBounds(110, 26, 199, 52);
+		lblSocialmediamed.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 24));
+		add(lblSocialmediamed);
+		
+		ImageIcon logo = new ImageIcon(InicioSesion.class.getResource("/resources/_Logo AccionSocialMed png.png"));
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setBounds(44, 26, 56, 52);
+		pictureBox.setIcon(logo);
+		add(pictureBox);
+		
 		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
 		lblCopyright.setBounds(10, 660, 537, 14);
 		add(lblCopyright);
 		JLabel login = new JLabel("Logout");
-		login.setBounds(990, 5, 105, 62);
+		login.setBounds(978, 24, 105, 62);
 		login.setForeground(Color.BLACK);
 		login.addMouseListener(new MouseAdapter() {
 			@Override
@@ -58,7 +73,7 @@ public class MenuPrincipalGestor extends JPanel {
 		login.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		
 		JLabel lblGestionPropuestas = new JLabel("Gestion propuestas");
-		lblGestionPropuestas.setBounds(804, 5, 168, 62);
+		lblGestionPropuestas.setBounds(800, 24, 168, 62);
 		lblGestionPropuestas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -80,7 +95,7 @@ public class MenuPrincipalGestor extends JPanel {
 		lblGestionPropuestas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		
 		JLabel lblRegistroOng = new JLabel("Registro ONG");
-		lblRegistroOng.setBounds(657, 5, 129, 62);
+		lblRegistroOng.setBounds(640, 24, 129, 62);
 		lblRegistroOng.setForeground(Color.BLACK);
 		lblRegistroOng.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblRegistroOng.addMouseListener(new MouseAdapter() {
@@ -100,15 +115,14 @@ public class MenuPrincipalGestor extends JPanel {
 				lblRegistroOng.setForeground(Color.BLACK);
 			}
 		});
-		setLayout(null);
 		add(lblRegistroOng);
 		add(lblGestionPropuestas);
 		add(login);
 		
 		JLabel lblCrearProyectoNuevo = new JLabel("Gesti\u00F3n de proyectos");
+		lblCrearProyectoNuevo.setBounds(427, 24, 193, 62);
 		lblCrearProyectoNuevo.setForeground(Color.BLACK);
 		lblCrearProyectoNuevo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblCrearProyectoNuevo.setBounds(438, 5, 193, 62);
 		lblCrearProyectoNuevo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -129,9 +143,9 @@ public class MenuPrincipalGestor extends JPanel {
 		add(lblCrearProyectoNuevo);
 		
 		JLabel lblBienvenida = new JLabel("");
+		lblBienvenida.setBounds(-33, 8, 1166, 699);
 		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBienvenida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 67));
-		lblBienvenida.setBounds(-33, 8, 1166, 699);
 		add(lblBienvenida);
 		lblBienvenida.setText("¡Bienvenid@ administrador!");
 		

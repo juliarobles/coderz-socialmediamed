@@ -1,55 +1,37 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
-import modelo.Disponibilidad;
+import modelo.Actividad;
+import modelo.Tupla;
 import modelo.Usuario;
-import modelo.ZonaAccion;
 
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
-import java.awt.Toolkit;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import utilidades.JPictureBox;
+import javax.swing.JList;
+
+@SuppressWarnings("serial")
 public class MenuPrincipalUsuario extends JPanel {
 
-
-	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenuPrincipalUsuario frame = new MenuPrincipalUsuario();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * @param usu 
-	 */
+	private DefaultListModel<Tupla> listamatch;
+	private DefaultListModel<Tupla> listanuevos;
+	private DefaultListModel<Tupla> listamassolicitados;
+	private Usuario usu;
+	
 	public MenuPrincipalUsuario(MenuPrincipal padre, Usuario usu) {
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipalUsuario.class.getResource("/resources/_Logo AccionSocialMed png.png")));
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
+		this.usu = usu;
 		//setBounds(100, 100, padre.getWidth(), padre.getHeight());
 		setBounds(100, 100, 1100, 715);
 		//setLocationRelativeTo(null);
@@ -59,6 +41,7 @@ public class MenuPrincipalUsuario extends JPanel {
 		//setContentPane(contentPane);
 		
 		JLabel login = new JLabel("Logout");
+		login.setBounds(971, 24, 105, 62);
 		login.setForeground(Color.BLACK);
 		login.addMouseListener(new MouseAdapter() {
 			@Override
@@ -80,10 +63,11 @@ public class MenuPrincipalUsuario extends JPanel {
 		
 		
 		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
-		lblCopyright.setBounds(10, 660, 537, 14);
+		lblCopyright.setBounds(10, 691, 537, 14);
 		add(lblCopyright);
 		
 		JLabel lblPerfil = new JLabel("Perfil");
+		lblPerfil.setBounds(872, 24, 105, 62);
 		lblPerfil.setForeground(Color.BLACK);
 		lblPerfil.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblPerfil.addMouseListener(new MouseAdapter() {
@@ -103,35 +87,23 @@ public class MenuPrincipalUsuario extends JPanel {
 		});
 		
 		JLabel lblActividades = new JLabel("Actividades");
+		lblActividades.setBounds(731, 24, 105, 62);
 		lblActividades.setForeground(Color.BLACK);
 		lblActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		
-		GroupLayout gl_contentPane = new GroupLayout(this);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(751, Short.MAX_VALUE)
-					.addComponent(lblActividades, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblPerfil, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(login, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(login, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblPerfil, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblActividades, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(643, Short.MAX_VALUE))
-		);
+		JLabel lblSocialmediamed = new JLabel("SocialMediaMed");
+		lblSocialmediamed.setBounds(110, 26, 199, 52);
+		lblSocialmediamed.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 24));
+		
+		ImageIcon logo = new ImageIcon(InicioSesion.class.getResource("/resources/_Logo AccionSocialMed png.png"));
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setBounds(44, 26, 56, 52);
+		pictureBox.setIcon(logo);
 		
 		lblActividades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				padre.cambiarAListaActividades(padre,usu);
+				padre.cambiarAListaActividades(usu);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -142,15 +114,95 @@ public class MenuPrincipalUsuario extends JPanel {
 				lblActividades.setForeground(Color.BLACK);
 			}
 		});
+		setLayout(null);
+		add(lblCopyright);
+		add(pictureBox);
+		add(lblSocialmediamed);
+		add(lblActividades);
+		add(lblPerfil);
+		add(login);
+		
+		JLabel lblTeRecomendamos = new JLabel("Te recomendamos...");
+		lblTeRecomendamos.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblTeRecomendamos.setBounds(44, 129, 199, 52);
+		add(lblTeRecomendamos);
+		
+		JLabel lblltimasActividadesPublicadas = new JLabel("\u00DAltimas actividades publicadas");
+		lblltimasActividadesPublicadas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblltimasActividadesPublicadas.setBounds(44, 296, 265, 52);
+		add(lblltimasActividadesPublicadas);
+		
+		JLabel lblActividadesMsSolicitadas = new JLabel("Actividades m\u00E1s solicitadas");
+		lblActividadesMsSolicitadas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblActividadesMsSolicitadas.setBounds(44, 463, 265, 52);
+		add(lblActividadesMsSolicitadas);
+		
+		listamatch = new DefaultListModel<Tupla>();
+		listanuevos = new DefaultListModel<Tupla>();
+		listamassolicitados = new DefaultListModel<Tupla>();
+		
+		actualizarMatch();
+		actualizarUltimasPublicadas();
+		actualizarMasSolicitadas();
 		
 		
-		setLayout(gl_contentPane);
-		JLabel lblBienvenida = new JLabel("");
-		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBienvenida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 67));
-		lblBienvenida.setBounds(-33, 8, 1166, 699);
-		add(lblBienvenida);
-		lblBienvenida.setText("¡Bienvenid@ "+usu.getNombre()+"!");
+		JScrollPane scroll = new JScrollPane();
+		scroll.setBorder(null);
+		scroll.setBounds(43, 171, 967, 119);
+		add(scroll);
+		
+		JList<Tupla> match = new JList<Tupla>(listamatch);
+		match.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
+		match.setBorder(null);
+		match.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		match.setLayoutOrientation(JList.VERTICAL);
+		scroll.setViewportView(match);
+		
+		JScrollPane scroll2 = new JScrollPane();
+		scroll2.setBorder(null);
+		scroll2.setBounds(43, 336, 967, 119);
+		add(scroll2);
+		
+		JList<Tupla> nuevas = new JList<Tupla>(listanuevos);
+		nuevas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
+		nuevas.setBorder(null);
+		nuevas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		nuevas.setLayoutOrientation(JList.VERTICAL);
+		scroll2.setViewportView(nuevas);
+		
+		
+		JScrollPane scroll3 = new JScrollPane();
+		scroll3.setBorder(null);
+		scroll3.setBounds(43, 505, 967, 119);
+		add(scroll3);
+		
+		JList<Tupla> list = new JList<Tupla>(listamassolicitados);
+		list.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
+		list.setBorder(null);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setLayoutOrientation(JList.VERTICAL);
+		scroll3.setViewportView(list);
+		
 	}
-
+	
+	public void actualizarMatch(){
+		listamatch.clear();
+		for(Tupla t : Actividad.getMatch(usu)) {
+			listamatch.addElement(t);
+		}
+	}
+	
+	public void actualizarUltimasPublicadas() {
+		listanuevos.clear();
+		for(Tupla t : Actividad.getUltimasAniadidas()) {
+			listanuevos.addElement(t);
+		}
+	}
+	
+	public void actualizarMasSolicitadas() {
+		listamassolicitados.clear();
+		for(Tupla t : Actividad.getMasSolicitadas()) {
+			listamassolicitados.addElement(t);
+		}
+	}
 }

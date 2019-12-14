@@ -5,6 +5,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import modelo.ONG;
+import utilidades.JPictureBox;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -12,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -25,6 +27,17 @@ public class MenuPrincipalONG extends JPanel {
 		setBounds(100, 100, 1100, 715);
 		//setLocationRelativeTo(null);
 		
+		JLabel lblSocialmediamed = new JLabel("SocialMediaMed");
+		lblSocialmediamed.setBounds(110, 26, 199, 52);
+		lblSocialmediamed.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 24));
+		add(lblSocialmediamed);
+		
+		ImageIcon logo = new ImageIcon(InicioSesion.class.getResource("/resources/_Logo AccionSocialMed png.png"));
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setBounds(44, 26, 56, 52);
+		pictureBox.setIcon(logo);
+		add(pictureBox);
+		
 		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
 		lblCopyright.setBounds(10, 660, 537, 14);
 		add(lblCopyright);
@@ -33,6 +46,7 @@ public class MenuPrincipalONG extends JPanel {
 		//setContentPane(contentPane);
 		
 		JLabel login = new JLabel("Logout");
+		login.setBounds(990, 24, 105, 62);
 		login.setForeground(Color.BLACK);
 		login.addMouseListener(new MouseAdapter() {
 			@Override
@@ -53,6 +67,7 @@ public class MenuPrincipalONG extends JPanel {
 		login.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		
 		JLabel lblPerfil = new JLabel("Perfil");
+		lblPerfil.setBounds(875, 24, 105, 62);
 		lblPerfil.setForeground(Color.BLACK);
 		lblPerfil.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblPerfil.addMouseListener(new MouseAdapter() {
@@ -72,6 +87,7 @@ public class MenuPrincipalONG extends JPanel {
 		});
 		
 		JLabel lblEnviarPropuesta = new JLabel("Enviar propuesta");
+		lblEnviarPropuesta.setBounds(681, 24, 184, 62);
 		lblEnviarPropuesta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -90,35 +106,21 @@ public class MenuPrincipalONG extends JPanel {
 		lblEnviarPropuesta.setForeground(Color.BLACK);
 		lblEnviarPropuesta.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		
-		GroupLayout gl_contentPane = new GroupLayout(this);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(668, Short.MAX_VALUE)
-					.addComponent(lblEnviarPropuesta, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblPerfil, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(login, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(login, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblPerfil, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblEnviarPropuesta, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(633, Short.MAX_VALUE))
-		);
-		setLayout(gl_contentPane);
-		
 		
 		JLabel lblBienvenida = new JLabel("");
 		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBienvenida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 67));
-		lblBienvenida.setBounds(-33, 8, 1166, 699);
+		lblBienvenida.setBounds(-21, 147, 1166, 460);
 		add(lblBienvenida);
 		lblBienvenida.setText("¡Bienvenid@ "+usu.getNombre()+"!");
+		setLayout(null);
+		add(lblSocialmediamed);
+		add(pictureBox);
+		add(lblCopyright);
+		add(lblBienvenida);
+		add(lblEnviarPropuesta);
+		add(lblPerfil);
+		add(login);
 	}
 
 }

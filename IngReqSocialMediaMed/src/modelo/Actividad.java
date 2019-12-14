@@ -6,8 +6,6 @@ import java.util.List;
 import utilidades.DiaSemana;
 
 public class Actividad {
-	//Quizás sea conveniente crear dos subclases que ereden de esta,
-	//ApreServ y Voluntariado
 	
 	private int id;
 	private String titulo;
@@ -23,7 +21,7 @@ public class Actividad {
 	private PDI investigador;
 	private Ambito ambito;
 	
-	/*
+	
 	public static List<Tupla> getMatch(Usuario u){
 		List<Tupla> lista = new ArrayList<>();
 		BD mibd = new BD();
@@ -31,19 +29,62 @@ public class Actividad {
 		String f;
 		
 		if(u != null) {
-			for(Object[] tupla : mibd.Select("SELECT id, titulo, fechainicio FROM ACTIVIDADES WHERE tipooferta = '" + u.tipoOferta + "' and zonaaccion = '" + u.zonaAccion + "';")) {
-				fecha = ((String) tupla[2]).split("/");
-				f = DiaSemana.diaSemana(Integer.parseInt(fecha[0]), Integer.parseInt(fecha[1]), Integer.parseInt(fecha[2]));
-				if(u.disponibilidad.equals(Disponibilidad.FindeSemana) && f.equals("S") && f.equals("D")) {
-					
+			List<Object[]> tupla = mibd.Select("SELECT id, titulo, fechainicio FROM ACTIVIDADES WHERE tipooferta = '" + u.tipoOferta + "' and zonaaccion = '" + u.zonaAccion + "' LIMIT 15;");
+			if(u.disponibilidad.equals(Disponibilidad.Siempre)){
+				for(Object[] t : tupla) {
+					lista.add(new Tupla(Integer.toString((Integer) t[0]), (String) t[1]));
+				}
+			} else {
+				List<Object[]> noEnLista = new ArrayList<>();
+				for(Object[] t : tupla) {
+					fecha = ((String) t[2]).split("/");
+					f = DiaSemana.diaSemana(Integer.parseInt(fecha[0]), Integer.parseInt(fecha[1]), Integer.parseInt(fecha[2]));
+					if(u.disponibilidad.equals(Disponibilidad.FindeSemana) && (f.equals("S") || f.equals("D"))) {
+						lista.add(new Tupla(Integer.toString((Integer) t[0]), (String) t[1]));
+					} else if (u.disponibilidad.equals(Disponibilidad.EntreSemana) && !f.equals("S") && !f.equals("D")) {
+						lista.add(new Tupla(Integer.toString((Integer) t[0]), (String) t[1]));
+					} else {
+						noEnLista.add(t);
+					}
+				}
+				if(lista.size() < 15 && !noEnLista.isEmpty()) {
+					Object[] t;
+					for(int i = 0; i < noEnLista.size() && lista.size() < 15; i++) {
+						t = noEnLista.get(i);
+						lista.add(new Tupla(Integer.toString((Integer) t[0]), (String) t[1]));
+					}
+				}
+			}
+			if(lista.size() < 15) {
+				for(Object[] t : mibd.Select("SELECT id, titulo FROM ACTIVIDADES WHERE tipooferta = '" + u.tipoOferta.toString() + "' AND zonaaccion <> '" + u.zonaAccion.toString() + "' LIMIT " + (15 - lista.size())+ ";")) {
+					lista.add(new Tupla(Integer.toString((Integer) t[0]), (String) t[1]));
 				}
 			}
 		}
-		
 		mibd.finalize();
 		return lista;
 	}
-	*/
+	
+	public static List<Tupla> getUltimasAniadidas() {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES ORDER BY id DESC LIMIT 15;")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<Tupla> getMasSolicitadas() {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT a.id, a.titulo, count(s.participante) FROM ACTIVIDADES a, SOLICITUDES s WHERE a.id = s.actividad GROUP BY a.id ORDER BY count(s.participante) DESC LIMIT 15;")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
 	
 	public boolean esVoluntariado() {
 		return asignatura == null && investigador == null;
@@ -305,6 +346,5 @@ public class Actividad {
 		mibd.finalize();
 		this.ambito = ambito;
 	}
-	
 	
 }

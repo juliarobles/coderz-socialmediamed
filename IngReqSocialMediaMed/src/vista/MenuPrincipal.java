@@ -15,7 +15,7 @@ import modelo.Usuario;
 public class MenuPrincipal extends JFrame {
 
 	private JPanel invitado;
-	private JPanel usuario;
+	private MenuPrincipalUsuario usuario;
 	private JPanel ong;
 	private JPanel gestor;
 	private GestionPropuestas gestionPropuestas;
@@ -85,14 +85,19 @@ public class MenuPrincipal extends JFrame {
 	}
 	
 	public void cambiarUsuario(Usuario usu) {
-		usuario = new MenuPrincipalUsuario(this, usu);
+		if(usuario != null) {
+			usuario.actualizarMatch();
+			usuario.actualizarMasSolicitadas();
+			usuario.actualizarUltimasPublicadas();
+		} else {
+			usuario = new MenuPrincipalUsuario(this, usu);
+		}
 		if(listaActividades != null) {
 			listaActividades.setVisible(false);
 			listaActividades = null;
 		}
 		if(invitado != null) {
 			invitado.setVisible(false);
-			invitado = null;
 		}
 		usuario.setVisible(true);
 		
@@ -111,7 +116,6 @@ public class MenuPrincipal extends JFrame {
 		ong.setVisible(true);
 		if(invitado != null) {
 			invitado.setVisible(false);
-			invitado = null;
 		}
 		if(perfilong != null) {
 			perfilong.setVisible(false);;
@@ -210,7 +214,7 @@ public class MenuPrincipal extends JFrame {
 		
 	}
 
-	public void cambiarAListaActividades(MenuPrincipal padre, Usuario usu) {
+	public void cambiarAListaActividades(Usuario usu) {
 		listaActividades = new ListaActividades(this, usu);
 		this.listaActividades.setVisible(true);
 		this.usuario.setVisible(false);

@@ -1,5 +1,5 @@
 package modelo;
 
 public enum Disponibilidad {
-	Siempre, FindeSemana, EntreSemana, Nunca
+	Siempre, FindeSemana, EntreSemana
 }
