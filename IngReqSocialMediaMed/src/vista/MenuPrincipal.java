@@ -22,7 +22,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel registroong;
 	private JPanel crearactividad;
 	private JPanel crearPropuesta;
-	private CrearProyecto crearproyecto;
+	private GestionProyectos crearproyecto;
 	private JPanel perfilong;
 	private JPanel editarong;
 	private JPanel listaActividades;
@@ -185,7 +185,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	public void cambiarACrearProyecto() {
-		crearproyecto = new CrearProyecto(this);
+		crearproyecto = new GestionProyectos(this);
 		gestor.setVisible(false);
 		crearproyecto.setVisible(true);
 		setContentPane(crearproyecto);

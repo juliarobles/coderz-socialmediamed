@@ -6,14 +6,14 @@ import javax.swing.event.ListSelectionListener;
 
 import modelo.Proyecto;
 import modelo.Tupla;
-import vista.CrearProyecto;
+import vista.GestionProyectos;
 
 public class CtrListaProyectos  implements ListSelectionListener  {
 
-	private CrearProyecto vista;
+	private GestionProyectos vista;
 	private JList<Tupla> lista;
 
-	public CtrListaProyectos(CrearProyecto vista, JList<Tupla> listaProyectos) {
+	public CtrListaProyectos(GestionProyectos vista, JList<Tupla> listaProyectos) {
 		this.vista = vista;
 		this.lista = listaProyectos;
 	}

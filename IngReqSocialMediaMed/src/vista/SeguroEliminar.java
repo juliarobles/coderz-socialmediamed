@@ -30,7 +30,7 @@ public class SeguroEliminar extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public SeguroEliminar(CrearProyecto panel, Proyecto proyecto) {
+	public SeguroEliminar(GestionProyectos panel, Proyecto proyecto) {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SeguroEliminar.class.getResource("/resources/blanco.png")));
 		setBounds(100, 100, 450, 245);

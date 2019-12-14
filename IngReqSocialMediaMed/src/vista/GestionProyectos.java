@@ -36,7 +36,7 @@ import javax.swing.UIManager;
 import java.awt.SystemColor;
 
 @SuppressWarnings("serial")
-public class CrearProyecto extends JPanel {
+public class GestionProyectos extends JPanel {
 
 	private Proyecto consultado;
 	private JTextField titulo;
@@ -49,7 +49,7 @@ public class CrearProyecto extends JPanel {
 	private DefaultListModel<Tupla> proyectos;
 	private DefaultListModel<Tupla> actividades;
 	private JList<Tupla> listaProyectos;
-	private CrearProyecto yo;
+	private GestionProyectos yo;
 	private boolean modoCreacion;
 
 	public void establecerConsultado(Proyecto p) {
@@ -77,7 +77,7 @@ public class CrearProyecto extends JPanel {
 	}
 	
 	
-	public CrearProyecto(MenuPrincipal padre) {
+	public GestionProyectos(MenuPrincipal padre) {
 		setBackground(Color.WHITE);
 		setBounds(100, 100, 1100, 715);
 		setLayout(null);
