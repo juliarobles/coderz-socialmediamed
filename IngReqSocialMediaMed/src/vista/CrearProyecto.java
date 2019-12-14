@@ -4,8 +4,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import modelo.Actividad;
-import modelo.Asignatura;
-import modelo.ONG;
 import modelo.PDI;
 import modelo.Proyecto;
 import modelo.Tupla;
@@ -35,7 +33,6 @@ import controlador.CtrListaProyectos;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.UIManager;
-import javax.swing.ListModel;
 import java.awt.SystemColor;
 
 @SuppressWarnings("serial")
@@ -46,9 +43,14 @@ public class CrearProyecto extends JPanel {
 	private JLabel aquititulo;
 	private JLabel aquipdi;
 	private JPanel creareditar;
+	private JButton btnEditar;
+	private JButton btnEliminar;
 	private DefaultListModel<Tupla> actividadesProyecto;
 	private DefaultListModel<Tupla> proyectos;
+	private DefaultListModel<Tupla> actividades;
 	private JList<Tupla> listaProyectos;
+	private CrearProyecto yo;
+	private boolean modoCreacion;
 
 	public void establecerConsultado(Proyecto p) {
 		if(p != null) {
@@ -59,14 +61,19 @@ public class CrearProyecto extends JPanel {
 			for(Tupla t : Proyecto.getActividadesSimple(p.getId())) {
 				actividadesProyecto.addElement(t);
 			}
+			btnEditar.setEnabled(true);
+			btnEliminar.setEnabled(true);
+			if(!modoCreacion) {
+				ponerModoCreacion();
+			}
 		} else {
 			consultado = null;
 			aquititulo.setText("");
 			aquipdi.setText("");
 			actividadesProyecto.clear();
+			btnEliminar.setEnabled(false);
+			btnEditar.setEnabled(false);
 		}
-		
-		
 	}
 	
 	
@@ -76,7 +83,7 @@ public class CrearProyecto extends JPanel {
 		setLayout(null);
 		
 		consultado = null;
-		
+		yo = this;
 		JLabel lblxb = new JLabel("<html>&larr;<html>");
 		lblxb.addMouseListener(new MouseAdapter() {
 			@Override
@@ -108,41 +115,14 @@ public class CrearProyecto extends JPanel {
 		lblCopyright.setBounds(10, 660, 537, 14);
 		add(lblCopyright);
 		
-		/*
-		JLabel lblAadirActividad = new JLabel("A\u00F1adir nueva actividad");
-		lblAadirActividad.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				padre.cambiarACrearActividad(p);
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblAadirActividad.setForeground(new Color(51, 204, 204));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblAadirActividad.setForeground(Color.BLACK);
-			}
-		});
-		
-		lblAadirActividad.setBounds(703, 226, 188, 51);
-		add(lblAadirActividad);
-		lblAadirActividad.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAadirActividad.setForeground(Color.BLACK);
-		lblAadirActividad.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblAadirActividad.setBackground(Color.WHITE);
-		*/
-		
 		JScrollPane scroll3 = new JScrollPane();
 		scroll3.setBounds(30, 114, 251, 543);
 		add(scroll3);
 		
-		DefaultListModel<Tupla> proyectos = new DefaultListModel<Tupla>();
-		for(Tupla t : Proyecto.getProyectosSimple()) {
-			proyectos.addElement(t);
-		}
+		proyectos = new DefaultListModel<Tupla>();
+		actualizarProyectos();
 		
-		JList<Tupla> listaProyectos = new JList<Tupla>(proyectos);
+		listaProyectos = new JList<Tupla>(proyectos);
 		listaProyectos.setLayoutOrientation(JList.VERTICAL);
 		listaProyectos.setBorder(new LineBorder(new Color(0, 0, 0)));
 		listaProyectos.setBackground(SystemColor.menu);
@@ -157,8 +137,8 @@ public class CrearProyecto extends JPanel {
 		lblListaDeProyectos.setBounds(20, 82, 261, 30);
 		add(lblListaDeProyectos);
 		
-		ponerModoEditar();
-		
+		ponerModoCreacion();
+		modoCreacion = true;
 						
 						JLabel lblCreaeditaProyectosAqu = new JLabel("Crea/edita proyectos aqu\u00ED");
 						lblCreaeditaProyectosAqu.setHorizontalAlignment(SwingConstants.CENTER);
@@ -212,13 +192,13 @@ public class CrearProyecto extends JPanel {
 								lblActividades_1.setBounds(27, 146, 303, 39);
 								panel.add(lblActividades_1);
 								
-								JButton btnEditar = new JButton("Editar");
+								btnEditar = new JButton("Editar");
 								btnEditar.setEnabled(false);
 								btnEditar.addMouseListener(new MouseAdapter() {
 									@Override
 									public void mousePressed(MouseEvent e) {
 										if(consultado != null) {
-											
+											ponerModoEditar();
 										}
 									}
 								});
@@ -227,7 +207,15 @@ public class CrearProyecto extends JPanel {
 								btnEditar.setBounds(27, 463, 135, 44);
 								panel.add(btnEditar);
 								
-								JButton btnEliminar = new JButton("Eliminar");
+								btnEliminar = new JButton("Eliminar");
+								btnEliminar.addMouseListener(new MouseAdapter() {
+									@Override
+									public void mousePressed(MouseEvent e) {
+										SeguroEliminar se = new SeguroEliminar(yo, consultado);
+										se.setVisible(true);
+										yo.setEnabled(false);
+									}
+								});
 								btnEliminar.setEnabled(false);
 								btnEliminar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 								btnEliminar.setBackground(new Color(51, 204, 204));
@@ -245,11 +233,17 @@ public class CrearProyecto extends JPanel {
 
 
 	private void ponerModoCreacion() {
-		// TODO Auto-generated method stub
+		if(creareditar != null) {
+			creareditar.setVisible(false);
+			remove(creareditar);
+			creareditar = null;
+		}
 		creareditar = new JPanel();
+		modoCreacion = true;
 		creareditar.setBorder(new LineBorder(new Color(0, 0, 0)));
 		creareditar.setBounds(658, 114, 409, 543);
 		add(creareditar);
+		creareditar.setVisible(true);
 		creareditar.setLayout(null);
 				
 				JComboBox<Tupla> boxProfesor = new JComboBox<Tupla>();
@@ -291,10 +285,8 @@ public class CrearProyecto extends JPanel {
 				scroll.setBounds(27, 185, 361, 240);
 				creareditar.add(scroll);
 				
-				DefaultListModel<Tupla> actividades = new DefaultListModel<Tupla>();
-				for(Tupla t : Actividad.getActividadesDisponiblesSimple()) {
-					actividades.addElement(t);
-				}
+				actividades = new DefaultListModel<Tupla>();
+				actualizarActividadesDisponibles();
 				
 				JList<Tupla> list = new JList<Tupla>(actividades);
 				list.setBackground(UIManager.getColor("Button.background"));
@@ -333,10 +325,8 @@ public class CrearProyecto extends JPanel {
 										if(boxProfesor.getItemCount() > 0) {
 											boxProfesor.setSelectedIndex(0);
 										}
-										actividades.clear();
-										for(Tupla t : Actividad.getActividadesDisponiblesSimple()) {
-											actividades.addElement(t);
-										}
+										actualizarActividadesDisponibles();
+										actualizarProyectos();
 										info.setForeground(new Color(46, 139, 87));
 										info.setText("El proyecto se ha creado correctamente");
 										info.setVisible(true);
@@ -383,18 +373,28 @@ public class CrearProyecto extends JPanel {
 	}
 	
 	private void ponerModoEditar() {
-		//if(consultado != null) {
+		if(consultado != null) {
+		creareditar.setVisible(false);
+		remove(creareditar);
+		creareditar = null;
 		creareditar = new JPanel();
+		modoCreacion = false;
 		creareditar.setBorder(new LineBorder(new Color(0, 0, 0)));
 		creareditar.setBounds(658, 114, 409, 543);
 		add(creareditar);
+		creareditar.setVisible(true);
 		creareditar.setLayout(null);
 				
+				int i = 0;
 				JComboBox<Tupla> boxProfesor = new JComboBox<Tupla>();
 				boxProfesor.setBounds(140, 108, 248, 30);
 				for(Tupla t : PDI.getPDISimple()) {
 					boxProfesor.addItem(t);
+					if(t.elemento1.equals(Integer.toString(consultado.getId()))) {
+						i = boxProfesor.getItemCount()-1;
+					}
 				}
+				boxProfesor.setSelectedIndex(i);
 				creareditar.add(boxProfesor);
 				
 				JLabel lblProfesor = new JLabel("PDI al cargo:");
@@ -408,6 +408,7 @@ public class CrearProyecto extends JPanel {
 				lblTitulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 				
 				titulo = new JTextField();
+				titulo.setText(consultado.getNombre());
 				titulo.setBounds(91, 61, 297, 30);
 				creareditar.add(titulo);
 				titulo.addKeyListener(new KeyAdapter() {
@@ -478,41 +479,31 @@ public class CrearProyecto extends JPanel {
 										info.setText("El titulo es obligatorio");
 										info.setVisible(true);
 									} else {
-										Proyecto p = new Proyecto(titulo.getText(), new PDI(((Tupla)boxProfesor.getSelectedItem()).elemento1));
+										if(!titulo.getText().equals(consultado.getNombre())){
+											consultado.setNombre(titulo.getText());
+										}
+										Tupla seleccionada = (Tupla)boxProfesor.getSelectedItem();
+										if (!consultado.getPDI().getEmail().equals(seleccionada.elemento1)) {
+											consultado.setPDI(new PDI(seleccionada.elemento1));
+										}
 										if(!list.isSelectionEmpty()) {
 											for(Tupla t : list.getSelectedValuesList()) {
-												Actividad.setProyectoSimple(p, Integer.parseInt(t.elemento1));
+												Actividad.setProyectoSimple(consultado, Integer.parseInt(t.elemento1));
 											}
 										}
-										titulo.setText("");
-										if(boxProfesor.getItemCount() > 0) {
-											boxProfesor.setSelectedIndex(0);
+										if(!list2.isSelectionEmpty()) {
+											for(Tupla t : list2.getSelectedValuesList()) {
+												Actividad.setProyectoSimple(null, Integer.parseInt(t.elemento1));
+											}
 										}
-										actividades.clear();
-										for(Tupla t : Actividad.getActividadesDisponiblesSimple()) {
-											actividades.addElement(t);
-										}
-										info.setForeground(new Color(46, 139, 87));
-										info.setText("El proyecto se ha creado correctamente");
-										info.setVisible(true);
-										Timer timer = new Timer (8000, new ActionListener () 
-										{ 
-											@Override
-											public void actionPerformed(ActionEvent e) {
-												if(e.getWhen() >= 7000) {
-													info.setVisible(false);
-												} else {
-													info.setVisible(true);
-												}
-											} 
-										}); 
-										timer.start();
-										timer.setRepeats(false);
+										actualizarProyectos();
+										ponerModoCreacion();
+										establecerConsultado(consultado);
 									}
 								} catch(Exception ex) {
 									info.setForeground(Color.RED);
 									System.out.println(ex.getMessage());
-									info.setText("Error: el proyecto no se ha creado correctamente");
+									info.setText("Error: el proyecto no se ha editado correctamente");
 									info.setVisible(true);
 								}
 							}
@@ -533,10 +524,32 @@ public class CrearProyecto extends JPanel {
 						creareditar.add(lblEliminaActividadesDe);
 						
 						JButton btnNoGuardar = new JButton("No guardar");
+						btnNoGuardar.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mousePressed(MouseEvent e) {
+								ponerModoCreacion();
+							}
+						});
 						btnNoGuardar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 						btnNoGuardar.setBackground(new Color(51, 204, 204));
 						btnNoGuardar.setBounds(207, 463, 140, 44);
 						creareditar.add(btnNoGuardar);
 		}
-	//}
+	}
+	
+	public void actualizarProyectos() {
+		proyectos.clear();
+		for(Tupla t : Proyecto.getProyectosSimple()) {
+			proyectos.addElement(t);
+		}
+	}
+	
+	public void actualizarActividadesDisponibles() {
+		if(modoCreacion) {
+			actividades.clear();
+			for(Tupla t : Actividad.getActividadesDisponiblesSimple()) {
+				actividades.addElement(t);
+			}
+		}
+	}
 }

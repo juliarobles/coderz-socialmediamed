@@ -2,17 +2,10 @@ package vista;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,14 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import controlador.CtrLoginONG;
-import controlador.CtrLoginUMA;
 import utilidades.*;
-import java.awt.image.BufferedImage;
-import java.awt.SystemColor;
 import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")

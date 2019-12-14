@@ -74,6 +74,33 @@ public class Proyecto {
 		this.pdi = pdi;
 	}
 
+	public void eliminarProyectoSolo() {
+		BD mibd = new BD();
+		mibd.Update("UPDATE ACTIVIDADES SET proyecto = NULL WHERE proyecto = " + this.id + ";");
+		mibd.finalize();
+		eliminarProyecto();
+	}
+	
+	public void eliminarProyectoConActividades() {
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id FROM ACTIVIDADES WHERE proyecto = " + this.id + ";")) {
+			mibd.Delete("DELETE FROM SOLICITUDES WHERE actividad = " + (Integer)tupla[0] + ";");
+			mibd.Delete("DELETE FROM PARTICIPAR WHERE actividad = " + (Integer)tupla[0] + ";");
+		}
+		mibd.Delete("DELETE FROM ACTIVIDADES WHERE proyecto = " + this.id + ";");
+		mibd.finalize();
+		eliminarProyecto();
+	}
+	
+	private void eliminarProyecto() {
+		BD mibd = new BD();
+		mibd.Delete("DELETE FROM PROYECTO WHERE id = " + this.id + ";");
+		mibd.finalize();
+		this.id = -1;
+		this.nombre = null;
+		this.pdi = null;
+	}
+	
 	@Override
 	public String toString() {
 		return nombre;

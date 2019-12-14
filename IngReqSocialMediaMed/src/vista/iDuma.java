@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,7 +33,7 @@ import java.awt.SystemColor;
 import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
-public class iDuma extends JFrame {
+public class iDuma extends JDialog {
 
 	private JPanel contentPane;
 	public JTextField emailuma;
@@ -52,7 +53,7 @@ public class iDuma extends JFrame {
 		setUndecorated(true);
 		setForeground(new Color(255, 255, 255));
 		setBackground(new Color(255, 255, 255));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 874, 548);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();

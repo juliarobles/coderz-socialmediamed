@@ -44,6 +44,11 @@ public class Actividad {
 		return lista;
 	}
 	*/
+	
+	public boolean esVoluntariado() {
+		return asignatura == null && investigador == null;
+	}
+	
 	public static List<Tupla> getActividadesDisponiblesSimple(){
 		List<Tupla> lista = new ArrayList<>();
 		BD mibd = new BD();
