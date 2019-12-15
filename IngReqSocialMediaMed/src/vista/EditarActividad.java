@@ -39,11 +39,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JCheckBox;
 
 
-public class CrearActividad extends JPanel {
-
-	enum Modo {
-		Crear, Editar
-	}
+public class EditarActividad extends JPanel {
 	
 	private JPanel contentPane;
 	private JTextField fechafin;
@@ -51,7 +47,7 @@ public class CrearActividad extends JPanel {
 	private JTextField titulo;
 
 	
-	public CrearActividad(MenuPrincipal padre, Propuesta p) {
+	public EditarActividad(MenuPrincipal padre, Actividad act, boolean gestor) {
 
 		setBackground(Color.WHITE);
 		setBounds(100, 100, 1100, 715);
@@ -61,7 +57,7 @@ public class CrearActividad extends JPanel {
 		lblCopyright.setBounds(10, 660, 537, 14);
 		add(lblCopyright);
 		
-		JLabel lblCrearActividad = new JLabel("Crear Actividad");
+		JLabel lblCrearActividad = new JLabel("Editar Actividad");
 		lblCrearActividad.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCrearActividad.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 29));
 		lblCrearActividad.setBounds(10, 10, 1080, 48);
@@ -88,11 +84,10 @@ public class CrearActividad extends JPanel {
 		add(lblFecha);
 		
 		fechafin = new JTextField();
-		
 		fechafin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		fechafin.setBorder(new LineBorder(new Color(0, 0, 0)));
 		fechafin.setBounds(873, 366, 136, 31);
-		fechafin.setText(p.getFechafinal());
+		fechafin.setText(act.getFechafinal());
 		add(fechafin);
 		fechafin.setColumns(10);
 		
@@ -112,7 +107,7 @@ public class CrearActividad extends JPanel {
 		for(int cont = 0;TipoOferta.values().length>cont; cont++) {
 			tipooferta.addItem(TipoOferta.values()[cont]);
 		}
-		tipooferta.setSelectedIndex(0);
+		tipooferta.setSelectedItem(act.getTipooferta());
 		tipooferta.setBounds(661, 500, 348, 31);
 		add(tipooferta);
 	
@@ -139,7 +134,7 @@ public class CrearActividad extends JPanel {
 				num.setText(Integer.toString(255 - descripcion.getText().length()));
 			}
 		});
-		descripcion.setText(p.getDescripcion());
+		descripcion.setText(act.getDescripcion());
 		add(descripcion);
 		
 		JComboBox<ZonaAccion> zonaaccion = new JComboBox<ZonaAccion>();
@@ -147,7 +142,7 @@ public class CrearActividad extends JPanel {
 		for(int cont = 0;ZonaAccion.values().length>cont; cont++) {
 			zonaaccion.addItem(ZonaAccion.values()[cont]);
 		}
-		zonaaccion.setSelectedIndex(0);
+		zonaaccion.setSelectedItem(act.getZonaaccion());
 		zonaaccion.setBounds(661, 420, 348, 31);
 		add(zonaaccion);
 		
@@ -160,11 +155,12 @@ public class CrearActividad extends JPanel {
 		fechainicio.setBorder(new LineBorder(new Color(0, 0, 0)));
 		fechainicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		fechainicio.setBounds(617, 366, 136, 31);
-		fechainicio.setText(p.getFechainicial());
+		fechainicio.setText(act.getFechainicio());
 		add(fechainicio);
 		fechainicio.setColumns(10);
 		
 		titulo = new JTextField();
+		titulo.setText(act.getTitulo());
 		titulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		titulo.setBorder(new LineBorder(new Color(0, 0, 0)));
 		titulo.setBounds(592, 88, 418, 30);
@@ -176,7 +172,6 @@ public class CrearActividad extends JPanel {
 			    }
 			}
 		});
-		titulo.setText(p.getTitulo());
 		add(titulo);
 		titulo.setColumns(10);
 		
@@ -186,13 +181,13 @@ public class CrearActividad extends JPanel {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				padre.volverAPropuestas();
+				padre.volverAGestionActividades(null);
 			}
 		});
 		btnCancelar.setForeground(new Color(255, 255, 255));
 		btnCancelar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		btnCancelar.setBackground(new Color(51, 204, 204));
-		btnCancelar.setBounds(761, 562, 159, 41);
+		btnCancelar.setBounds(779, 562, 159, 41);
 		add(btnCancelar);
 		
 		JComboBox<Asignatura> asignatura = new JComboBox<Asignatura>();
@@ -204,18 +199,26 @@ public class CrearActividad extends JPanel {
 		asignatura.setEnabled(false);
 		add(asignatura);
 		
+		int indexproy = 0;
 		JComboBox<Tupla> proyecto = new JComboBox<Tupla>();
 		for(Tupla t : Proyecto.getProyectosSimple()) {
 			proyecto.addItem(t);
+			if(gestor && act.getProyecto() != null && act.getProyecto().getId() == Integer.parseInt(t.elemento1)) {
+				indexproy = proyecto.getItemCount()-1;
+			}
 		}
 		proyecto.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		proyecto.setBounds(42, 552, 401, 31);
 		proyecto.setEnabled(false);
 		add(proyecto);
 		
+		int indexprofe = 0;
 		JComboBox<Tupla> profesores = new JComboBox<Tupla>();
 		for(Tupla t : PDI.getPDISimple()) {
 			profesores.addItem(t);
+			if(gestor && act.getInvestigador() != null && t.elemento1.equals(act.getInvestigador().getEmail())){
+				indexprofe = profesores.getItemCount()-1;
+			}
 		}
 		profesores.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		profesores.setEnabled(false);
@@ -238,7 +241,9 @@ public class CrearActividad extends JPanel {
 		    }
 		});
 		proyectosi.setSelected(false);
-		proyectosi.setEnabled(true);
+		if(!gestor) {
+			proyectosi.setEnabled(false);
+		} 
 		add(proyectosi);
 		
 		JComboBox<Ambito> ambito = new JComboBox<Ambito>();
@@ -247,47 +252,66 @@ public class CrearActividad extends JPanel {
 			ambito.addItem(Ambito.values()[cont]);
 		}
 		ambito.setSelectedIndex(0);
+		ambito.setSelectedItem(act.getAmbito());
 		ambito.setBounds(661, 461, 348, 31);
 		add(ambito);
 		
-		JButton btnSubirActividad = new JButton("Subir actividad");
-		btnSubirActividad.setForeground(new Color(255, 255, 255));
-		btnSubirActividad.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if(!titulo.getText().isEmpty()) {
-					try {
-						Asignatura asig = (asignatura.isEnabled())? (Asignatura) asignatura.getSelectedItem() : null;
-						System.out.println("que");
-						Proyecto proy = (proyectosi.isSelected())? new Proyecto(Integer.parseInt(((Tupla) proyecto.getSelectedItem()).elemento1)) : null;
-						System.out.println("estaque");
-						PDI pdi = (profesores.isEnabled())? new PDI(((Tupla)profesores.getSelectedItem()).elemento1) : null;
-						System.out.println("quxsse");
-						Actividad a = new Actividad(titulo.getText(), descripcion.getText(), "", fechainicio.getText(), fechafin.getText(), 
-								(ZonaAccion)zonaaccion.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), asig, proy, p.getOng(), 
-								pdi, (Ambito)ambito.getSelectedItem());
-						System.out.println("qusdsae");
-						p.eliminarPropuesta();
-						System.out.println("quedsad");
-						padre.volverAPropuestasModificado();
+			JButton btnActActividad = new JButton("Guardar cambios");
+			btnActActividad.setForeground(new Color(255, 255, 255));
+			btnActActividad.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					if(!titulo.getText().isEmpty()) {
+						try {
+							//Actualizamos titulo
+							if(!titulo.getText().equals(act.getTitulo())) act.setTitulo(titulo.getText());
+							if(!descripcion.getText().equals(act.getDescripcion())) act.setDescripcion(descripcion.getText());
+							if(!fechainicio.getText().equals(act.getFechainicio())) act.setFechainicio(fechainicio.getText());
+							if(!fechafin.getText().equals(act.getFechafinal())) act.setFechafinal(fechafin.getText());
+							if(!((ZonaAccion)zonaaccion.getSelectedItem()).equals(act.getZonaaccion())) act.setZonaaccion((ZonaAccion)zonaaccion.getSelectedItem());
+							if(!((TipoOferta)tipooferta.getSelectedItem()).equals(act.getTipooferta())) act.setTipooferta((TipoOferta)tipooferta.getSelectedItem());
+							if(!((Ambito)ambito.getSelectedItem()).equals(act.getAmbito())) act.setAmbito((Ambito)ambito.getSelectedItem());
 							
-					} catch (Exception ex) {
-						System.out.println(ex.getMessage());
-					}
+							if(gestor) {
+								Asignatura asig = (asignatura.isEnabled())? (Asignatura) asignatura.getSelectedItem() : null;
+								Proyecto proy = (proyectosi.isSelected())? new Proyecto(Integer.parseInt(((Tupla) proyecto.getSelectedItem()).elemento1)) : null;
+								PDI pdi = (profesores.isEnabled())? new PDI(((Tupla)profesores.getSelectedItem()).elemento1) : null;
+								
+								act.setProyecto(proy);
+								
+								if(asig != null) {
+									act.setAsignatura(asig);
+									act.setInvestigador(null);
+								}
+								
+								if(pdi != null) {
+									act.setAsignatura(null);
+									act.setInvestigador(pdi);
+								}
+							}
+							
+							padre.volverAGestionActividades(act);
+							
+						} catch (Exception ex) {
+							System.out.println(ex.getMessage());
+						}
 						
-				} else {
-					//mostrar error
+					} else {
+						//mostrar error
+					}
 				}
-			}
-		});
-		btnSubirActividad.setBackground(new Color(51, 204, 204));
-		btnSubirActividad.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		btnSubirActividad.setBounds(592, 562, 159, 41);
-		add(btnSubirActividad);
+			});
+			btnActActividad.setBackground(new Color(51, 204, 204));
+			btnActActividad.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+			btnActActividad.setBounds(592, 562, 177, 41);
+			add(btnActActividad);
 		
 		JComboBox<String> tipo = new JComboBox<String>();
 		tipo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		tipo.setEnabled(true);
+		if(!gestor) {
+			tipo.setEnabled(false);
+		}
 		tipo.addItem("Voluntariado");
 		tipo.addItem("Aprendizaje");
 		tipo.addItem("Investigacion");
@@ -320,6 +344,24 @@ public class CrearActividad extends JPanel {
 		lblmbito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblmbito.setBounds(512, 459, 142, 28);
 		add(lblmbito);
+		
+		if(gestor) {
+			if(act.getInvestigador() != null) {
+				tipo.setSelectedItem("Investigacion");
+				profesores.setSelectedIndex(indexprofe);
+			} else if (act.getAsignatura() != null) {
+				tipo.setSelectedItem("Aprendizaje");
+				asignatura.setSelectedItem(act.getAsignatura());
+			} else {
+				tipo.setSelectedItem("Voluntariado");
+			}
+			
+			if(act.getProyecto() != null) {
+				proyectosi.setSelected(true);
+				proyecto.setEnabled(true);
+				proyecto.setSelectedIndex(indexproy);
+			}
+		}
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);

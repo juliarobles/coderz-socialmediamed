@@ -144,11 +144,11 @@ public class Actividad {
 		this.zonaaccion = ZonaAccion.valueOf((String)tupla[6]);
 		this.tipooferta = TipoOferta.valueOf((String)tupla[7]);
 		//this.asignatura = new Asignatura((Integer)tupla[8]);
-		this.asignatura = (((String)tupla[8]).equals("NULL"))? null : new Asignatura((Integer)tupla[8]);
+		this.asignatura = (tupla[8] == null)? null : new Asignatura((Integer)tupla[8]);
 		//this.proyecto = new Proyecto((Integer)tupla[9]);
-		this.proyecto = (((String)tupla[9]).equals("NULL"))? null : new Proyecto((Integer)tupla[9]);
+		this.proyecto = (tupla[9] == null)? null : new Proyecto((Integer)tupla[9]);
 		this.ong = new ONG((String)tupla[10]);
-		this.investigador = (((String)tupla[11]).equals("NULL"))? null : new PDI((String)tupla[11]);
+		this.investigador = (tupla[11] == null)? null : new PDI((String)tupla[11]);
 		this.ambito = Ambito.valueOf((String)tupla[12]);
 	}
 

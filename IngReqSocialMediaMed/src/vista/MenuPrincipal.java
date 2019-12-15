@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import modelo.Actividad;
 import modelo.ONG;
 import modelo.PDI;
 import modelo.Propuesta;
@@ -28,6 +29,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel perfilong;
 	private JPanel editarong;
 	private JPanel listaActividades;
+	private EditarActividad editarActividad;
 
 	/**
 	 * Launch the application.
@@ -249,5 +251,30 @@ public class MenuPrincipal extends JFrame {
 		}
 		setContentPane(gestionActividades);
 		
+	}
+
+	public void volverAGestionActividades(Actividad editada) {
+		if(gestionActividades != null) {
+			gestionActividades.setVisible(true);
+			if(editada != null) {
+				gestionActividades.establecerConsultado(editada);
+				gestionActividades.actualizarActividades();
+			}
+			setContentPane(gestionActividades);
+		}
+		if(editarActividad != null) {
+			editarActividad.setVisible(false);
+			editarActividad = null;
+		}
+		
+	}
+
+	public void cambiarAEditarActividad(Actividad a, boolean gestor) {
+		if(a != null) {
+			editarActividad = new EditarActividad(this, a, gestor);
+			gestionActividades.setVisible(false);
+			editarActividad.setVisible(true);
+			setContentPane(editarActividad);
+		}
 	}
 }

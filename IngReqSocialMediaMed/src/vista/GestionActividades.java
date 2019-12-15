@@ -22,14 +22,22 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+
 import java.awt.Color;
 import javax.swing.JList;
 import javax.swing.border.LineBorder;
+
+import controlador.CtrListaGestionActividades;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
+import java.awt.Dimension;
+import javax.swing.JTextPane;
+import java.awt.TextArea;
+import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
 public class GestionActividades extends JPanel {
@@ -41,12 +49,12 @@ public class GestionActividades extends JPanel {
 		Editar, Solicitudes, Participantes, Vacio
 	}
 	
-	private JLabel aquipdi, aquititulo;
+	private JLabel aquititulo, aquidescripcion;
 	private JTextField titulo;
 	private JPanel gestionarPersonas;
+	private JPanel gestionarPersonas_1;
 	private JButton btnEditar;
 	private JButton btnEliminar;
-	private DefaultListModel<Tupla> actividadesProyecto;
 	private DefaultListModel<Tupla> actividades;
 	private JList<Tupla> listaActividades;
 	private GestionActividades yo;
@@ -55,32 +63,74 @@ public class GestionActividades extends JPanel {
 	private Pantalla pantalla;
 	private PDI pdi;
 	private ONG ong;
+	private JLabel aquiasiginvest;
+	private JLabel aquiproyecto;
+	private JLabel aquitipooferta;
+	private JButton solicitudes;
+	private JButton btnParticipantes;
+	private JLabel aquiambito;
+	private JLabel aquizonaaccion;
+	private JLabel aquifechafin;
+	private JLabel aquifechaini;
+	private JLabel lblAsigInves;
 
-	/*
+	
 	public void establecerConsultado(Actividad p) {
 		if(p != null) {
 			consultado = p;
-			aquititulo.setText(p.getNombre());
-			aquipdi.setText(p.getPDI().getNombre() +  " " + p.getPDI().getApellido1() + " " + p.getPDI().getApellido2());
-			actividadesProyecto.clear();
-			for(Tupla t : Proyecto.getActividadesSimple(p.getId())) {
-				actividadesProyecto.addElement(t);
+			aquititulo.setText(p.getTitulo());
+			aquidescripcion.setText("<html>" + p.getDescripcion() + "<html>");
+			aquifechaini.setText(p.getFechainicio());
+			aquifechafin.setText(p.getFechafinal());
+			aquizonaaccion.setText(p.getZonaaccion().toString());
+			aquiambito.setText(p.getAmbito().toString());
+			aquitipooferta.setText(p.getTipooferta().toString());
+			if(p.getAsignatura() != null) {
+				lblAsigInves.setText("Asignatura:");
+				aquiasiginvest.setText(p.getAsignatura().getNombre());
+			} else if (p.getInvestigador() != null) {
+				lblAsigInves.setText("Investigador:");
+				aquiasiginvest.setText(p.getInvestigador().getNombre() + " " + p.getInvestigador().getApellido1());
+			} else {
+				lblAsigInves.setText("Actividad de voluntariado");
+				aquiasiginvest.setText("");
 			}
-			btnEditar.setEnabled(true);
-			btnEliminar.setEnabled(true);
-			if(!modoCreacion) {
-				ponerModoCreacion();
+			if(p.getProyecto() != null) {
+				aquiproyecto.setText(p.getProyecto().getNombre());
+			} else {
+				aquiproyecto.setText("No incluida en ningún proyecto");
+			}
+			if(modo != Modo.ONG) {
+				btnEditar.setEnabled(true);
+				btnEliminar.setEnabled(true);
+			}
+			btnParticipantes.setEnabled(true);
+			solicitudes.setEnabled(true);
+			if(pantalla != Pantalla.Vacio) {
+				ponerModoVacio();
 			}
 		} else {
 			consultado = null;
 			aquititulo.setText("");
-			aquipdi.setText("");
-			actividadesProyecto.clear();
-			btnEliminar.setEnabled(false);
+			aquidescripcion.setText("");
+			aquifechaini.setText("");
+			aquifechafin.setText("");
+			aquizonaaccion.setText("");
+			aquiambito.setText("");
+			aquitipooferta.setText("");
+			lblAsigInves.setText("Asig/Inves:");
+			aquiasiginvest.setText("");
+			aquiproyecto.setText("");
 			btnEditar.setEnabled(false);
+			btnEliminar.setEnabled(false);
+			btnParticipantes.setEnabled(false);
+			solicitudes.setEnabled(false);
+			if(pantalla != Pantalla.Vacio) {
+				ponerModoVacio();
+			}
 		}
 	}
-	*/
+	
 	
 	public GestionActividades(MenuPrincipal padre, ONG ong, PDI pdi) { 	//Si se entra como ONG se deja usu null y se envia ong
 																		//Si se entra como PDI se deja ong null y se envia pdi
@@ -151,6 +201,7 @@ public class GestionActividades extends JPanel {
 		listaActividades.setBackground(SystemColor.menu);
 		listaActividades.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listaActividades.setLayoutOrientation(JList.VERTICAL);
+		listaActividades.addListSelectionListener(new CtrListaGestionActividades(this, listaActividades));
 		scroll3.setViewportView(listaActividades);
 		
 		JLabel lblListaDeProyectos = new JLabel("Lista de actividades");
@@ -161,13 +212,10 @@ public class GestionActividades extends JPanel {
 		
 		ponerModoVacio();
 						
-						JLabel lblCreaeditaProyectosAqu = new JLabel("Solicitudes / Participantes / Edici\u00F3n");
+						JLabel lblCreaeditaProyectosAqu = new JLabel("Solicitudes / Participantes");
 						lblCreaeditaProyectosAqu.setHorizontalAlignment(SwingConstants.CENTER);
 						lblCreaeditaProyectosAqu.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 						lblCreaeditaProyectosAqu.setBounds(658, 82, 409, 30);
-						if(modo.equals(Modo.ONG)) {
-							lblCreaeditaProyectosAqu.setText("Solicitudes / Participantes");
-						}
 						add(lblCreaeditaProyectosAqu);
 						
 						
@@ -183,25 +231,18 @@ public class GestionActividades extends JPanel {
 						panel.add(label_1);
 						
 						aquititulo = new JLabel("");
-						aquititulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+						aquititulo.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
 						aquititulo.setBounds(27, 37, 308, 30);
 						panel.add(aquititulo);
 						
-						JLabel label_2 = new JLabel("PDI al cargo:");
-						label_2.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						label_2.setBounds(27, 77, 117, 36);
-						panel.add(label_2);
-						
-						aquipdi = new JLabel("");
-						aquipdi.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						aquipdi.setBounds(27, 107, 308, 30);
-						panel.add(aquipdi);
-						
-						actividadesProyecto = new DefaultListModel<Tupla>();
+						JLabel lblDescripcin = new JLabel("Descripci\u00F3n:");
+						lblDescripcin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+						lblDescripcin.setBounds(27, 77, 117, 36);
+						panel.add(lblDescripcin);
 								
-								JLabel lblActividades_1 = new JLabel("Actividades:");
+								JLabel lblActividades_1 = new JLabel("Fecha inicio:");
 								lblActividades_1.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-								lblActividades_1.setBounds(27, 146, 303, 39);
+								lblActividades_1.setBounds(27, 220, 105, 39);
 								panel.add(lblActividades_1);
 								
 								btnEditar = new JButton("Editar");
@@ -210,13 +251,13 @@ public class GestionActividades extends JPanel {
 									@Override
 									public void mousePressed(MouseEvent e) {
 										if(consultado != null) {
-											ponerModoEditar();
+											padre.cambiarAEditarActividad(consultado, modo.equals(Modo.Gestor));
 										}
 									}
 								});
 								btnEditar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 								btnEditar.setBackground(new Color(51, 204, 204));
-								btnEditar.setBounds(27, 463, 135, 44);
+								btnEditar.setBounds(27, 438, 135, 36);
 								if(modo.equals(Modo.ONG)) {
 									btnEditar.setVisible(false);
 								}
@@ -231,11 +272,96 @@ public class GestionActividades extends JPanel {
 								btnEliminar.setEnabled(false);
 								btnEliminar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 								btnEliminar.setBackground(new Color(51, 204, 204));
-								btnEliminar.setBounds(192, 463, 135, 44);
+								btnEliminar.setBounds(189, 438, 135, 36);
 								if(modo.equals(Modo.ONG)) {
 									btnEliminar.setVisible(false);
 								}
 								panel.add(btnEliminar);
+								
+								JLabel lblFechaFinal = new JLabel("Fecha final:");
+								lblFechaFinal.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+								lblFechaFinal.setBounds(27, 247, 105, 39);
+								panel.add(lblFechaFinal);
+								
+								JLabel lblZonaDeAccin = new JLabel("Zona de acci\u00F3n:");
+								lblZonaDeAccin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+								lblZonaDeAccin.setBounds(27, 275, 126, 39);
+								panel.add(lblZonaDeAccin);
+								
+								JLabel lblmbito = new JLabel("\u00C1mbito:");
+								lblmbito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+								lblmbito.setBounds(27, 305, 72, 39);
+								panel.add(lblmbito);
+								
+								JLabel lblTipoOferta = new JLabel("Tipo oferta:");
+								lblTipoOferta.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+								lblTipoOferta.setBounds(27, 335, 97, 39);
+								panel.add(lblTipoOferta);
+								
+								lblAsigInves = new JLabel("Asig/Inves:");
+								lblAsigInves.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+								lblAsigInves.setBounds(27, 392, 117, 39);
+								panel.add(lblAsigInves);
+								
+								JLabel lblProyecto = new JLabel("Proyecto:");
+								lblProyecto.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+								lblProyecto.setBounds(27, 365, 82, 39);
+								panel.add(lblProyecto);
+								
+								aquidescripcion = new JLabel("");
+								aquidescripcion.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
+								aquidescripcion.setVerticalAlignment(SwingConstants.TOP);
+								aquidescripcion.setBounds(27, 114, 308, 108);
+								panel.add(aquidescripcion);
+								
+								aquifechaini = new JLabel("");
+								aquifechaini.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
+								aquifechaini.setBounds(130, 220, 205, 39);
+								panel.add(aquifechaini);
+								
+								aquifechafin = new JLabel("");
+								aquifechafin.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
+								aquifechafin.setBounds(130, 247, 205, 39);
+								panel.add(aquifechafin);
+								
+								aquizonaaccion = new JLabel("");
+								aquizonaaccion.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
+								aquizonaaccion.setBounds(163, 275, 172, 39);
+								panel.add(aquizonaaccion);
+								
+								aquiambito = new JLabel("");
+								aquiambito.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
+								aquiambito.setBounds(109, 305, 226, 39);
+								panel.add(aquiambito);
+								
+								aquitipooferta = new JLabel("");
+								aquitipooferta.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
+								aquitipooferta.setBounds(130, 335, 205, 39);
+								panel.add(aquitipooferta);
+								
+								aquiproyecto = new JLabel("");
+								aquiproyecto.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
+								aquiproyecto.setBounds(130, 365, 205, 39);
+								panel.add(aquiproyecto);
+								
+								aquiasiginvest = new JLabel("");
+								aquiasiginvest.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
+								aquiasiginvest.setBounds(154, 392, 181, 39);
+								panel.add(aquiasiginvest);
+								
+								solicitudes = new JButton("Solicitudes");
+								solicitudes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+								solicitudes.setEnabled(false);
+								solicitudes.setBackground(new Color(51, 204, 204));
+								solicitudes.setBounds(27, 484, 135, 36);
+								panel.add(solicitudes);
+								
+								btnParticipantes = new JButton("Participantes");
+								btnParticipantes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+								btnParticipantes.setEnabled(false);
+								btnParticipantes.setBackground(new Color(51, 204, 204));
+								btnParticipantes.setBounds(189, 484, 135, 36);
+								panel.add(btnParticipantes);
 						
 						JLabel lblConsultaUnProyecto = new JLabel("Consulta una actividad aqu\u00ED");
 						lblConsultaUnProyecto.setHorizontalAlignment(SwingConstants.CENTER);
@@ -248,17 +374,17 @@ public class GestionActividades extends JPanel {
 
 
 	private void ponerModoVacio() {
-		if(gestionarPersonas != null) {
-			gestionarPersonas.setVisible(false);
-			remove(gestionarPersonas);
-			gestionarPersonas = null;
+		if(gestionarPersonas_1 != null) {
+			gestionarPersonas_1.setVisible(false);
+			remove(gestionarPersonas_1);
+			gestionarPersonas_1 = null;
 		}
-		gestionarPersonas = new JPanel();
-		gestionarPersonas.setBorder(new LineBorder(new Color(0, 0, 0)));
-		gestionarPersonas.setBounds(658, 114, 409, 543);
-		add(gestionarPersonas);
-		gestionarPersonas.setVisible(true);
-		gestionarPersonas.setLayout(null);
+		gestionarPersonas_1 = new JPanel();
+		gestionarPersonas_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		gestionarPersonas_1.setBounds(658, 114, 409, 543);
+		add(gestionarPersonas_1);
+		gestionarPersonas_1.setVisible(true);
+		gestionarPersonas_1.setLayout(null);
 		pantalla = Pantalla.Vacio;
 		
 		JLabel lblModoCreacin = new JLabel("<html><center>Pulsa sobre una actividad para gestionarla. Aquí podrás gestionar sus solicitudes y sus participantes.</center><html>");
@@ -266,51 +392,39 @@ public class GestionActividades extends JPanel {
 		lblModoCreacin.setForeground(Color.BLACK);
 		lblModoCreacin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblModoCreacin.setBounds(26, 229, 361, 77);
-		gestionarPersonas.add(lblModoCreacin);
+		gestionarPersonas_1.add(lblModoCreacin);
 	}
 
 
 	
-	
+	/*
 	private void ponerModoEditar() {
-		if(consultado != null) {
+		//if(consultado != null) {
 		gestionarPersonas.setVisible(false);
 		remove(gestionarPersonas);
 		gestionarPersonas = null;
-		gestionarPersonas = new JPanel();
+		gestionarPersonas_1 = new JPanel();
 		pantalla = Pantalla.Editar;
-		gestionarPersonas.setBorder(new LineBorder(new Color(0, 0, 0)));
-		gestionarPersonas.setBounds(658, 114, 409, 543);
-		add(gestionarPersonas);
-		gestionarPersonas.setVisible(true);
-		gestionarPersonas.setLayout(null);
+		gestionarPersonas_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		gestionarPersonas_1.setBounds(658, 114, 409, 543);
+		add(gestionarPersonas_1);
+		gestionarPersonas_1.setVisible(true);
+		gestionarPersonas_1.setLayout(null);
 				
-				int i = 0;
-				JComboBox<Tupla> boxProfesor = new JComboBox<Tupla>();
-				boxProfesor.setBounds(140, 108, 248, 30);
-				for(Tupla t : PDI.getPDISimple()) {
-					boxProfesor.addItem(t);
-					if(t.elemento1.equals(Integer.toString(consultado.getId()))) {
-						i = boxProfesor.getItemCount()-1;
-					}
-				}
-				boxProfesor.setSelectedIndex(i);
-				gestionarPersonas.add(boxProfesor);
-				
-				JLabel lblProfesor = new JLabel("PDI al cargo:");
-				lblProfesor.setBounds(27, 101, 117, 36);
-				gestionarPersonas.add(lblProfesor);
+				JLabel lblProfesor = new JLabel("Descripci\u00F3n:");
+				lblProfesor.setBounds(27, 86, 117, 36);
+				gestionarPersonas_1.add(lblProfesor);
 				lblProfesor.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 				
 				JLabel lblTitulo = new JLabel("T\u00EDtulo:");
 				lblTitulo.setBounds(27, 61, 54, 30);
-				gestionarPersonas.add(lblTitulo);
+				gestionarPersonas_1.add(lblTitulo);
 				lblTitulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 				
 				titulo = new JTextField();
 				titulo.setText(consultado.getTitulo());
 				titulo.setBounds(91, 61, 297, 30);
-				gestionarPersonas.add(titulo);
+				gestionarPersonas_1.add(titulo);
 				titulo.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyTyped(KeyEvent e) {
@@ -322,54 +436,19 @@ public class GestionActividades extends JPanel {
 				titulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 				titulo.setColumns(10);
 				
-				JLabel lblActividades = new JLabel("A\u00F1ade actividades existentes a este proyecto:");
-				lblActividades.setBounds(27, 151, 361, 39);
-				gestionarPersonas.add(lblActividades);
-				lblActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-				JScrollPane scroll = new JScrollPane();
-				scroll.setBounds(27, 185, 361, 101);
-				gestionarPersonas.add(scroll);
 				
-				DefaultListModel<Tupla> actividades = new DefaultListModel<Tupla>();
-				for(Tupla t : Actividad.getActividadesDisponiblesSimple()) {
-					actividades.addElement(t);
-				}
-				
-				JList<Tupla> list = new JList<Tupla>(actividades);
-				list.setBackground(UIManager.getColor("Button.background"));
-				list.setSelectionModel(new ToggleSelectionModel());
-				list.setLayoutOrientation(JList.VERTICAL);
-				list.setBorder(new LineBorder(new Color(0, 0, 0)));
-				
-						scroll.setViewportView(list);
-						
+			
 						JLabel info = new JLabel("\"\"");
 						info.setBounds(27, 435, 361, 25);
-						gestionarPersonas.add(info);
+						gestionarPersonas_1.add(info);
 						info.setVisible(false);
 						info.setHorizontalAlignment(SwingConstants.CENTER);
 						info.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						
-						JScrollPane scroll2 = new JScrollPane();
-						scroll2.setBounds(27, 324, 361, 101);
-						gestionarPersonas.add(scroll2);
-						
-						DefaultListModel<Tupla> actividadesproy = new DefaultListModel<Tupla>();
-						for(Tupla t : Proyecto.getActividadesSimple(consultado.getId())) {
-							actividadesproy.addElement(t);
-						}
-						
-						JList<Tupla> list2 = new JList<Tupla>(actividadesproy);
-						list2.setBackground(UIManager.getColor("Button.background"));
-						list2.setSelectionModel(new ToggleSelectionModel());
-						list2.setLayoutOrientation(JList.VERTICAL);
-						list2.setBorder(new LineBorder(new Color(0, 0, 0)));
-						
-						scroll2.setViewportView(list2);
+	
 						
 						JButton btnGuardar = new JButton("Guardar");
 						btnGuardar.setBounds(57, 463, 140, 44);
-						gestionarPersonas.add(btnGuardar);
+						gestionarPersonas_1.add(btnGuardar);
 						btnGuardar.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mousePressed(MouseEvent e) {
@@ -387,7 +466,7 @@ public class GestionActividades extends JPanel {
 										if (!consultado.getPDI().getEmail().equals(seleccionada.elemento1)) {
 											consultado.setPDI(new PDI(seleccionada.elemento1));
 										}
-										*/
+										
 										
 										actualizarActividades();
 										ponerModoVacio();
@@ -409,12 +488,7 @@ public class GestionActividades extends JPanel {
 						lblModoCreacin.setForeground(Color.RED);
 						lblModoCreacin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 						lblModoCreacin.setBounds(27, 21, 361, 30);
-						gestionarPersonas.add(lblModoCreacin);
-						
-						JLabel lblEliminaActividadesDe = new JLabel("Elimina actividades de este proyecto:");
-						lblEliminaActividadesDe.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						lblEliminaActividadesDe.setBounds(27, 292, 361, 39);
-						gestionarPersonas.add(lblEliminaActividadesDe);
+						gestionarPersonas_1.add(lblModoCreacin);
 						
 						JButton btnNoGuardar = new JButton("No guardar");
 						btnNoGuardar.addMouseListener(new MouseAdapter() {
@@ -426,9 +500,74 @@ public class GestionActividades extends JPanel {
 						btnNoGuardar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 						btnNoGuardar.setBackground(new Color(51, 204, 204));
 						btnNoGuardar.setBounds(207, 463, 140, 44);
-						gestionarPersonas.add(btnNoGuardar);
+						gestionarPersonas_1.add(btnNoGuardar);
+						
+						TextArea textArea = new TextArea();
+						textArea.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
+						textArea.setBounds(27, 115, 361, 110);
+						gestionarPersonas_1.add(textArea);
+						
+						JLabel lblInicio = new JLabel("Inicio:");
+						lblInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+						lblInicio.setBounds(27, 219, 105, 39);
+						gestionarPersonas_1.add(lblInicio);
+						
+						JDateChooser fechaini = new JDateChooser();
+						fechaini.setBounds(80, 231, 117, 25);
+						gestionarPersonas_1.add(fechaini);
+						
+						JLabel lblFinal = new JLabel("Final:");
+						lblFinal.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+						lblFinal.setBounds(221, 219, 54, 39);
+						gestionarPersonas_1.add(lblFinal);
+						
+						JDateChooser fechafin = new JDateChooser();
+						fechafin.setBounds(271, 231, 117, 25);
+						gestionarPersonas_1.add(fechafin);
+						
+						JLabel lblZonaDeAccin_1 = new JLabel("Zona de acci\u00F3n:");
+						lblZonaDeAccin_1.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+						lblZonaDeAccin_1.setBounds(27, 320, 126, 39);
+						gestionarPersonas_1.add(lblZonaDeAccin_1);
+						
+						JComboBox comboBox = new JComboBox();
+						comboBox.setBounds(121, 297, 267, 25);
+						gestionarPersonas_1.add(comboBox);
+						
+						JLabel label_2 = new JLabel("\u00C1mbito:");
+						label_2.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+						label_2.setBounds(27, 252, 72, 39);
+						gestionarPersonas_1.add(label_2);
+						
+						JLabel label_3 = new JLabel("Tipo oferta:");
+						label_3.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+						label_3.setBounds(24, 286, 97, 39);
+						gestionarPersonas_1.add(label_3);
+						
+						JComboBox comboBox_1 = new JComboBox();
+						comboBox_1.setBounds(100, 263, 288, 25);
+						gestionarPersonas_1.add(comboBox_1);
+						
+						JComboBox comboBox_2 = new JComboBox();
+						comboBox_2.setBounds(160, 331, 228, 25);
+						gestionarPersonas_1.add(comboBox_2);
+						
+						JLabel lblAsignatura = new JLabel("Asignatura:");
+						lblAsignatura.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+						lblAsignatura.setBounds(27, 349, 126, 39);
+						gestionarPersonas_1.add(lblAsignatura);
+						
+						JLabel label_1 = new JLabel("Zona de acci\u00F3n:");
+						label_1.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+						label_1.setBounds(27, 378, 126, 39);
+						gestionarPersonas_1.add(label_1);
+						
+						JLabel label_4 = new JLabel("Zona de acci\u00F3n:");
+						label_4.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+						label_4.setBounds(27, 406, 126, 39);
+						gestionarPersonas_1.add(label_4);
 		}
-	}
+	}*/
 	
 	public void actualizarActividades() {
 		actividades.clear();
