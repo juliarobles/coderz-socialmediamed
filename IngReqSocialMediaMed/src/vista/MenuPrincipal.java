@@ -30,6 +30,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel editarong;
 	private JPanel listaActividades;
 	private EditarActividad editarActividad;
+	private ConsultarActividad consultar;
 
 	/**
 	 * Launch the application.
@@ -232,7 +233,16 @@ public class MenuPrincipal extends JFrame {
 	public void cambiarAListaActividades(Usuario usu) {
 		listaActividades = new ListaActividades(this, usu);
 		this.listaActividades.setVisible(true);
-		this.usuario.setVisible(false);
+		if(usuario != null) {
+			this.usuario.setVisible(false);
+			usuario =null;
+		}
+		if(consultar != null) {
+			consultar.setVisible(false);
+			consultar = null;
+		}
+		
+		
 		setContentPane(listaActividades);
 		
 	}
@@ -276,5 +286,11 @@ public class MenuPrincipal extends JFrame {
 			editarActividad.setVisible(true);
 			setContentPane(editarActividad);
 		}
+	}
+	public void cambiarAConsultarActividad (Actividad a, Usuario usu) {
+		consultar = new ConsultarActividad (this, usu, a);
+		listaActividades.setVisible(false);
+		consultar.setVisible(true);
+		setContentPane(consultar);
 	}
 }
