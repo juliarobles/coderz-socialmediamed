@@ -90,6 +90,31 @@ public class Actividad {
 		return asignatura == null && investigador == null;
 	}
 	
+	
+	public List<Tupla> getParticipantes() {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT u.email, u.nombre, u.apellido1, u.apellido2 FROM PARTICIPAR p, PARTICIPANTES u WHERE u.email = p.usuario AND p.actividad = " + this.id + ";")) {
+			lista.add(new Tupla((String) tupla[0], (String) tupla[1] + " " + (String) tupla[2] + " " + (String) tupla[3]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public void borrarParticipantes(List<Tupla> eliminados) {
+		BD mibd = new BD();
+		for(Tupla t : eliminados) {
+			mibd.Delete("DELETE FROM PARTICIPAR WHERE usuario = '" + t.elemento1 + "' AND actividad = " + this.id + ";");
+		}
+		mibd.finalize();
+	}
+	
+	public void aniadirParticipante(String email) {
+		BD mibd = new BD();
+		mibd.Insert("INSERT INTO PARTICIPAR VALUES('" + email + "', " + this.id + ");");
+		mibd.finalize();
+	}
+	
 	public static List<Tupla> getActividadesDisponiblesSimple(){
 		List<Tupla> lista = new ArrayList<>();
 		BD mibd = new BD();
@@ -157,12 +182,13 @@ public class Actividad {
 		
 		String asig = (asignatura != null)? Integer.toString(asignatura.getId()) : "NULL";
 		String proy = (proyecto != null)? Integer.toString(proyecto.getId()) : "NULL";
+		String pdicargo = (pdi != null)? pdi.getEmail() : "NULL";
 	
 		BD mibd = new BD();
 		mibd.Insert("INSERT INTO ACTIVIDADES (titulo, descripcion, imagen, fechainicio, fechafinal, zonaaccion, tipooferta, asignatura, proyecto, ong, investigador, ambito) "
 				+ "VALUES('" + titulo + "', '" + descripcion + "', NULL, '" + fechainicio + "', '" 
 				+ fechafinal + "', '" + zonaaccion.toString() + "', '" + tipooferta.toString() + "', " + asig + ", " 
-				+ proy + ", '" + ong.getEmail() + "', '" + pdi.getEmail() + "', '" + ambito.toString() + "');");
+				+ proy + ", '" + ong.getEmail() + "', " + pdicargo + ", '" + ambito.toString() + "');");
 		
 		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM ACTIVIDADES;");
 		mibd.finalize();
@@ -367,6 +393,8 @@ public class Actividad {
 		mibd.finalize();
 		this.ambito = ambito;
 	}
+
+	
 
 	
 	

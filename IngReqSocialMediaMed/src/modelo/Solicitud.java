@@ -9,10 +9,12 @@ public class Solicitud {
 	private int aceptadopdi; //0 indefinido, 1 aceptado, 2 rechazado
 	private int aceptadoong;
 	
+	private String email;
+	
 	public static List<Tupla> getTodasSolicitudesPDIGestorSimple(int idActividad){
 		List<Tupla> list = new ArrayList<>();
 		BD mibd = new BD();
-		for(Object[] tupla : mibd.Select("SELECT s.participante, u.nombre, u.apellido1, u.apellido2 FROM SOLICITUDES s, PARTICIPANTES u WHERE u.email = s.participante AND s.aceptadopdi = 0;")) {
+		for(Object[] tupla : mibd.Select("SELECT s.participante, u.nombre, u.apellido1, u.apellido2 FROM SOLICITUDES s, PARTICIPANTES u WHERE u.email = s.participante AND s.aceptadopdi = 0 AND s.actividad = " + idActividad + ";")) {
 			list.add(new Tupla((String) tupla[0], (String)tupla[1] + " " + (String)tupla[2] + " " + (String)tupla[3]));
 		}
 		mibd.finalize();
@@ -49,7 +51,7 @@ public class Solicitud {
 	
 	public Solicitud(Usuario participante, Actividad actividad) {
 		BD mibd = new BD();
-		Object[] tupla = mibd.Select("SELECT * FROM participante = '" + participante.email + "' AND actividad = " + actividad.getId() + ";").get(0);
+		Object[] tupla = mibd.Select("SELECT * FROM SOLICITUDES WHERE participante = '" + participante.email + "' AND actividad = " + actividad.getId() + ";").get(0);
 		int tipo = (int)mibd.SelectEscalar("SELECT tipo FROM USUARIOSUMA WHERE email = '" + (String)tupla[0] + "';");
 		mibd.finalize();
 		if(tipo == 1) {
@@ -62,6 +64,17 @@ public class Solicitud {
 		this.actividad = new Actividad((Integer) tupla[1]);
 		this.aceptadopdi = (Integer) tupla[2];
 		this.aceptadoong = (Integer) tupla[3];
+		this.email = participante.email;
+	}
+	
+	public Solicitud(String usuario, Actividad actividad) {
+		BD mibd = new BD();
+		Object[] tupla = mibd.Select("SELECT * FROM SOLICITUDES WHERE participante = '" + usuario + "' AND actividad = " + actividad.getId() + ";").get(0);
+		mibd.finalize();
+		this.actividad = new Actividad((Integer) tupla[1]);
+		this.aceptadopdi = (Integer) tupla[2];
+		this.aceptadoong = (Integer) tupla[3];
+		this.email = usuario;
 	}
 
 	
@@ -79,6 +92,7 @@ public class Solicitud {
 		this.actividad = actividad;
 		this.aceptadopdi = aceptadopdi;
 		this.aceptadoong = aceptadoong;
+		this.email = participante.email;
 	}
 
 	public Usuario getParticipante() {
@@ -87,7 +101,7 @@ public class Solicitud {
 
 	public void setParticipante(Usuario participante) {
 		BD mibd = new BD();
-		mibd.Update("UPDATE SOLICITUDES SET participante = '" + participante.getEmail() + "' WHERE participante = '" + this.participante.getEmail() + "' AND actividad = " + this.actividad.getId() + ";");
+		mibd.Update("UPDATE SOLICITUDES SET participante = '" + participante.getEmail() + "' WHERE participante = '" + this.email + "' AND actividad = " + this.actividad.getId() + ";");
 		mibd.finalize();
 		this.participante = participante;
 	}
@@ -98,40 +112,41 @@ public class Solicitud {
 
 	public void setActividad(Actividad actividad) {
 		BD mibd = new BD();
-		mibd.Update("UPDATE SOLICITUDES SET actividad = " + actividad.getId() + " WHERE participante = '" + this.participante.getEmail() + "' AND actividad = " + this.actividad.getId() + ";");
+		mibd.Update("UPDATE SOLICITUDES SET actividad = " + actividad.getId() + " WHERE participante = '" + this.email + "' AND actividad = " + this.actividad.getId() + ";");
 		mibd.finalize();
 		this.actividad = actividad;
 	}
 
-	public int getAceptadopdi() {
-		return aceptadopdi;
+	public boolean getAceptadopdi() {
+		return aceptadopdi == 1;
 	}
 
 	private void setAceptadopdi(int aceptadopdi) {
 		BD mibd = new BD();
-		mibd.Update("UPDATE SOLICITUDES SET aceptadopdi = " + aceptadopdi + " WHERE participante = '" + this.participante.getEmail() + "' AND actividad = " + this.actividad.getId() + ";");
+		mibd.Update("UPDATE SOLICITUDES SET aceptadopdi = " + aceptadopdi + " WHERE participante = '" + this.email + "' AND actividad = " + this.actividad.getId() + ";");
 		mibd.finalize();
 		this.aceptadopdi = aceptadopdi;
 	}
 
-	public int getAceptadoong() {
-		return aceptadoong;
+	public boolean getAceptadoong() {
+		return aceptadoong == 1;
 	}
 
 	private void setAceptadoong(int aceptadoong) {
 		BD mibd = new BD();
-		mibd.Update("UPDATE SOLICITUDES SET aceptadoong = " + aceptadoong + " WHERE participante = '" + this.participante.getEmail() + "' AND actividad = " + this.actividad.getId() + ";");
+		mibd.Update("UPDATE SOLICITUDES SET aceptadoong = " + aceptadoong + " WHERE participante = '" + this.email + "' AND actividad = " + this.actividad.getId() + ";");
 		mibd.finalize();
 		this.aceptadoong = aceptadoong;
 	}
 	
 	public void borrarSolicitud() {
 		BD mibd = new BD();
-		mibd.Delete("DELETE FROM SOLICITUDES WHERE participante = '" + this.participante.getEmail() + "' AND actividad = " + this.actividad.getId() + ";");
+		mibd.Delete("DELETE FROM SOLICITUDES WHERE participante = '" + this.email + "' AND actividad = " + this.actividad.getId() + ";");
 		mibd.finalize();
 		this.participante = null;
 		this.actividad = null;
 		this.aceptadopdi = -1;
 		this.aceptadoong = -1;
+		this.email = null;
 	}
 }

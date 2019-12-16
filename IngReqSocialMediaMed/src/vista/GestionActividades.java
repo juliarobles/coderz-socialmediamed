@@ -7,13 +7,17 @@ import modelo.Actividad;
 import modelo.ONG;
 import modelo.PDI;
 import modelo.Proyecto;
+import modelo.Solicitud;
 import modelo.Tupla;
 import utilidades.ToggleSelectionModel;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -46,13 +50,12 @@ public class GestionActividades extends JPanel {
 	}
 	
 	enum Pantalla {
-		Editar, Solicitudes, Participantes, Vacio
+		Solicitudes, Participantes, Vacio
 	}
 	
 	private JLabel aquititulo, aquidescripcion;
 	private JTextField titulo;
 	private JPanel gestionarPersonas;
-	private JPanel gestionarPersonas_1;
 	private JButton btnEditar;
 	private JButton btnEliminar;
 	private DefaultListModel<Tupla> actividades;
@@ -73,6 +76,11 @@ public class GestionActividades extends JPanel {
 	private JLabel aquifechafin;
 	private JLabel aquifechaini;
 	private JLabel lblAsigInves;
+	private JLabel lblParticipantes;
+	private JLabel info;
+	private JButton btnAceptar;
+	private DefaultListModel<Tupla> participantes, solicitantes;
+	private JButton btnRechazar;
 
 	
 	public void establecerConsultado(Actividad p) {
@@ -211,6 +219,7 @@ public class GestionActividades extends JPanel {
 		add(lblListaDeProyectos);
 		
 		ponerModoVacio();
+		
 						
 						JLabel lblCreaeditaProyectosAqu = new JLabel("Solicitudes / Participantes");
 						lblCreaeditaProyectosAqu.setHorizontalAlignment(SwingConstants.CENTER);
@@ -257,7 +266,7 @@ public class GestionActividades extends JPanel {
 								});
 								btnEditar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 								btnEditar.setBackground(new Color(51, 204, 204));
-								btnEditar.setBounds(27, 438, 135, 36);
+								btnEditar.setBounds(27, 438, 142, 36);
 								if(modo.equals(Modo.ONG)) {
 									btnEditar.setVisible(false);
 								}
@@ -267,12 +276,15 @@ public class GestionActividades extends JPanel {
 								btnEliminar.addMouseListener(new MouseAdapter() {
 									@Override
 									public void mousePressed(MouseEvent e) {
+										SeguroEliminarActividad se = new SeguroEliminarActividad(yo, consultado);
+										se.setVisible(true);
+										yo.setEnabled(false);
 									}
 								});
 								btnEliminar.setEnabled(false);
 								btnEliminar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 								btnEliminar.setBackground(new Color(51, 204, 204));
-								btnEliminar.setBounds(189, 438, 135, 36);
+								btnEliminar.setBounds(190, 438, 145, 36);
 								if(modo.equals(Modo.ONG)) {
 									btnEliminar.setVisible(false);
 								}
@@ -350,17 +362,31 @@ public class GestionActividades extends JPanel {
 								panel.add(aquiasiginvest);
 								
 								solicitudes = new JButton("Solicitudes");
+								solicitudes.addMouseListener(new MouseAdapter() {
+									@Override
+									public void mousePressed(MouseEvent e) {
+										ponerModoSolicitudes();
+									}
+								});
 								solicitudes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 								solicitudes.setEnabled(false);
 								solicitudes.setBackground(new Color(51, 204, 204));
-								solicitudes.setBounds(27, 484, 135, 36);
+								solicitudes.setBounds(27, 484, 142, 36);
 								panel.add(solicitudes);
 								
 								btnParticipantes = new JButton("Participantes");
+								btnParticipantes.addMouseListener(new MouseAdapter() {
+									@Override
+									public void mousePressed(MouseEvent e) {
+										if(consultado != null) {
+											ponerModoParticipantes();
+										}	
+									}
+								});
 								btnParticipantes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 								btnParticipantes.setEnabled(false);
 								btnParticipantes.setBackground(new Color(51, 204, 204));
-								btnParticipantes.setBounds(189, 484, 135, 36);
+								btnParticipantes.setBounds(190, 484, 145, 36);
 								panel.add(btnParticipantes);
 						
 						JLabel lblConsultaUnProyecto = new JLabel("Consulta una actividad aqu\u00ED");
@@ -373,18 +399,163 @@ public class GestionActividades extends JPanel {
 	}
 
 
-	private void ponerModoVacio() {
-		if(gestionarPersonas_1 != null) {
-			gestionarPersonas_1.setVisible(false);
-			remove(gestionarPersonas_1);
-			gestionarPersonas_1 = null;
+	private void ponerModoSolicitudes() {
+		if(gestionarPersonas != null) {
+			gestionarPersonas.setVisible(false);
+			remove(gestionarPersonas);
+			gestionarPersonas = null;
 		}
-		gestionarPersonas_1 = new JPanel();
-		gestionarPersonas_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		gestionarPersonas_1.setBounds(658, 114, 409, 543);
-		add(gestionarPersonas_1);
-		gestionarPersonas_1.setVisible(true);
-		gestionarPersonas_1.setLayout(null);
+		gestionarPersonas = new JPanel();
+		gestionarPersonas.setBorder(new LineBorder(new Color(0, 0, 0)));
+		gestionarPersonas.setBounds(658, 114, 409, 543);
+		add(gestionarPersonas);
+		gestionarPersonas.setVisible(true);
+		gestionarPersonas.setLayout(null);
+		pantalla = Pantalla.Participantes;
+		
+		lblParticipantes = new JLabel("SOLICITUDES");
+		lblParticipantes.setForeground(Color.BLUE);
+		lblParticipantes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblParticipantes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblParticipantes.setBounds(10, 10, 389, 30);
+		gestionarPersonas.add(lblParticipantes);
+		
+		JScrollPane scroll = new JScrollPane();
+		scroll.setBounds(20, 50, 367, 380);
+		gestionarPersonas.add(scroll);
+	
+		solicitantes = new DefaultListModel<Tupla>();
+		actualizarSolicitantes();
+		
+		JList<Tupla> list = new JList<Tupla>(solicitantes);
+		list.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		list.setOpaque(false);
+		list.setSelectionModel(new ToggleSelectionModel());
+		list.setLayoutOrientation(JList.VERTICAL);
+		scroll.setViewportView(list);
+		
+		info = new JLabel("");
+		info.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
+		info.setBounds(10, 440, 389, 30);
+		info.setVisible(false);
+		gestionarPersonas.add(info);
+		
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				try {
+					for(Tupla t : list.getSelectedValuesList()) {
+						Solicitud s =  new Solicitud(t.elemento1, consultado);
+						if(modo.equals(Modo.Gestor)) {
+							consultado.aniadirParticipante(t.elemento1);
+							s.aceptadoPorPDIGestor();
+							s.aceptadoPorONG();
+						} else if (modo.equals(Modo.PDI)) {
+							s.aceptadoPorPDIGestor();
+							if(s.getAceptadoong()) {
+								consultado.aniadirParticipante(t.elemento1);
+							} 
+						} else {
+							s.aceptadoPorONG();
+							if(s.getAceptadopdi()) {
+								consultado.aniadirParticipante(t.elemento1);
+							} 
+						}
+					}
+					actualizarSolicitantes();
+					info.setText("Solicitante/s aceptados correctamente");
+					info.setForeground(Color.GREEN);
+					info.setHorizontalAlignment(SwingConstants.CENTER);
+					info.setVisible(true);
+					Timer timer = new Timer (6000, new ActionListener () 
+					{ 
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(e.getWhen() >= 5000) {
+								info.setVisible(false);
+							} else {
+								info.setVisible(true);
+							}
+						} 
+					}); 
+					timer.start();
+					timer.setRepeats(false);
+				} catch (Exception ex) {
+					info.setText("ERROR: " + ex.getMessage());
+					info.setForeground(Color.RED);
+					info.setVisible(true);
+					System.out.println(ex.getMessage());
+				}
+			}
+		});
+		btnAceptar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		btnAceptar.setBackground(new Color(51, 204, 204));
+		btnAceptar.setBounds(73, 480, 128, 36);
+		gestionarPersonas.add(btnAceptar);
+		
+		btnRechazar = new JButton("Rechazar");
+		btnRechazar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				try {
+					for(Tupla t : list.getSelectedValuesList()) {
+						Solicitud s =  new Solicitud(t.elemento1, consultado);
+						if(modo.equals(Modo.Gestor)) {
+							s.rechazadoPorPDIGestor();
+							s.rechazadoPorONG();
+						} else if (modo.equals(Modo.PDI)) {
+							s.rechazadoPorPDIGestor();
+						} else {
+							s.rechazadoPorONG();
+						}
+					}
+					actualizarSolicitantes();
+					info.setText("Solicitante/s rechazados correctamente");
+					info.setForeground(Color.GREEN);
+					info.setHorizontalAlignment(SwingConstants.CENTER);
+					info.setVisible(true);
+					Timer timer = new Timer (6000, new ActionListener () 
+					{ 
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(e.getWhen() >= 5000) {
+								info.setVisible(false);
+							} else {
+								info.setVisible(true);
+							}
+						} 
+					}); 
+					timer.start();
+					timer.setRepeats(false);
+				} catch (Exception ex) {
+					info.setText("ERROR: " + ex.getMessage());
+					info.setForeground(Color.RED);
+					info.setVisible(true);
+					System.out.println(ex.getMessage());
+				}
+			}
+		});
+		btnRechazar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		btnRechazar.setBackground(new Color(51, 204, 204));
+		btnRechazar.setBounds(211, 480, 128, 36);
+		gestionarPersonas.add(btnRechazar);
+		
+	}
+
+
+	private void ponerModoVacio() {
+		if(gestionarPersonas != null) {
+			gestionarPersonas.setVisible(false);
+			remove(gestionarPersonas);
+			gestionarPersonas = null;
+		}
+		gestionarPersonas = new JPanel();
+		gestionarPersonas.setBorder(new LineBorder(new Color(0, 0, 0)));
+		gestionarPersonas.setBounds(658, 114, 409, 543);
+		add(gestionarPersonas);
+		gestionarPersonas.setVisible(true);
+		gestionarPersonas.setLayout(null);
 		pantalla = Pantalla.Vacio;
 		
 		JLabel lblModoCreacin = new JLabel("<html><center>Pulsa sobre una actividad para gestionarla. Aquí podrás gestionar sus solicitudes y sus participantes.</center><html>");
@@ -392,183 +563,112 @@ public class GestionActividades extends JPanel {
 		lblModoCreacin.setForeground(Color.BLACK);
 		lblModoCreacin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblModoCreacin.setBounds(26, 229, 361, 77);
-		gestionarPersonas_1.add(lblModoCreacin);
+		gestionarPersonas.add(lblModoCreacin);
+	}
+
+	private void ponerModoParticipantes(){
+		if(gestionarPersonas != null) {
+			gestionarPersonas.setVisible(false);
+			remove(gestionarPersonas);
+			gestionarPersonas = null;
+		}
+		gestionarPersonas = new JPanel();
+		gestionarPersonas.setBorder(new LineBorder(new Color(0, 0, 0)));
+		gestionarPersonas.setBounds(658, 114, 409, 543);
+		add(gestionarPersonas);
+		gestionarPersonas.setVisible(true);
+		gestionarPersonas.setLayout(null);
+		pantalla = Pantalla.Participantes;
+		
+		lblParticipantes = new JLabel("PARTICIPANTES");
+		lblParticipantes.setForeground(Color.RED);
+		lblParticipantes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblParticipantes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblParticipantes.setBounds(10, 10, 389, 30);
+		gestionarPersonas.add(lblParticipantes);
+		
+		JScrollPane scroll = new JScrollPane();
+		scroll.setBounds(20, 50, 367, 380);
+		gestionarPersonas.add(scroll);
+	
+		participantes = new DefaultListModel<Tupla>();
+		actualizarParticipantes();
+		
+		JList<Tupla> list = new JList<Tupla>(participantes);
+		list.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		list.setOpaque(false);
+		list.setSelectionModel(new ToggleSelectionModel());
+		list.setLayoutOrientation(JList.VERTICAL);
+		scroll.setViewportView(list);
+		
+		info = new JLabel("");
+		info.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
+		info.setBounds(10, 440, 389, 30);
+		info.setVisible(false);
+		gestionarPersonas.add(info);
+		
+		btnAceptar = new JButton("Eliminar de la actividad");
+		btnAceptar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				try {
+					consultado.borrarParticipantes(list.getSelectedValuesList());
+					actualizarParticipantes();
+					info.setText("Participante/s eliminados correctamente");
+					info.setForeground(Color.GREEN);
+					info.setHorizontalAlignment(SwingConstants.CENTER);
+					info.setVisible(true);
+					Timer timer = new Timer (6000, new ActionListener () 
+					{ 
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(e.getWhen() >= 5000) {
+								info.setVisible(false);
+							} else {
+								info.setVisible(true);
+							}
+						} 
+					}); 
+					timer.start();
+					timer.setRepeats(false);
+				} catch (Exception ex) {
+					info.setText("ERROR: " + ex.getMessage());
+					info.setForeground(Color.RED);
+					info.setVisible(true);
+				}
+				
+			}
+		});
+		btnAceptar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		btnAceptar.setBackground(new Color(51, 204, 204));
+		btnAceptar.setBounds(93, 480, 221, 36);
+		gestionarPersonas.add(btnAceptar);
+		
+	}
+	
+	private void actualizarSolicitantes() {
+		solicitantes.clear();
+		if(!modo.equals(Modo.ONG)) {
+			for(Tupla t : Solicitud.getTodasSolicitudesPDIGestorSimple(consultado.getId())) {
+				solicitantes.addElement(t);
+			}
+		} else {
+			for(Tupla t : Solicitud.getTodasSolicitudesONGSimple(consultado.getId())) {
+				solicitantes.addElement(t);
+			}
+		}
+		
 	}
 
 
-	
-	/*
-	private void ponerModoEditar() {
-		//if(consultado != null) {
-		gestionarPersonas.setVisible(false);
-		remove(gestionarPersonas);
-		gestionarPersonas = null;
-		gestionarPersonas_1 = new JPanel();
-		pantalla = Pantalla.Editar;
-		gestionarPersonas_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		gestionarPersonas_1.setBounds(658, 114, 409, 543);
-		add(gestionarPersonas_1);
-		gestionarPersonas_1.setVisible(true);
-		gestionarPersonas_1.setLayout(null);
-				
-				JLabel lblProfesor = new JLabel("Descripci\u00F3n:");
-				lblProfesor.setBounds(27, 86, 117, 36);
-				gestionarPersonas_1.add(lblProfesor);
-				lblProfesor.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-				
-				JLabel lblTitulo = new JLabel("T\u00EDtulo:");
-				lblTitulo.setBounds(27, 61, 54, 30);
-				gestionarPersonas_1.add(lblTitulo);
-				lblTitulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-				
-				titulo = new JTextField();
-				titulo.setText(consultado.getTitulo());
-				titulo.setBounds(91, 61, 297, 30);
-				gestionarPersonas_1.add(titulo);
-				titulo.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyTyped(KeyEvent e) {
-						if (titulo.getText().length() == 100) {
-					         e.consume(); 
-					    }
-					}
-				});
-				titulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-				titulo.setColumns(10);
-				
-				
-			
-						JLabel info = new JLabel("\"\"");
-						info.setBounds(27, 435, 361, 25);
-						gestionarPersonas_1.add(info);
-						info.setVisible(false);
-						info.setHorizontalAlignment(SwingConstants.CENTER);
-						info.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-	
-						
-						JButton btnGuardar = new JButton("Guardar");
-						btnGuardar.setBounds(57, 463, 140, 44);
-						gestionarPersonas_1.add(btnGuardar);
-						btnGuardar.addMouseListener(new MouseAdapter() {
-							@Override
-							public void mousePressed(MouseEvent e) {
-								try {
-									if(titulo.getText().isEmpty()) {
-										info.setForeground(Color.RED);
-										info.setText("El titulo es obligatorio");
-										info.setVisible(true);
-									} else {
-										if(!titulo.getText().equals(consultado.getTitulo())){
-											consultado.setTitulo(titulo.getText());
-										}
-										/*
-										Tupla seleccionada = (Tupla)boxProfesor.getSelectedItem();
-										if (!consultado.getPDI().getEmail().equals(seleccionada.elemento1)) {
-											consultado.setPDI(new PDI(seleccionada.elemento1));
-										}
-										
-										
-										actualizarActividades();
-										ponerModoVacio();
-										//establecerConsultado(consultado);
-									}
-								} catch(Exception ex) {
-									info.setForeground(Color.RED);
-									System.out.println(ex.getMessage());
-									info.setText("Error: el proyecto no se ha editado correctamente");
-									info.setVisible(true);
-								}
-							}
-						});
-						btnGuardar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						btnGuardar.setBackground(new Color(51, 204, 204));
-						
-						JLabel lblModoCreacin = new JLabel("MODO EDITAR");
-						lblModoCreacin.setHorizontalAlignment(SwingConstants.CENTER);
-						lblModoCreacin.setForeground(Color.RED);
-						lblModoCreacin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						lblModoCreacin.setBounds(27, 21, 361, 30);
-						gestionarPersonas_1.add(lblModoCreacin);
-						
-						JButton btnNoGuardar = new JButton("No guardar");
-						btnNoGuardar.addMouseListener(new MouseAdapter() {
-							@Override
-							public void mousePressed(MouseEvent e) {
-								ponerModoVacio();
-							}
-						});
-						btnNoGuardar.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						btnNoGuardar.setBackground(new Color(51, 204, 204));
-						btnNoGuardar.setBounds(207, 463, 140, 44);
-						gestionarPersonas_1.add(btnNoGuardar);
-						
-						TextArea textArea = new TextArea();
-						textArea.setFont(new Font("Malgun Gothic", Font.PLAIN, 14));
-						textArea.setBounds(27, 115, 361, 110);
-						gestionarPersonas_1.add(textArea);
-						
-						JLabel lblInicio = new JLabel("Inicio:");
-						lblInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						lblInicio.setBounds(27, 219, 105, 39);
-						gestionarPersonas_1.add(lblInicio);
-						
-						JDateChooser fechaini = new JDateChooser();
-						fechaini.setBounds(80, 231, 117, 25);
-						gestionarPersonas_1.add(fechaini);
-						
-						JLabel lblFinal = new JLabel("Final:");
-						lblFinal.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						lblFinal.setBounds(221, 219, 54, 39);
-						gestionarPersonas_1.add(lblFinal);
-						
-						JDateChooser fechafin = new JDateChooser();
-						fechafin.setBounds(271, 231, 117, 25);
-						gestionarPersonas_1.add(fechafin);
-						
-						JLabel lblZonaDeAccin_1 = new JLabel("Zona de acci\u00F3n:");
-						lblZonaDeAccin_1.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						lblZonaDeAccin_1.setBounds(27, 320, 126, 39);
-						gestionarPersonas_1.add(lblZonaDeAccin_1);
-						
-						JComboBox comboBox = new JComboBox();
-						comboBox.setBounds(121, 297, 267, 25);
-						gestionarPersonas_1.add(comboBox);
-						
-						JLabel label_2 = new JLabel("\u00C1mbito:");
-						label_2.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						label_2.setBounds(27, 252, 72, 39);
-						gestionarPersonas_1.add(label_2);
-						
-						JLabel label_3 = new JLabel("Tipo oferta:");
-						label_3.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						label_3.setBounds(24, 286, 97, 39);
-						gestionarPersonas_1.add(label_3);
-						
-						JComboBox comboBox_1 = new JComboBox();
-						comboBox_1.setBounds(100, 263, 288, 25);
-						gestionarPersonas_1.add(comboBox_1);
-						
-						JComboBox comboBox_2 = new JComboBox();
-						comboBox_2.setBounds(160, 331, 228, 25);
-						gestionarPersonas_1.add(comboBox_2);
-						
-						JLabel lblAsignatura = new JLabel("Asignatura:");
-						lblAsignatura.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						lblAsignatura.setBounds(27, 349, 126, 39);
-						gestionarPersonas_1.add(lblAsignatura);
-						
-						JLabel label_1 = new JLabel("Zona de acci\u00F3n:");
-						label_1.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						label_1.setBounds(27, 378, 126, 39);
-						gestionarPersonas_1.add(label_1);
-						
-						JLabel label_4 = new JLabel("Zona de acci\u00F3n:");
-						label_4.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						label_4.setBounds(27, 406, 126, 39);
-						gestionarPersonas_1.add(label_4);
+	private void actualizarParticipantes() {
+		participantes.clear();
+		for(Tupla t : consultado.getParticipantes()) {
+			participantes.addElement(t);
 		}
-	}*/
-	
+	}
+
+
 	public void actualizarActividades() {
 		actividades.clear();
 		if(modo.equals(Modo.Gestor)) {
