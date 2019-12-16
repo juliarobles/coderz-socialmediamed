@@ -18,6 +18,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class ConsultarActividad extends JPanel {
 		
@@ -138,5 +139,11 @@ public class ConsultarActividad extends JPanel {
 		campoONG.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		campoONG.setBounds(140, 493, 159, 20);
 		add(campoONG);
+		campoONG.setText(act.getOng().toString());
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(ConsultarActividad.class.getResource("/resources/fondo 6 asm.png")));
+		label.setBounds(0, 0, 1100, 715);
+		add(label);
 	}
 }
