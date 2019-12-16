@@ -61,7 +61,7 @@ public class ConsultarActividad extends JPanel {
 				//padre.cambiarAEditarONG(ong);
 				//dispose();
 				int vol = 0;
-				if(!act.esVoluntariado()) {
+				if(act.esVoluntariado()) {
 					vol =1;
 				}
 				new Solicitud(usu, act, vol,0);

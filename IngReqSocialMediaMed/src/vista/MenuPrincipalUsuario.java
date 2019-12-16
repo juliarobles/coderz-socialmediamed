@@ -153,6 +153,13 @@ public class MenuPrincipalUsuario extends JPanel {
 		add(scroll);
 		
 		JList<Tupla> match = new JList<Tupla>(listamatch);
+		match.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//Acceder a actividad elegida
+				padre.cambiarAConsultarActividad(new Actividad(Integer.parseInt(match.getSelectedValue().elemento1)), usu);
+			}
+		});
 		match.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
 		match.setBorder(null);
 		match.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -165,6 +172,13 @@ public class MenuPrincipalUsuario extends JPanel {
 		add(scroll2);
 		
 		JList<Tupla> nuevas = new JList<Tupla>(listanuevos);
+		nuevas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println((Integer.parseInt(nuevas.getSelectedValue().elemento1)));
+				padre.cambiarAConsultarActividad(new Actividad(Integer.parseInt(nuevas.getSelectedValue().elemento1)), usu);
+			}
+		});
 		nuevas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
 		nuevas.setBorder(null);
 		nuevas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -177,12 +191,18 @@ public class MenuPrincipalUsuario extends JPanel {
 		scroll3.setBounds(43, 505, 967, 119);
 		add(scroll3);
 		
-		JList<Tupla> list = new JList<Tupla>(listamassolicitados);
-		list.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
-		list.setBorder(null);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setLayoutOrientation(JList.VERTICAL);
-		scroll3.setViewportView(list);
+		JList<Tupla> comunes = new JList<Tupla>(listamassolicitados);
+		comunes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				padre.cambiarAConsultarActividad(new Actividad(Integer.parseInt(comunes.getSelectedValue().elemento1)), usu);
+			}
+		});
+		comunes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
+		comunes.setBorder(null);
+		comunes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		comunes.setLayoutOrientation(JList.VERTICAL);
+		scroll3.setViewportView(comunes);
 		
 		
 		if(usu.getClass().equals(PDI.class)) {

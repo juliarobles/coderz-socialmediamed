@@ -289,7 +289,15 @@ public class MenuPrincipal extends JFrame {
 	}
 	public void cambiarAConsultarActividad (Actividad a, Usuario usu) {
 		consultar = new ConsultarActividad (this, usu, a);
-		listaActividades.setVisible(false);
+		if(listaActividades != null) {
+			listaActividades.setVisible(false);
+			listaActividades = null;
+		}
+		if(usuario != null) {
+			usuario.setVisible(false);
+			usuario = null;
+		}
+		
 		consultar.setVisible(true);
 		setContentPane(consultar);
 	}
