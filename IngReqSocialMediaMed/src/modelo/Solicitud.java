@@ -77,6 +77,16 @@ public class Solicitud {
 		this.email = usuario;
 	}
 
+	public static boolean estaApuntado(String emailusu, Actividad a) {
+		BD mibd = new BD();
+		boolean res = !mibd.Select("SELECT participante FROM SOLICITUDES WHERE participante = '" + emailusu + "' AND actividad = " + a.getId() + ";").isEmpty();
+		if(!res) {
+			res = !mibd.Select("SELECT usuario FROM PARTICIPAR WHERE usuario = '" + emailusu + "' AND actividad = " + a.getId() + ";").isEmpty();
+		}
+		mibd.finalize();
+		return res;
+	}
+	
 	
 	/**
 	 * Este método crea una nueva solicitud

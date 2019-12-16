@@ -90,7 +90,6 @@ public class Actividad {
 		return asignatura == null && investigador == null;
 	}
 	
-	
 	public List<Tupla> getParticipantes() {
 		List<Tupla> lista = new ArrayList<>();
 		BD mibd = new BD();
