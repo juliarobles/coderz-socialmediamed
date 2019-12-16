@@ -18,7 +18,7 @@ public class MenuPrincipal extends JFrame {
 
 	private JPanel invitado;
 	private MenuPrincipalUsuario usuario;
-	private JPanel ong;
+	private MenuPrincipalONG ong;
 	private JPanel gestor;
 	private GestionPropuestas gestionPropuestas;
 	private JPanel registroong;
@@ -31,6 +31,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel listaActividades;
 	private EditarActividad editarActividad;
 	private ConsultarActividad consultar;
+	
 
 	/**
 	 * Launch the application.
@@ -207,19 +208,35 @@ public class MenuPrincipal extends JFrame {
 		setContentPane(crearproyecto);
 		
 	}
-	public void cambiarAPerfilONG(ONG ong) {
-		perfilong = new PerfilONG (this, ong);
-		if(ong != null)
+	
+	/**
+	 * El booleano indica si viene desde la vista consultar actividad o viene desde otra
+	 * Consultar = true - No consultar = false;
+	 */
+	public void cambiarAPerfilONG(ONG ong, boolean conAPerf) {
+		
+		boolean editar = true;
+		if(this.ong != null)
 		{
+			System.out.println("He entrado en ong de cambiar a perfil ONG");
 			this.ong.setVisible(false);
-			ong = null;
+			this.ong = null;
 		}
 		if(editarong != null) {
+			System.out.println("He entrado en editarONG de cambiar a perfil ONG");
 			editarong.setVisible(false);
 			editarong= null;
 		}
+		if(conAPerf) {
+			System.out.println("He entrado en consultar de cambiar a perfil ONG");
+			editar = false;
+			consultar.setVisible(false);
+			//consultar = null;
+			
+		}
+		perfilong = new PerfilONG (this, ong, editar);
 		perfilong.setVisible(true);
-		setContentPane(perfilong);
+		this.setContentPane(perfilong);
 		
 	}
 	public void cambiarAEditarONG (ONG ong) {
@@ -298,6 +315,16 @@ public class MenuPrincipal extends JFrame {
 			usuario = null;
 		}
 		
+		consultar.setVisible(true);
+		setContentPane(consultar);
+	}
+
+	public void volverAConsultarActividad() {
+		// TODO Auto-generated method stub
+		if(perfilong != null) {
+			perfilong.setVisible(false);
+			perfilong = null;
+		}
 		consultar.setVisible(true);
 		setContentPane(consultar);
 	}

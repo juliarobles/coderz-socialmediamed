@@ -159,6 +159,20 @@ public class ConsultarActividad extends JPanel {
 		add(lblOng);
 		
 		JLabel campoONG = new JLabel("");
+		campoONG.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				padre.cambiarAPerfilONG(act.getOng(), true);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				campoONG.setForeground(new Color(51, 204, 204));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				campoONG.setForeground(Color.BLACK);
+			}
+		});
 		campoONG.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		campoONG.setBounds(140, 493, 159, 20);
 		add(campoONG);

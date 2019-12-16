@@ -63,7 +63,7 @@ public class EditarPerfilONG extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				//Abrir ventana gestion
 				//padre.cambiarGestor();
-				padre.cambiarAPerfilONG(ong);
+				padre.cambiarAPerfilONG(ong, false);
 				
 			}
 			@Override
@@ -237,7 +237,7 @@ public class EditarPerfilONG extends JPanel {
 	    this.textoDescripcion.addKeyListener(new KeyAdapter() {
 	    	@Override
 			public void keyReleased(KeyEvent e) {
-				 int limite  = 100;
+				 int limite  = 255;
 				
 					if (textoDescripcion.getText().length()== limite)
 					     e.consume();
@@ -247,14 +247,14 @@ public class EditarPerfilONG extends JPanel {
 					textoDescripcion.setText(textoDescripcion.getText().substring(0, limite));
 					e.consume();
 				}
-				 lblLimiteCaracteres.setText( (textoDescripcion.getText().length())+ "/" + limite);
+				 lblLimiteCaracteresDescripcion.setText( (textoDescripcion.getText().length())+ "/" + limite);
 				
 				
 			}
 			@Override
 			public void keyPressed(KeyEvent e) {
-				int limite = 100;
-				lblLimiteCaracteres.setText( (textoDescripcion.getText().length())+ "/" + limite);
+				int limite = 250;
+				lblLimiteCaracteresDescripcion.setText( (textoDescripcion.getText().length())+ "/" + limite);
 				if(e.getKeyCode()==8) {
 					
 				}else

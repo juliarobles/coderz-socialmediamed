@@ -26,7 +26,7 @@ public class PerfilONG extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PerfilONG(MenuPrincipal padre, ONG ong) {
+	public PerfilONG(MenuPrincipal padre, ONG ong, boolean editar) {
 		ImageIcon imgasm = new ImageIcon(PerfilUsuario2.class.getResource("/resources/_Logo AccionSocialMed png.png"));
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -38,12 +38,20 @@ public class PerfilONG extends JPanel {
 		lblCopyright.setBounds(10, 654, 620, 14);
 		lblCopyright.setVisible(true);
 		add(lblCopyright);
+
+		//imagenASM1.repaint();
+		
 		JLabel lblxb = new JLabel("<html>&larr;<html>");
 		lblxb.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				//Abrir ventana gestion
-				padre.cambiarONG(ong);
+				if(editar) {
+					padre.cambiarONG(ong);
+				}else {
+					padre.volverAConsultarActividad();
+				}
+				
 				
 			}
 			@Override
@@ -55,55 +63,59 @@ public class PerfilONG extends JPanel {
 				lblxb.setForeground(Color.BLACK);
 			}
 		});
-		//imagenASM1.repaint();
-		
-	    JPanel panelEditarPerfil = new JPanel();
-	    panelEditarPerfil.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-	    panelEditarPerfil.setBounds(450, 457, 200, 50);
-	    panelEditarPerfil.setBackground(new Color(93,103,175));
-	    add(panelEditarPerfil);
-	    panelEditarPerfil.setLayout(null);
-	    
-	    JLabel lblEditarPerfil = new JLabel("Editar perfil");
-	    lblEditarPerfil.addMouseListener(new MouseAdapter() {
-	    	@Override
-	    	public void mousePressed(MouseEvent e) {
-	    		
-	    		Border bordeAbajo = new BevelBorder(1);
-	    		
-	    		panelEditarPerfil.setBorder(bordeAbajo);
-	    		
-	    		
-	    		//panelEditarPerfil.setBorder(bordeArriba);
-	    		
-	    	}
-	    	
-	    	@Override
-	    	public void mouseClicked(MouseEvent e) {
-	    		Border bordeArriba = new BevelBorder(0);
-	    		panelEditarPerfil.setBorder(bordeArriba);
-	    		//Cambiar a editar perfil
-	    		padre.cambiarAEditarONG(ong);
-				//dispose();
-				
-	    	}
-	    });
-	    
-	    lblEditarPerfil.setFont(new Font("Tahoma", Font.BOLD, 14));
-	    lblEditarPerfil.setBounds(0, 0, 200, 50);
-	    panelEditarPerfil.add(lblEditarPerfil);
-	    lblEditarPerfil.setForeground(Color.WHITE);
-	    lblEditarPerfil.setHorizontalAlignment(SwingConstants.CENTER);
-	    lblEditarPerfil.setBackground(new Color(93,103,175));
+		lblxb.setForeground(Color.BLACK);
+		lblxb.setBounds(40, 10, 52, 51);
+		lblxb.setFont(new Font("Tahoma", Font.PLAIN, 46));
+		add(lblxb);
+	   
+	    if(editar) {
+			
+			
+	    	 JPanel panelEditarPerfil = new JPanel();
+	 	    panelEditarPerfil.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+	 	    panelEditarPerfil.setBounds(450, 457, 200, 50);
+	 	    panelEditarPerfil.setBackground(new Color(93,103,175));
+	 	    add(panelEditarPerfil);
+	 	    panelEditarPerfil.setLayout(null);
+	 	    
+	 	    JLabel lblEditarPerfil = new JLabel("Editar perfil");
+	 	    lblEditarPerfil.addMouseListener(new MouseAdapter() {
+	 	    	@Override
+	 	    	public void mousePressed(MouseEvent e) {
+	 	    		
+	 	    		Border bordeAbajo = new BevelBorder(1);
+	 	    		
+	 	    		panelEditarPerfil.setBorder(bordeAbajo);
+	 	    		
+	 	    		
+	 	    		//panelEditarPerfil.setBorder(bordeArriba);
+	 	    		
+	 	    	}
+	 	    	
+	 	    	@Override
+	 	    	public void mouseClicked(MouseEvent e) {
+	 	    		Border bordeArriba = new BevelBorder(0);
+	 	    		panelEditarPerfil.setBorder(bordeArriba);
+	 	    		//Cambiar a editar perfil
+	 	    		padre.cambiarAEditarONG(ong);
+	 				//dispose();
+	 				
+	 	    	}
+	 	    });
+		    lblEditarPerfil.setFont(new Font("Tahoma", Font.BOLD, 14));
+		    lblEditarPerfil.setBounds(0, 0, 200, 50);
+		    panelEditarPerfil.add(lblEditarPerfil);
+		    lblEditarPerfil.setForeground(Color.WHITE);
+		    lblEditarPerfil.setHorizontalAlignment(SwingConstants.CENTER);
+		    lblEditarPerfil.setBackground(new Color(93,103,175));
+	    }
+
 	    
 	    
 	    
 	    //Aqui continua la flecha para volver atrás --- Todo lo que tiene lblxb
 	    
-		lblxb.setForeground(Color.BLACK);
-		lblxb.setBounds(40, 10, 52, 51);
-		lblxb.setFont(new Font("Tahoma", Font.PLAIN, 46));
-		add(lblxb);
+
 		
 		JLabel lblNombreONG = new JLabel("");
 		lblNombreONG.setForeground(Color.WHITE);
