@@ -21,6 +21,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 
 public class ConsultarActividad extends JPanel {
+	private boolean apuntado;
 		
 	/**
 	 * Create the panel.
@@ -28,6 +29,20 @@ public class ConsultarActividad extends JPanel {
 	public ConsultarActividad(MenuPrincipal padre, Usuario usu, Actividad act) {
 		this.setSize(1100, 715);
 		setLayout(null);
+		JLabel lblApuntado = new JLabel("\u00A1Solicitud enviada!");
+		lblApuntado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblApuntado.setFont(new Font("Malgun Gothic Semilight", Font.BOLD, 14));
+		lblApuntado.setForeground(Color.GREEN);
+		lblApuntado.setBounds(87, 629, 210, 20);
+		add(lblApuntado);
+		
+		if(Solicitud.estaApuntado(usu.getEmail(), act)) {
+			apuntado = true;
+			lblApuntado.setVisible(true);
+		}else {
+			apuntado = false;
+			lblApuntado.setVisible(false);
+		}
 		
 		JPanel panelApuntarse = new JPanel();
 		panelApuntarse.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -38,7 +53,7 @@ public class ConsultarActividad extends JPanel {
 		
 		JLabel lblApuntarse = new JLabel("Apuntarse");
 		
-		
+	
 	
 		lblApuntarse.addMouseListener(new MouseAdapter() {
 			@Override
@@ -64,7 +79,15 @@ public class ConsultarActividad extends JPanel {
 				if(act.esVoluntariado()) {
 					vol =1;
 				}
-				new Solicitud(usu, act, vol,0);
+				if(!apuntado) {
+					System.out.println("Solicitud enviada");
+					new Solicitud(usu, act, vol,0);	
+				}
+				apuntado = true;
+				
+				lblApuntado.setVisible(true);
+				
+				
 			}
 		});
 		
@@ -75,7 +98,7 @@ public class ConsultarActividad extends JPanel {
 		lblApuntarse.setHorizontalAlignment(SwingConstants.CENTER);
 		lblApuntarse.setBackground(new Color(93,103,175));
 		
-		
+
 		
 		JLabel lblTituloActividad = new JLabel("");
 		lblTituloActividad.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 32));
