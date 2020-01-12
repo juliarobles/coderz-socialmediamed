@@ -19,10 +19,10 @@ import vista.Toast;
 import vista.MenuPrincipal;
 import vista.MenuPrincipalONG;
 
-public class CtrCrearPropuesta implements MouseListener, ItemListener{
+public class CtrCrearPropuesta implements MouseListener{
 	private CrearPropuesta panel;
-	private Fecha Inicio;
-	private Fecha Fin;
+	//private Fecha Inicio;
+	//private Fecha Fin;
 	private ONG ong;
 	private MenuPrincipal padre;
 	public  CtrCrearPropuesta (CrearPropuesta panel, ONG ong, MenuPrincipal padre) {
@@ -43,8 +43,11 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 			}else if(a.equals(panel.getBtnCrear())) {
 				System.out.println(panel.getCampoExplicacion());
 				if(todoCorrecto().equals(" ")) {
-					
-					new Propuesta( panel.getCampoTitulo(), panel.getCampoExplicacion(),Inicio.toString() , Fin.toString(), ong);
+					//( String titulo, String descripcion, String fechainicial, String fechafinal, ZonaAccion zonaaccion, TipoOferta tipooferta, Ambito ambito, 
+					//Asignatura asignatura, Proyecto proyecto, ONG ong, PDI pdi, int aceptadogestor, int aceptadopdi)
+					new Propuesta( panel.getCampoTitulo(), panel.getCampoExplicacion(), panel.getFechaIni(), panel.getFechaFin(), 
+							(ZonaAccion)panel.zonaaccion.getSelectedItem(), (TipoOferta)panel.tipooferta.getSelectedItem(), (Ambito)panel.ambito.getSelectedItem(),
+							null, null, ong, null, 0, 0);
 					System.out.println("propuesta creada correctamente");
 				}else {
 					JFrame error = new Toast(todoCorrecto());
@@ -58,18 +61,30 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 	private String todoCorrecto() {
 		String res = " ";
 		
-	
-		if(panel.getAnyoFin().getText().trim().isEmpty()) res += "El campo año final está vacío<br>";
-		else if(Integer.parseInt(panel.getAnyoFin().getText())> 2099) res += "No te pases de gracioso<br>";
-		if(panel.getAnyoInicio().getText().trim().isEmpty())res+= "El campo año inicio está vacío<br>";
-		else 		if(Integer.parseInt(panel.getAnyoInicio().getText())> 2099) res += "No te pases de gracioso 2<br>";
+		//Comprobar que no se pueda poner una fecha en el pasado
+		/*
+		 * if(panel.getAnyoFin().getText().trim().isEmpty()) res +=
+		 * "El campo año final está vacío<br>"; else
+		 * if(Integer.parseInt(panel.getAnyoFin().getText())> 2099) res +=
+		 * "No te pases de gracioso<br>";
+		 * if(panel.getAnyoInicio().getText().trim().isEmpty())res+=
+		 * "El campo año inicio está vacío<br>"; else
+		 * if(Integer.parseInt(panel.getAnyoInicio().getText())> 2099) res +=
+		 * "No te pases de gracioso 2<br>";
+		 */
 		if(panel.getCampoExplicacion().trim().isEmpty()) res += "La descripción está vacía<br>";
 		if(panel.getCampoTitulo().trim().isEmpty()) res += "El título está vacío<br>";
-		if(res.equals(" ")) {
-			Inicio = new Fecha ((Integer)panel.getdIni().getSelectedItem(), (Meses)panel.getmIni().getSelectedItem(), Integer.valueOf(panel.getAnyoInicio().getText()));
-			Fin = new Fecha ((Integer)panel.getdFin().getSelectedItem(), (Meses)panel.getmFin().getSelectedItem(), Integer.valueOf(panel.getAnyoFin().getText()));
-			if(! Inicio.igualOAnterior(Fin))res+= "La fecha de inicio es posterior a la fecha de finalización.<br>";
-		}
+		/*
+		 * if(res.equals(" ")) { Inicio = new Fecha
+		 * ((Integer)panel.getdIni().getSelectedItem(),
+		 * (Meses)panel.getmIni().getSelectedItem(),
+		 * Integer.valueOf(panel.getAnyoInicio().getText())); Fin = new Fecha
+		 * ((Integer)panel.getdFin().getSelectedItem(),
+		 * (Meses)panel.getmFin().getSelectedItem(),
+		 * Integer.valueOf(panel.getAnyoFin().getText())); if(!
+		 * Inicio.igualOAnterior(Fin))res+=
+		 * "La fecha de inicio es posterior a la fecha de finalización.<br>"; }
+		 */
 		
 		System.out.println(res);
 		return res;
@@ -99,39 +114,30 @@ public class CtrCrearPropuesta implements MouseListener, ItemListener{
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-		
-		Object o = e.getSource();
-		System.out.println("Holaaaa?");
-		if(o instanceof JComboBox) {
-			System.out.println("El objeto es instancia de combobox");
-			if(((JComboBox) o).equals(panel.getmFin())) {
-				System.out.println("Meses final");
-				JComboBox cbm = (JComboBox)o;
-				JComboBox <Integer>cbd = panel.getdFin();
-				cbd.removeAllItems();
-				añadirDias(cbd,(Fecha.comprobarDias((Meses)cbm.getSelectedItem())));
-				System.out.println("Tengo que poner " + Fecha.comprobarDias((Meses)cbm.getSelectedItem()) + "dias");
-				panel.setdFin(cbd);
-			}else if(((JComboBox) o).equals(panel.getmIni())) {
-				System.out.println("Meses inicio");
-				JComboBox cbm = (JComboBox)o;
-				JComboBox <Integer>cbd = panel.getdIni();
-				cbd.removeAllItems();
-				añadirDias(cbd,(Fecha.comprobarDias((Meses)cbm.getSelectedItem())));
-				System.out.println("Tengo que poner " + Fecha.comprobarDias((Meses)cbm.getSelectedItem()) + "dias");
-				panel.setdIni(cbd);
-			}
-		}
-	}
-	private void añadirDias(JComboBox<Integer> cbd, int i) {
-		for(int cont = 1; cont <= i; cont++) {
-			cbd.addItem(cont);
-		}
-		
-	}
+	
+	/*
+	 * public void itemStateChanged(ItemEvent e) { // TODO Auto-generated method
+	 * stub
+	 * 
+	 * Object o = e.getSource(); System.out.println("Holaaaa?"); if(o instanceof
+	 * JComboBox) { System.out.println("El objeto es instancia de combobox");
+	 * if(((JComboBox) o).equals(panel.getmFin())) {
+	 * System.out.println("Meses final"); JComboBox cbm = (JComboBox)o; JComboBox
+	 * <Integer>cbd = panel.getdFin(); cbd.removeAllItems();
+	 * añadirDias(cbd,(Fecha.comprobarDias((Meses)cbm.getSelectedItem())));
+	 * System.out.println("Tengo que poner " +
+	 * Fecha.comprobarDias((Meses)cbm.getSelectedItem()) + "dias");
+	 * panel.setdFin(cbd); }else if(((JComboBox) o).equals(panel.getmIni())) {
+	 * System.out.println("Meses inicio"); JComboBox cbm = (JComboBox)o; JComboBox
+	 * <Integer>cbd = panel.getdIni(); cbd.removeAllItems();
+	 * añadirDias(cbd,(Fecha.comprobarDias((Meses)cbm.getSelectedItem())));
+	 * System.out.println("Tengo que poner " +
+	 * Fecha.comprobarDias((Meses)cbm.getSelectedItem()) + "dias");
+	 * panel.setdIni(cbd); } } } private void añadirDias(JComboBox<Integer> cbd, int
+	 * i) { for(int cont = 1; cont <= i; cont++) { cbd.addItem(cont); }
+	 * 
+	 * }
+	 */
 	
 		
 	

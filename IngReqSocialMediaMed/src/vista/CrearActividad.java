@@ -36,7 +36,11 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.swing.JCheckBox;
+import com.toedter.calendar.JDateChooser;
 
 
 public class CrearActividad extends JPanel {
@@ -46,9 +50,10 @@ public class CrearActividad extends JPanel {
 	}
 	
 	private JPanel contentPane;
-	private JTextField fechafin;
-	private JTextField fechainicio;
+	//private JTextField fechafin;
+	//private JTextField fechainicio;
 	private JTextField titulo;
+	public JDateChooser fechaini, fechafinal;
 
 	
 	public CrearActividad(MenuPrincipal padre, Propuesta p) {
@@ -87,14 +92,14 @@ public class CrearActividad extends JPanel {
 		lblFecha.setBounds(788, 369, 104, 24);
 		add(lblFecha);
 		
-		fechafin = new JTextField();
-		
-		fechafin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		fechafin.setBorder(new LineBorder(new Color(0, 0, 0)));
-		fechafin.setBounds(873, 366, 136, 31);
-		fechafin.setText(p.getFechafinal());
-		add(fechafin);
-		fechafin.setColumns(10);
+		/*
+		 * fechafin = new JTextField();
+		 * 
+		 * fechafin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		 * fechafin.setBorder(new LineBorder(new Color(0, 0, 0)));
+		 * fechafin.setBounds(873, 366, 136, 31); fechafin.setText(p.getFechafinal());
+		 * add(fechafin); fechafin.setColumns(10);
+		 */
 		
 		JLabel lblImagen = new JLabel("Imagen:");
 		lblImagen.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -112,7 +117,7 @@ public class CrearActividad extends JPanel {
 		for(int cont = 0;TipoOferta.values().length>cont; cont++) {
 			tipooferta.addItem(TipoOferta.values()[cont]);
 		}
-		tipooferta.setSelectedIndex(0);
+		tipooferta.setSelectedItem(p.getTipooferta());
 		tipooferta.setBounds(661, 500, 348, 31);
 		add(tipooferta);
 	
@@ -147,7 +152,7 @@ public class CrearActividad extends JPanel {
 		for(int cont = 0;ZonaAccion.values().length>cont; cont++) {
 			zonaaccion.addItem(ZonaAccion.values()[cont]);
 		}
-		zonaaccion.setSelectedIndex(0);
+		zonaaccion.setSelectedItem(p.getZonaaccion());
 		zonaaccion.setBounds(661, 420, 348, 31);
 		add(zonaaccion);
 		
@@ -156,13 +161,13 @@ public class CrearActividad extends JPanel {
 		lblZonaDeAccion.setBounds(512, 421, 142, 28);
 		add(lblZonaDeAccion);
 		
-		fechainicio = new JTextField();
-		fechainicio.setBorder(new LineBorder(new Color(0, 0, 0)));
-		fechainicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		fechainicio.setBounds(617, 366, 136, 31);
-		fechainicio.setText(p.getFechainicial());
-		add(fechainicio);
-		fechainicio.setColumns(10);
+		/*
+		 * fechainicio = new JTextField(); fechainicio.setBorder(new LineBorder(new
+		 * Color(0, 0, 0))); fechainicio.setFont(new Font("Malgun Gothic Semilight",
+		 * Font.PLAIN, 18)); fechainicio.setBounds(617, 366, 136, 31);
+		 * fechainicio.setText(p.getFechainicial()); add(fechainicio);
+		 * fechainicio.setColumns(10);
+		 */
 		
 		titulo = new JTextField();
 		titulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
@@ -241,50 +246,6 @@ public class CrearActividad extends JPanel {
 		proyectosi.setEnabled(true);
 		add(proyectosi);
 		
-		JComboBox<Ambito> ambito = new JComboBox<Ambito>();
-		ambito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		for(int cont = 0;Ambito.values().length>cont; cont++) {
-			ambito.addItem(Ambito.values()[cont]);
-		}
-		ambito.setSelectedIndex(0);
-		ambito.setBounds(661, 461, 348, 31);
-		add(ambito);
-		
-		JButton btnSubirActividad = new JButton("Subir actividad");
-		btnSubirActividad.setForeground(new Color(255, 255, 255));
-		btnSubirActividad.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if(!titulo.getText().isEmpty()) {
-					try {
-						Asignatura asig = (asignatura.isEnabled())? (Asignatura) asignatura.getSelectedItem() : null;
-						System.out.println("que");
-						Proyecto proy = (proyectosi.isSelected())? new Proyecto(Integer.parseInt(((Tupla) proyecto.getSelectedItem()).elemento1)) : null;
-						System.out.println("estaque");
-						PDI pdi = (profesores.isEnabled())? new PDI(((Tupla)profesores.getSelectedItem()).elemento1) : null;
-						System.out.println("quxsse");
-						Actividad a = new Actividad(titulo.getText(), descripcion.getText(), "", fechainicio.getText(), fechafin.getText(), 
-								(ZonaAccion)zonaaccion.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), asig, proy, p.getOng(), 
-								pdi, (Ambito)ambito.getSelectedItem());
-						System.out.println("qusdsae");
-						p.eliminarPropuesta();
-						System.out.println("quedsad");
-						padre.volverAPropuestasModificado();
-							
-					} catch (Exception ex) {
-						System.out.println(ex.getMessage());
-					}
-						
-				} else {
-					//mostrar error
-				}
-			}
-		});
-		btnSubirActividad.setBackground(new Color(51, 204, 204));
-		btnSubirActividad.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		btnSubirActividad.setBounds(592, 562, 159, 41);
-		add(btnSubirActividad);
-		
 		JComboBox<String> tipo = new JComboBox<String>();
 		tipo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		tipo.setEnabled(true);
@@ -309,6 +270,83 @@ public class CrearActividad extends JPanel {
 		});
 		add(tipo);
 		
+		JComboBox<Ambito> ambito = new JComboBox<Ambito>();
+		ambito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		for(int cont = 0;Ambito.values().length>cont; cont++) {
+			ambito.addItem(Ambito.values()[cont]);
+		}
+		ambito.setSelectedItem(p.getAmbito());
+		ambito.setBounds(661, 461, 348, 31);
+		add(ambito);
+		
+		JButton btnSubirActividad = new JButton("Subir actividad");
+		btnSubirActividad.setForeground(new Color(255, 255, 255));
+		btnSubirActividad.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(!titulo.getText().isEmpty()) {
+					try {
+						/*
+						 * Asignatura asig = (asignatura.isEnabled())? (Asignatura)
+						 * asignatura.getSelectedItem() : null; System.out.println("que"); Proyecto proy
+						 * = (proyectosi.isSelected())? new Proyecto(Integer.parseInt(((Tupla)
+						 * proyecto.getSelectedItem()).elemento1)) : null;
+						 * System.out.println("estaque"); PDI pdi = (profesores.isEnabled())? new
+						 * PDI(((Tupla)profesores.getSelectedItem()).elemento1) : null;
+						 * System.out.println("quxsse"); Actividad a = new Actividad(titulo.getText(),
+						 * descripcion.getText(), "", fechaini.getDateFormatString(),
+						 * fechafinal.getDateFormatString(), (ZonaAccion)zonaaccion.getSelectedItem(),
+						 * (TipoOferta)tipooferta.getSelectedItem(), asig, proy, p.getOng(), pdi,
+						 * (Ambito)ambito.getSelectedItem()); System.out.println("qusdsae");
+						 * p.eliminarPropuesta(); System.out.println("quedsad");
+						 */
+						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+						if(!titulo.getText().equals(p.getTitulo())) p.setTitulo(titulo.getText());
+						if(!descripcion.getText().equals(p.getDescripcion())) p.setDescripcion(descripcion.getText());
+						if(!sdf.format(fechaini.getDate()).equals(p.getFechainicial())) p.setFechainicial(sdf.format(fechaini.getDate()));
+						if(!sdf.format(fechafinal.getDate()).equals(p.getFechafinal())) p.setFechafinal(sdf.format(fechafinal.getDate()));
+						if(!((ZonaAccion)zonaaccion.getSelectedItem()).equals(p.getZonaaccion())) p.setZonaaccion((ZonaAccion)zonaaccion.getSelectedItem());
+						if(!((TipoOferta)tipooferta.getSelectedItem()).equals(p.getTipooferta())) p.setTipooferta((TipoOferta)tipooferta.getSelectedItem());
+						if(!((Ambito)ambito.getSelectedItem()).equals(p.getAmbito())) p.setAmbito((Ambito)ambito.getSelectedItem());
+						if(true) {
+							Asignatura asig = (asignatura.isEnabled())? (Asignatura) asignatura.getSelectedItem() : null;
+							Proyecto proy = (proyectosi.isSelected())? new Proyecto(Integer.parseInt(((Tupla) proyecto.getSelectedItem()).elemento1)) : null;
+							PDI pdi = (profesores.isEnabled())? new PDI(((Tupla)profesores.getSelectedItem()).elemento1) : null;
+							
+							p.setProyecto(proy);
+							
+							if(asig != null) {
+								p.setAsignatura(asig);
+								//p.setInvestigador(null);
+							}
+							
+							if(pdi != null) {
+								//p.setAsignatura(null);
+								p.setInvestigador(pdi);
+							}
+							p.setAceptadogestor(1);
+							if(((String)tipo.getSelectedItem()).equals("Voluntariado")) {
+								p.setAceptadopdi(1);
+							}
+						}
+						padre.volverAPropuestasModificado();
+							
+					} catch (Exception ex) {
+						System.out.println(ex.getMessage());
+					}
+						
+				} else {
+					//mostrar error
+				}
+			}
+		});
+		btnSubirActividad.setBackground(new Color(51, 204, 204));
+		btnSubirActividad.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		btnSubirActividad.setBounds(592, 562, 159, 41);
+		add(btnSubirActividad);
+		
+		
+		
 		
 		JLabel lblqueTipoDe = new JLabel("\u00BFQue tipo de actividad es?");
 		lblqueTipoDe.setHorizontalAlignment(SwingConstants.CENTER);
@@ -320,6 +358,29 @@ public class CrearActividad extends JPanel {
 		lblmbito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblmbito.setBounds(512, 459, 142, 28);
 		add(lblmbito);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		fechaini = new JDateChooser();
+		fechaini.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		try {
+			fechaini.setDate(sdf.parse(p.getFechainicial()));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		fechaini.setBounds(617, 366, 136, 31);
+		add(fechaini);
+		
+		fechafinal = new JDateChooser();
+		fechafinal.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		fechafinal.setBounds(873, 366, 136, 31);
+		try {
+			fechafinal.setDate(sdf.parse(p.getFechafinal()));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		add(fechafinal);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);

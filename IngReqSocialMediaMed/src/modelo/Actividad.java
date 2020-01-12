@@ -181,7 +181,7 @@ public class Actividad {
 		
 		String asig = (asignatura != null)? Integer.toString(asignatura.getId()) : "NULL";
 		String proy = (proyecto != null)? Integer.toString(proyecto.getId()) : "NULL";
-		String pdicargo = (pdi != null)? pdi.getEmail() : "NULL";
+		String pdicargo = (pdi != null)? ("'" + pdi.getEmail() + "'") : "NULL";
 	
 		BD mibd = new BD();
 		mibd.Insert("INSERT INTO ACTIVIDADES (titulo, descripcion, imagen, fechainicio, fechafinal, zonaaccion, tipooferta, asignatura, proyecto, ong, investigador, ambito) "

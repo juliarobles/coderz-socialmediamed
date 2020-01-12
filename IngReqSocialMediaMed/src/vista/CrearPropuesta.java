@@ -20,8 +20,11 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.DocumentFilter.FilterBypass;
 
 import controlador.CtrCrearPropuesta;
+import modelo.Ambito;
 import modelo.Meses;
 import modelo.ONG;
+import modelo.TipoOferta;
+import modelo.ZonaAccion;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -34,10 +37,13 @@ import javax.swing.JButton;
 import javax.swing.JTextPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
 
 public class CrearPropuesta extends JPanel {
 	
@@ -45,31 +51,15 @@ public class CrearPropuesta extends JPanel {
 	private ONG ong;
 	private CtrCrearPropuesta control;
 	private JTextField campoTitulo;
-	private JTextField anyoInicio;
-	private JTextField anyoFin;
-	private JComboBox <Integer>dIni, dFin;
-	private JComboBox <Meses>mIni, mFin;
+	//private JComboBox <Integer>dIni, dFin;
+	//private JComboBox <Meses>mIni, mFin;
 	private JButton btnCrear, btnCancelar;
 	private JTextArea campoExplicacion;
+	public JComboBox zonaaccion, ambito, tipooferta;
+	private JDateChooser fechaini, fechafin;
 	
 	//private Propuesta propuestaActiva;
 	
-
-	public JComboBox<Integer> getdIni() {
-		return dIni;
-	}
-
-	public void setdIni(JComboBox<Integer> dIni) {
-		this.dIni = dIni;
-	}
-
-	public JComboBox<Integer> getdFin() {
-		return dFin;
-	}
-
-	public void setdFin(JComboBox<Integer> dFin) {
-		this.dFin = dFin;
-	}
 
 	/**
 	 * Create the panel.
@@ -141,100 +131,21 @@ public class CrearPropuesta extends JPanel {
 		BarraExplicacion.setBounds(1703, 102, 17, 48);
 		
 		JLabel lblFechaInicio = new JLabel("Fecha inicio:");
-		lblFechaInicio.setBounds(91, 345, 77, 28);
-		lblFechaInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		
-		JLabel lblDia = new JLabel("D\u00EDa");
-		lblDia.setBounds(240, 315, 42, 20);
-		lblDia.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDia.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		
-		JLabel lblMes = new JLabel("Mes");
-		lblMes.setBounds(352, 315, 133, 20);
-		lblMes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		
-		JLabel lblAnyo = new JLabel("A\u00F1o");
-		lblAnyo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAnyo.setBounds(546, 315, 86, 20);
-		lblAnyo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		lblFechaInicio.setBounds(153, 305, 118, 31);
+		lblFechaInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		
 		JLabel lblFechaFin = new JLabel("Fecha fin:");
-		lblFechaFin.setBounds(93, 416, 73, 28);
+		lblFechaFin.setBounds(439, 306, 108, 28);
 		lblFechaFin.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFechaFin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		
-		JComboBox <Integer> DiaInicio = new JComboBox<Integer>();
-		DiaInicio.setBounds(240, 345, 42, 28);
-		DiaInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		
-		JComboBox <Integer>DiaFin = new JComboBox<Integer>();
-		DiaFin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		DiaFin.setBounds(240, 416, 42, 28);
-		
-		JComboBox <Meses>mesInicio = new JComboBox<Meses>();
-		mesInicio.setBounds(352, 345, 133, 28);
-		mesInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		
-		JComboBox<Meses> mesFin = new JComboBox<Meses>();
-		mesFin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		mesFin.setBounds(352, 417, 133, 28);
-		
-		
-		
-		
-		//Aquí tenemos un trozo de codigo para que en los jtextfield solo se puedan poner números//
-		
-		
-		
-		anyoInicio = new JTextField(4);
-		((AbstractDocument)anyoInicio.getDocument()).setDocumentFilter(new DocumentFilter(){
-	        Pattern regEx = Pattern.compile("\\d*");
-	        @Override
-	        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {          
-	            Matcher matcher = regEx.matcher(text);
-	            if(!matcher.matches()){
-	                return;
-	            }
-	            super.replace(fb, offset, length, text, attrs);
-	        }
-	    });
-		anyoInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		anyoInicio.setBounds(546, 345, 86, 28);
-		anyoInicio.setColumns(10);
-		
-		anyoFin = new JTextField(4);
-		((AbstractDocument)anyoFin.getDocument()).setDocumentFilter(new DocumentFilter(){
-	        Pattern regEx = Pattern.compile("\\d*");
-	        @Override
-	        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {          
-	            Matcher matcher = regEx.matcher(text);
-	            if(!matcher.matches()){
-	                return;
-	            }
-	            super.replace(fb, offset, length, text, attrs);
-	        }
-	    });
-		anyoFin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		anyoFin.setBounds(546, 416, 86, 28);
-		anyoFin.setColumns(10);
+		lblFechaFin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		setLayout(null);
 		add(lblTitulo);
 		add(campoTitulo);
-		add(lblDia);
-		add(lblMes);
-		add(lblAnyo);
 		add(lblExplicacin);
 		add(lblFechaInicio);
 		add(lblFechaFin);
 		add(lblSolicitud);
 		add(BarraExplicacion);
-		add(DiaInicio);
-		add(DiaFin);
-		add(mesInicio);
-		add(mesFin);
-		add(anyoInicio);
-		add(anyoFin);
 		
 		JButton btnEnviarSolicitud = new JButton("Enviar solicitud");
 		btnEnviarSolicitud.addActionListener(new ActionListener() {
@@ -259,16 +170,8 @@ public class CrearPropuesta extends JPanel {
 		btnEnviarSolicitud.setBackground(new Color(51,204,204));
 		btnCancelar.setBackground(new Color(51,204,204));
 		control = new CtrCrearPropuesta(this, ong, padre);
-		this.dIni = DiaInicio;
-		this.dFin = DiaFin;
-		this.mFin = mesFin;
-		this.mIni = mesInicio;
 		this.btnCancelar =btnCancelar;
 		this.btnCrear= btnEnviarSolicitud;
-		llenarMeses(mIni);
-		llenarMeses(mFin);
-		llenarDias(dIni);
-		llenarDias(dFin);
 		
 		JLabel lblLimiteCaracteresDescripcion = new JLabel("9/100");
 		lblLimiteCaracteresDescripcion.setForeground(Color.GRAY);
@@ -317,16 +220,63 @@ public class CrearPropuesta extends JPanel {
 		scrollPane.setBounds(172, 102, 677, 161);
 		add(scrollPane);
 		
+		fechaini = new JDateChooser();
+		fechaini.setBounds(281, 317, 133, 19);
+		fechaini.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		add(fechaini);
+		
+		fechafin = new JDateChooser();
+		fechafin.setBounds(551, 317, 124, 19);
+		fechafin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		add(fechafin);
+		
+		zonaaccion = new JComboBox();
+		zonaaccion.setBounds(281, 347, 348, 31);
+		zonaaccion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		for(int cont = 0;ZonaAccion.values().length>cont; cont++) {
+			zonaaccion.addItem(ZonaAccion.values()[cont]);
+		}
+		zonaaccion.setSelectedIndex(0);
+		add(zonaaccion);
+		
+		JLabel lblZonaAccion = new JLabel("Zona accion:");
+		lblZonaAccion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblZonaAccion.setBounds(153, 341, 118, 28);
+		add(lblZonaAccion);
+		
+		JLabel lblAmbito = new JLabel("Ambito:");
+		lblAmbito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblAmbito.setBounds(153, 378, 118, 28);
+		add(lblAmbito);
+		
+		ambito = new JComboBox();
+		ambito.setBounds(281, 394, 348, 31);
+		ambito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		for(int cont = 0;Ambito.values().length>cont; cont++) {
+			ambito.addItem(Ambito.values()[cont]);
+		}
+		ambito.setSelectedIndex(0);
+		add(ambito);
+		
+		JLabel sas = new JLabel("Tipo oferta:");
+		sas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		sas.setBounds(153, 416, 118, 28);
+		add(sas);
+		
+		tipooferta = new JComboBox();
+		tipooferta.setBounds(281, 446, 348, 31);
+		tipooferta.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		for(int cont = 0;TipoOferta.values().length>cont; cont++) {
+			tipooferta.addItem(TipoOferta.values()[cont]);
+		}
+		tipooferta.setSelectedIndex(0);
+		add(tipooferta);
+		
 	
 		
 
 		this.btnCancelar.addMouseListener(control);
 		this.btnCrear.addMouseListener(control);
-		
-		this.dIni.addItemListener(control);
-		this.dFin.addItemListener(control);
-		this.mFin.addItemListener(control);
-		this.mIni.addItemListener(control);
 		
 	
 	}
@@ -347,39 +297,30 @@ public class CrearPropuesta extends JPanel {
 		this.btnCancelar = btnCancelar;
 	}
 
-	private void llenarDias(JComboBox<Integer> cb) {
-		for(int cont = 1; cont <= 31; cont++) {
-			cb.addItem(cont);
-		}
-		
-	}
-
-	public JComboBox<Meses> getmIni() {
-		return mIni;
-	}
-
-
-
-	public JComboBox<Meses> getmFin() {
-		return mFin;
-	}
-
-
-	
-	private void llenarMeses(JComboBox<Meses> cb) {
-		Meses[] a = Meses.values();
-		for(int cont = 0; cont < a.length; cont++) {
-			cb.addItem(a[cont]);
-		}
-		
-	}
-
-
-
+	/*
+	 * private void llenarDias(JComboBox<Integer> cb) { for(int cont = 1; cont <=
+	 * 31; cont++) { cb.addItem(cont); }
+	 * 
+	 * }
+	 * 
+	 * 
+	 * private void llenarMeses(JComboBox<Meses> cb) { Meses[] a = Meses.values();
+	 * for(int cont = 0; cont < a.length; cont++) { cb.addItem(a[cont]); }
+	 * 
+	 * }
+	 */
 	public String getCampoTitulo() {
 		return campoTitulo.getText();
 	}
 
+	public String getFechaIni() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return sdf.format(fechaini.getDate());
+	}
+	public String getFechaFin() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return sdf.format(fechafin.getDate());
+	}
 	public void setCampoTitulo(String campoTitulo) {
 		this.campoTitulo.setText(campoTitulo);;
 	}
@@ -390,21 +331,5 @@ public class CrearPropuesta extends JPanel {
 
 	public void setCampoExplicacion(String campoExplicacion) {
 		this.campoExplicacion.setText(campoExplicacion);;
-	}
-
-	public JTextField getAnyoInicio() {
-		return anyoInicio;
-	}
-
-	public void setAnyoInicio(JTextField anyoInicio) {
-		this.anyoInicio = anyoInicio;
-	}
-
-	public JTextField getAnyoFin() {
-		return anyoFin;
-	}
-
-	public void setAnyoFin(JTextField anyoFin) {
-		this.anyoFin = anyoFin;
 	}
 }

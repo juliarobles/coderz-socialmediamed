@@ -32,19 +32,26 @@ import modelo.TipoOferta;
 import modelo.Tupla;
 import modelo.ZonaAccion;
 import javax.swing.border.LineBorder;
+
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.swing.JCheckBox;
 
 
 public class EditarActividad extends JPanel {
 	
 	private JPanel contentPane;
-	private JTextField fechafin;
-	private JTextField fechainicio;
+	//private JTextField fechafin;
+	//private JTextField fechainicio;
 	private JTextField titulo;
+	public JDateChooser fechaini, fechafinal;
 
 	
 	public EditarActividad(MenuPrincipal padre, Actividad act, boolean gestor) {
@@ -83,13 +90,36 @@ public class EditarActividad extends JPanel {
 		lblFecha.setBounds(788, 369, 104, 24);
 		add(lblFecha);
 		
-		fechafin = new JTextField();
-		fechafin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		fechafin.setBorder(new LineBorder(new Color(0, 0, 0)));
-		fechafin.setBounds(873, 366, 136, 31);
-		fechafin.setText(act.getFechafinal());
-		add(fechafin);
-		fechafin.setColumns(10);
+		/*
+		 * fechafin = new JTextField(); fechafin.setFont(new
+		 * Font("Malgun Gothic Semilight", Font.PLAIN, 18)); fechafin.setBorder(new
+		 * LineBorder(new Color(0, 0, 0))); fechafin.setBounds(873, 366, 136, 31);
+		 * fechafin.setText(act.getFechafinal()); add(fechafin);
+		 * fechafin.setColumns(10);
+		 */
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		fechaini = new JDateChooser();
+		fechaini.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		try {
+			fechaini.setDate(sdf.parse(act.getFechainicio()));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		fechaini.setBounds(617, 366, 136, 31);
+		add(fechaini);
+		
+		fechafinal = new JDateChooser();
+		fechafinal.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		fechafinal.setBounds(873, 366, 136, 31);
+		try {
+			fechafinal.setDate(sdf.parse(act.getFechafinal()));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		add(fechafinal);
 		
 		JLabel lblImagen = new JLabel("Imagen:");
 		lblImagen.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -151,13 +181,13 @@ public class EditarActividad extends JPanel {
 		lblZonaDeAccion.setBounds(512, 421, 142, 28);
 		add(lblZonaDeAccion);
 		
-		fechainicio = new JTextField();
-		fechainicio.setBorder(new LineBorder(new Color(0, 0, 0)));
-		fechainicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		fechainicio.setBounds(617, 366, 136, 31);
-		fechainicio.setText(act.getFechainicio());
-		add(fechainicio);
-		fechainicio.setColumns(10);
+		/*
+		 * fechainicio = new JTextField(); fechainicio.setBorder(new LineBorder(new
+		 * Color(0, 0, 0))); fechainicio.setFont(new Font("Malgun Gothic Semilight",
+		 * Font.PLAIN, 18)); fechainicio.setBounds(617, 366, 136, 31);
+		 * fechainicio.setText(act.getFechainicio()); add(fechainicio);
+		 * fechainicio.setColumns(10);
+		 */
 		
 		titulo = new JTextField();
 		titulo.setText(act.getTitulo());
@@ -264,10 +294,11 @@ public class EditarActividad extends JPanel {
 					if(!titulo.getText().isEmpty()) {
 						try {
 							//Actualizamos titulo
+							SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 							if(!titulo.getText().equals(act.getTitulo())) act.setTitulo(titulo.getText());
 							if(!descripcion.getText().equals(act.getDescripcion())) act.setDescripcion(descripcion.getText());
-							if(!fechainicio.getText().equals(act.getFechainicio())) act.setFechainicio(fechainicio.getText());
-							if(!fechafin.getText().equals(act.getFechafinal())) act.setFechafinal(fechafin.getText());
+							if(!sdf.format(fechaini.getDate()).equals(act.getFechainicio())) act.setFechainicio(sdf.format(fechaini.getDate()));
+							if(!sdf.format(fechafinal.getDate()).equals(act.getFechafinal())) act.setFechafinal(sdf.format(fechafinal.getDate()));
 							if(!((ZonaAccion)zonaaccion.getSelectedItem()).equals(act.getZonaaccion())) act.setZonaaccion((ZonaAccion)zonaaccion.getSelectedItem());
 							if(!((TipoOferta)tipooferta.getSelectedItem()).equals(act.getTipooferta())) act.setTipooferta((TipoOferta)tipooferta.getSelectedItem());
 							if(!((Ambito)ambito.getSelectedItem()).equals(act.getAmbito())) act.setAmbito((Ambito)ambito.getSelectedItem());
