@@ -122,6 +122,29 @@ public class MenuPrincipalONG extends JPanel {
 		add(lblPerfil);
 		add(login);
 		
+		JLabel lblGestionPropuestas = new JLabel("Gestion propuestas");
+		lblGestionPropuestas.setBounds(895, 75, 168, 62);
+		lblGestionPropuestas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//Abrir ventana gestion propuestas
+				padre.cambiarAGestionPropuestasONG(usu);
+				lblGestionPropuestas.setForeground(Color.BLACK);
+				
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblGestionPropuestas.setForeground(new Color(51, 204, 204));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblGestionPropuestas.setForeground(Color.BLACK);
+			}
+		});
+		lblGestionPropuestas.setForeground(Color.BLACK);
+		lblGestionPropuestas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		add(lblGestionPropuestas);
+		
 		JLabel lblGestionarActividades = new JLabel("Gesti\u00F3n de actividades");
 		lblGestionarActividades.setForeground(Color.BLACK);
 		lblGestionarActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));

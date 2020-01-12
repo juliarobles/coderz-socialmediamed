@@ -53,7 +53,27 @@ public class Propuesta {
 	public static List<Tupla> getPropuestasSimpleONG(String emailong) { //pal gestor
 		List<Tupla> lista = new ArrayList<>();
 		BD mibd = new BD();
-		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM PROPUESTA WHERE aceptadogestor = 1 AND aceptadopdi = 0 AND ong = '" + emailong + "');")) {
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM PROPUESTA WHERE aceptadogestor = 1 AND aceptadopdi = 1 AND ong = '" + emailong + "';")) {
+			lista.add(new Tupla(Integer.toString((Integer)tupla[0]), (String)tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<Tupla> getPropuestasSimpleRechazadasONG(String emailong) { //pal gestor
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM PROPUESTA WHERE (aceptadogestor = 2 OR aceptadopdi = 2) AND ong = '" + emailong + "';")) {
+			lista.add(new Tupla(Integer.toString((Integer)tupla[0]), (String)tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<Tupla> getPropuestasSimplePendientesONG(String emailong) { //pal gestor
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM PROPUESTA WHERE aceptadopdi = 0 AND ong = '" + emailong + "';")) {
 			lista.add(new Tupla(Integer.toString((Integer)tupla[0]), (String)tupla[1]));
 		}
 		mibd.finalize();

@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import controlador.CtrBotonVerTodo;
 import controlador.CtrListaONG;
 import controlador.CtrListaPropuesta;
+import controlador.CtrListaPropuestaONG;
 import controlador.CtrListaPropuestaPDI;
 
 import javax.swing.JList;
@@ -25,10 +26,16 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
+import modelo.Actividad;
+import modelo.Ambito;
+import modelo.Asignatura;
 import modelo.ONG;
 import modelo.PDI;
 import modelo.Propuesta;
+import modelo.Proyecto;
+import modelo.TipoOferta;
 import modelo.Tupla;
+import modelo.ZonaAccion;
 
 import javax.swing.JCheckBox;
 import java.awt.event.MouseAdapter;
@@ -39,25 +46,25 @@ import javax.swing.border.LineBorder;
 import javax.swing.UIManager;
 import java.awt.TextArea;
 import javax.swing.JButton;
+import java.awt.SystemColor;
 
-public class GestionPropuestasPDI extends JPanel {
+public class GestionPropuestasONG extends JPanel {
 	
 	public Map<String, String> mapa;
 	public Propuesta prop;
 	public DefaultListModel<Tupla> listapropuestas;
-	public PDI pdi;
+	public ONG ong;
 	public JLabel zonaaccion, ambito, tipooferta, proyecto, tipo;
-	public JPanel propuestapanel;
 	/**
 	 * Create the panel.
 	 * @param padre 
 	 */
-	public GestionPropuestasPDI(MenuPrincipal padre, PDI pdi) {
+	public GestionPropuestasONG(MenuPrincipal padre, ONG ong) {
 		setBackground(Color.WHITE);
 		prop = null;
-		this.pdi = pdi;
+		this.ong = ong;
 		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
-		lblCopyright.setBounds(10, 660, 537, 14);
+		lblCopyright.setBounds(10, 691, 537, 14);
 		add(lblCopyright);
 		setSize(new Dimension(1100, 715));
 		
@@ -75,11 +82,11 @@ public class GestionPropuestasPDI extends JPanel {
 		propuesta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		propuesta.setLayoutOrientation(JList.VERTICAL);
 		scrollPropuestas.setViewportView(propuesta);
-		scrollPropuestas.setBounds(40, 134, 443, 487);
+		scrollPropuestas.setBounds(40, 134, 443, 160);
 		
 		actualizarLista();
 		
-		JLabel lbldpropuesta = new JLabel("Propuestas");
+		JLabel lbldpropuesta = new JLabel("Actividades validadas, falta confirmaci\u00F3n de la ONG");
 		lbldpropuesta.setBounds(42, 94, 574, 42);
 		lbldpropuesta.setHorizontalAlignment(SwingConstants.LEFT);
 		lbldpropuesta.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
@@ -89,7 +96,7 @@ public class GestionPropuestasPDI extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				//Abrir ventana gestion
-				padre.cambiarUsuario(pdi);
+				padre.cambiarONG(ong);
 				
 			}
 			@Override
@@ -112,7 +119,7 @@ public class GestionPropuestasPDI extends JPanel {
 		add(lblGestinDePropuestas);
 		add(scrollPropuestas);
 		
-		propuestapanel = new JPanel();
+		JPanel propuestapanel = new JPanel();
 		propuestapanel.setBackground(UIManager.getColor("Button.background"));
 		propuestapanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		propuestapanel.setBounds(534, 134, 517, 482);
@@ -122,7 +129,7 @@ public class GestionPropuestasPDI extends JPanel {
 		JLabel lblTitulo = new JLabel("Titulo:");
 		lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTitulo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblTitulo.setBounds(10, 15, 64, 31);
+		lblTitulo.setBounds(10, 10, 64, 31);
 		propuestapanel.add(lblTitulo);
 		
 		JLabel titulo = new JLabel("<html>" + "<html>");
@@ -167,12 +174,20 @@ public class GestionPropuestasPDI extends JPanel {
 		fechafin.setBounds(372, 270, 135, 31);
 		propuestapanel.add(fechafin);
 		
-		JButton btnAceptarYCrear = new JButton("Aceptar y editar");
+		JButton btnAceptarYCrear = new JButton("Publicar");
 		btnAceptarYCrear.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if(prop != null) {
-					padre.cambiarACrearActividadPDI(prop);
+					//(String titulo, String descripcion, String imagen, String fechainicio, String fechafinal,
+					//ZonaAccion zonaaccion, TipoOferta tipooferta, Asignatura asignatura, Proyecto proyecto, ONG ong, PDI pdi, Ambito ambito) {
+						
+					Actividad a = new Actividad(prop.getTitulo(), prop.getDescripcion(), null, prop.getFechainicial(), prop.getFechafinal(),
+							prop.getZonaaccion(), prop.getTipooferta(), prop.getAsignatura(), prop.getProyecto(), prop.getOng(), prop.getInvestigador(), prop.getAmbito());
+					prop.eliminarPropuesta();
+					prop = null;
+					actualizarLista();
+					ponerpanelvisible(propuestapanel, false);
 				}
 			}
 		});
@@ -182,13 +197,13 @@ public class GestionPropuestasPDI extends JPanel {
 		btnAceptarYCrear.setBounds(83, 429, 151, 43);
 		propuestapanel.add(btnAceptarYCrear);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton("Eliminar");
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				prop.setAceptadopdi(2);
+				prop.eliminarPropuesta();
 				prop = null;
-				listapropuestas.clear();
+				actualizarLista();
 				ponerpanelvisible(propuestapanel, false);
 			}
 		});
@@ -206,17 +221,17 @@ public class GestionPropuestasPDI extends JPanel {
 		lblPropuestaSeleccionada.setBounds(534, 94, 321, 42);
 		add(lblPropuestaSeleccionada);
 		
-		JLabel lblNombreOng = new JLabel("Nombre ONG:");
+		JLabel lblNombreOng = new JLabel("Nombre PDI:");
 		lblNombreOng.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreOng.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblNombreOng.setBounds(10, 75, 125, 31);
+		lblNombreOng.setBounds(10, 75, 151, 31);
 		propuestapanel.add(lblNombreOng);
 		
-		JLabel nomong = new JLabel("");
-		nomong.setHorizontalAlignment(SwingConstants.LEFT);
-		nomong.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		nomong.setBounds(145, 75, 358, 31);
-		propuestapanel.add(nomong);
+		JLabel nompdi = new JLabel("");
+		nompdi.setHorizontalAlignment(SwingConstants.LEFT);
+		nompdi.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		nompdi.setBounds(120, 75, 383, 31);
+		propuestapanel.add(nompdi);
 
 		
 		
@@ -268,9 +283,7 @@ public class GestionPropuestasPDI extends JPanel {
 		proyecto.setBounds(93, 388, 389, 31);
 		propuestapanel.add(proyecto);
 		
-		
-		
-		tipo = new JLabel("");
+		tipo = new JLabel("Investigaci\u00F3n");
 		tipo.setBounds(73, 44, 418, 31);
 		propuestapanel.add(tipo);
 		tipo.setHorizontalAlignment(SwingConstants.LEFT);
@@ -282,8 +295,50 @@ public class GestionPropuestasPDI extends JPanel {
 		lblTipo.setBounds(10, 44, 64, 31);
 		propuestapanel.add(lblTipo);
 		
-		propuesta.addListSelectionListener(new CtrListaPropuestaPDI(propuestapanel, propuesta, titulo, descripcion, fechaini, fechafin, nomong, this));
+		propuesta.addListSelectionListener(new CtrListaPropuestaONG(propuestapanel, propuesta, titulo, descripcion, fechaini, fechafin, nompdi, this));
 		ponerpanelvisible(propuestapanel, false);
+		
+		JLabel lblPropuestasPendientesDe = new JLabel("Propuestas pendientes de validaci\u00F3n");
+		lblPropuestasPendientesDe.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPropuestasPendientesDe.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblPropuestasPendientesDe.setBounds(42, 297, 574, 42);
+		add(lblPropuestasPendientesDe);
+		
+		JLabel lblPropuestasRechazadas = new JLabel("Propuestas rechazadas");
+		lblPropuestasRechazadas.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPropuestasRechazadas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblPropuestasRechazadas.setBounds(42, 456, 574, 42);
+		add(lblPropuestasRechazadas);
+		
+		DefaultListModel<Tupla> listaenvalidacion = new DefaultListModel<Tupla>();
+		for(Tupla p : Propuesta.getPropuestasSimplePendientesONG(ong.getEmail())) {
+			listaenvalidacion.addElement(p);
+		}
+		
+		DefaultListModel<Tupla> listarechazadas = new DefaultListModel<Tupla>();
+		for(Tupla p : Propuesta.getPropuestasSimpleRechazadasONG(ong.getEmail())) {
+			listarechazadas.addElement(p);
+		}
+		
+		JScrollPane scrollvalidacion = new JScrollPane();
+		JList<Tupla> validacion = new JList<Tupla>(listaenvalidacion);
+		validacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		validacion.setLayoutOrientation(JList.VERTICAL);
+		validacion.setBorder(new LineBorder(new Color(0, 0, 0)));
+		validacion.setBackground(SystemColor.menu);
+		scrollvalidacion.setBounds(42, 335, 441, 121);
+		scrollvalidacion.setViewportView(validacion);
+		add(scrollvalidacion);
+		
+		JScrollPane scrollrechazadas = new JScrollPane();
+		JList<Tupla> rechazadas = new JList<Tupla>(listarechazadas);
+		rechazadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		rechazadas.setLayoutOrientation(JList.VERTICAL);
+		rechazadas.setBorder(new LineBorder(new Color(0, 0, 0)));
+		rechazadas.setBackground(SystemColor.menu);
+		scrollrechazadas.setBounds(42, 495, 441, 121);
+		scrollrechazadas.setViewportView(rechazadas);
+		add(scrollrechazadas);
 	}
 	
 	private void ponerpanelvisible(JPanel propuestapanel, boolean b) {
@@ -298,14 +353,8 @@ public class GestionPropuestasPDI extends JPanel {
 	
 	public void actualizarLista() {
 		listapropuestas.clear();
-		for(Tupla p : Propuesta.getPropuestasSimplePDI(pdi.getEmail())) {
+		for(Tupla p : Propuesta.getPropuestasSimpleONG(ong.getEmail())) {
 			listapropuestas.addElement(p);
 		}
-	}
-
-	public void recargar() {
-		setPropuesta(null);
-		ponerpanelvisible(propuestapanel, false);
-		actualizarLista();
 	}
 }

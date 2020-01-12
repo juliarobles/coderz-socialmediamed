@@ -8,12 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import modelo.PDI;
 import modelo.Propuesta;
 import modelo.Tupla;
 import vista.GestionPropuestas;
+import vista.GestionPropuestasONG;
 import vista.GestionPropuestasPDI;
 
-public class CtrListaPropuestaPDI implements ListSelectionListener {
+public class CtrListaPropuestaONG implements ListSelectionListener {
 
 	private JPanel panel;
 	private JList<Tupla> lista; 
@@ -21,18 +23,18 @@ public class CtrListaPropuestaPDI implements ListSelectionListener {
 	private JLabel descripcion;
 	private JLabel fechaini;
 	private JLabel fechafin;
-	private JLabel ong;
-	private GestionPropuestasPDI vista;
+	private JLabel pdi;
+	private GestionPropuestasONG vista;
 	
-	public CtrListaPropuestaPDI(JPanel panel, JList<Tupla> lista, JLabel titulo, JLabel descripcion, JLabel fechaini,
-			JLabel fechafin, JLabel ong, GestionPropuestasPDI vista) {
+	public CtrListaPropuestaONG(JPanel panel, JList<Tupla> lista, JLabel titulo, JLabel descripcion, JLabel fechaini,
+			JLabel fechafin, JLabel pdi, GestionPropuestasONG vista) {
 		this.panel = panel;
 		this.lista = lista;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.fechaini = fechaini;
 		this.fechafin = fechafin;
-		this.ong = ong;
+		this.pdi = pdi;
 		this.vista = vista;
 	}
 	//Importante para controlar el tamaño de los campos que escribimos
@@ -44,7 +46,14 @@ public class CtrListaPropuestaPDI implements ListSelectionListener {
 			descripcion.setText("<html>" + p.getDescripcion()+ "<html>");
 			fechaini.setText(p.getFechainicial());
 			fechafin.setText(p.getFechafinal());
-			ong.setText(p.getOng().getNombre());
+			if(p.getInvestigador() != null) {
+				pdi.setText(p.getInvestigador().getNombre() + " " + p.getInvestigador().getApellido1() + " " + p.getInvestigador().getApellido2());
+			} else if (p.getAsignatura() != null) {
+				PDI pdicargo = p.getAsignatura().getPDICargo();
+				pdi.setText(pdicargo.getNombre() + " " + pdicargo.getApellido1() + " " + pdicargo.getApellido2());
+			} else {
+				pdi.setText("Sin pdi a cargo");
+			}
 			vista.ambito.setText(p.getAmbito().toString());
 			vista.zonaaccion.setText(p.getZonaaccion().toString());
 			vista.tipooferta.setText(p.getTipooferta().toString());
@@ -64,7 +73,7 @@ public class CtrListaPropuestaPDI implements ListSelectionListener {
 			descripcion.setText("");
 			fechaini.setText("");
 			fechafin.setText("");
-			ong.setText("");
+			pdi.setText("");
 			vista.setPropuesta(null);
 			vista.ambito.setText("");
 			vista.zonaaccion.setText("");

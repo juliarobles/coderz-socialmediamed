@@ -209,6 +209,7 @@ public class GestionPropuestas extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				prop.setAceptadogestor(2);
+				prop.setAceptadopdi(2);
 				prop = null;
 				listapropuestas.clear();
 				ponerpanelvisible(propuestapanel, false);

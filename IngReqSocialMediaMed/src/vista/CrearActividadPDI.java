@@ -296,7 +296,7 @@ public class CrearActividadPDI extends JPanel {
 						if(!((TipoOferta)tipooferta.getSelectedItem()).equals(p.getTipooferta())) p.setTipooferta((TipoOferta)tipooferta.getSelectedItem());
 						if(!((Ambito)ambito.getSelectedItem()).equals(p.getAmbito())) p.setAmbito((Ambito)ambito.getSelectedItem());
 						p.setAceptadopdi(1);
-						padre.volverAPropuestasModificado();
+						padre.volverAPropuestasPDImodificado();
 							
 					} catch (Exception ex) {
 						System.out.println(ex.getMessage());
