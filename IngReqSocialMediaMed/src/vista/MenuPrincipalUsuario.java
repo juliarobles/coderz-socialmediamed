@@ -226,6 +226,29 @@ public class MenuPrincipalUsuario extends JPanel {
 					lblGestionActividades.setForeground(Color.BLACK);
 				}
 			});
+			
+			JLabel lblGestionPropuestas = new JLabel("Gestion propuestas");
+			lblGestionPropuestas.setBounds(355, 26, 168, 62);
+			lblGestionPropuestas.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					//Abrir ventana gestion propuestas
+					padre.cambiarAGestionPropuestasPDI((PDI)usu);
+					lblGestionPropuestas.setForeground(Color.BLACK);
+					
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lblGestionPropuestas.setForeground(new Color(51, 204, 204));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lblGestionPropuestas.setForeground(Color.BLACK);
+				}
+			});
+			lblGestionPropuestas.setForeground(Color.BLACK);
+			lblGestionPropuestas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+			add(lblGestionPropuestas);
 		}
 	}
 	

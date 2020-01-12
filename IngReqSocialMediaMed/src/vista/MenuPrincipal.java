@@ -21,6 +21,7 @@ public class MenuPrincipal extends JFrame {
 	private MenuPrincipalONG ong;
 	private JPanel gestor;
 	private GestionPropuestas gestionPropuestas;
+	private GestionPropuestasPDI gestionPropuestasPDI;
 	private JPanel registroong;
 	private JPanel crearactividad;
 	private JPanel crearPropuesta;
@@ -108,6 +109,10 @@ public class MenuPrincipal extends JFrame {
 		}
 		if(invitado != null) {
 			invitado.setVisible(false);
+		}
+		if(gestionPropuestasPDI != null) {
+			gestionPropuestasPDI.setVisible(false);
+			gestionPropuestasPDI = null;
 		}
 		usuario.setVisible(true);
 		
@@ -327,5 +332,27 @@ public class MenuPrincipal extends JFrame {
 		}
 		consultar.setVisible(true);
 		setContentPane(consultar);
+	}
+
+	public void cambiarACrearActividadPDI(Propuesta p) {
+		crearactividad = new CrearActividadPDI(this, p);
+		gestionPropuestasPDI.setVisible(false);
+		crearactividad.setVisible(true);
+		setContentPane(crearactividad);
+	}
+
+	public void volverAPropuestasPDI() {
+		gestionPropuestasPDI.setVisible(true);
+		crearactividad.setVisible(false);
+		crearactividad = null;
+		setContentPane(gestionPropuestasPDI);
+	}
+
+	public void cambiarAGestionPropuestasPDI(PDI usu) {
+		gestionPropuestasPDI = new GestionPropuestasPDI(this, usu);
+		gestionPropuestasPDI.setVisible(true);
+		usuario.setVisible(false);
+		setContentPane(gestionPropuestasPDI);
+		
 	}
 }

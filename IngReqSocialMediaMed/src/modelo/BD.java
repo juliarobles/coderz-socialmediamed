@@ -9,6 +9,7 @@ import java.util.*;
 //Para acceder a la base de datos y realizr comprobaciones
 
 //GESTOR: mjruiz@uma.es PASS: 444444
+//PDI: rmlopez@uma.es PASS: 666666
 public class BD 
 {
 	

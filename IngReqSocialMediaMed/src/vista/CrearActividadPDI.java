@@ -43,7 +43,7 @@ import javax.swing.JCheckBox;
 import com.toedter.calendar.JDateChooser;
 
 
-public class CrearActividad extends JPanel {
+public class CrearActividadPDI extends JPanel {
 
 	enum Modo {
 		Crear, Editar
@@ -56,7 +56,7 @@ public class CrearActividad extends JPanel {
 	public JDateChooser fechaini, fechafinal;
 
 	
-	public CrearActividad(MenuPrincipal padre, Propuesta p) {
+	public CrearActividadPDI(MenuPrincipal padre, Propuesta p) {
 
 		setBackground(Color.WHITE);
 		setBounds(100, 100, 1100, 715);
@@ -191,7 +191,7 @@ public class CrearActividad extends JPanel {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				padre.volverAPropuestas();
+				padre.volverAPropuestasPDI();
 			}
 		});
 		btnCancelar.setForeground(new Color(255, 255, 255));
@@ -243,12 +243,12 @@ public class CrearActividad extends JPanel {
 		    }
 		});
 		proyectosi.setSelected(false);
-		proyectosi.setEnabled(true);
+		proyectosi.setEnabled(false);
 		add(proyectosi);
 		
 		JComboBox<String> tipo = new JComboBox<String>();
 		tipo.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		tipo.setEnabled(true);
+		tipo.setEnabled(false);
 		tipo.addItem("Voluntariado");
 		tipo.addItem("Aprendizaje");
 		tipo.addItem("Investigacion");
@@ -286,20 +286,7 @@ public class CrearActividad extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				if(!titulo.getText().isEmpty()) {
 					try {
-						/*
-						 * Asignatura asig = (asignatura.isEnabled())? (Asignatura)
-						 * asignatura.getSelectedItem() : null; System.out.println("que"); Proyecto proy
-						 * = (proyectosi.isSelected())? new Proyecto(Integer.parseInt(((Tupla)
-						 * proyecto.getSelectedItem()).elemento1)) : null;
-						 * System.out.println("estaque"); PDI pdi = (profesores.isEnabled())? new
-						 * PDI(((Tupla)profesores.getSelectedItem()).elemento1) : null;
-						 * System.out.println("quxsse"); Actividad a = new Actividad(titulo.getText(),
-						 * descripcion.getText(), "", fechaini.getDateFormatString(),
-						 * fechafinal.getDateFormatString(), (ZonaAccion)zonaaccion.getSelectedItem(),
-						 * (TipoOferta)tipooferta.getSelectedItem(), asig, proy, p.getOng(), pdi,
-						 * (Ambito)ambito.getSelectedItem()); System.out.println("qusdsae");
-						 * p.eliminarPropuesta(); System.out.println("quedsad");
-						 */
+						
 						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 						if(!titulo.getText().equals(p.getTitulo())) p.setTitulo(titulo.getText());
 						if(!descripcion.getText().equals(p.getDescripcion())) p.setDescripcion(descripcion.getText());
@@ -308,27 +295,7 @@ public class CrearActividad extends JPanel {
 						if(!((ZonaAccion)zonaaccion.getSelectedItem()).equals(p.getZonaaccion())) p.setZonaaccion((ZonaAccion)zonaaccion.getSelectedItem());
 						if(!((TipoOferta)tipooferta.getSelectedItem()).equals(p.getTipooferta())) p.setTipooferta((TipoOferta)tipooferta.getSelectedItem());
 						if(!((Ambito)ambito.getSelectedItem()).equals(p.getAmbito())) p.setAmbito((Ambito)ambito.getSelectedItem());
-						if(true) {
-							Asignatura asig = (asignatura.isEnabled())? (Asignatura) asignatura.getSelectedItem() : null;
-							Proyecto proy = (proyectosi.isSelected())? new Proyecto(Integer.parseInt(((Tupla) proyecto.getSelectedItem()).elemento1)) : null;
-							PDI pdi = (profesores.isEnabled())? new PDI(((Tupla)profesores.getSelectedItem()).elemento1) : null;
-							
-							p.setProyecto(proy);
-							
-							if(asig != null) {
-								p.setAsignatura(asig);
-								//p.setInvestigador(null);
-							}
-							
-							if(pdi != null) {
-								//p.setAsignatura(null);
-								p.setInvestigador(pdi);
-							}
-							p.setAceptadogestor(1);
-							if(((String)tipo.getSelectedItem()).equals("Voluntariado")) {
-								p.setAceptadopdi(1);
-							}
-						}
+						p.setAceptadopdi(1);
 						padre.volverAPropuestasModificado();
 							
 					} catch (Exception ex) {
