@@ -205,10 +205,21 @@ public class Actividad {
 		this.ambito = ambito;
 	}
 	
+	public static void borrarActividad(int id) {
+		BD mibd = new BD();
+		mibd.Delete("DELETE FROM SEGUIMIENTO WHERE actividad = " + id + ";");
+		mibd.Delete("DELETE FROM PARTICIPAR WHERE actividad = " + id + ";");
+		mibd.Delete("DELETE FROM SOLICITUDES WHERE actividad = " + id + ";");
+		mibd.Delete("DELETE FROM ACTIVIDADES WHERE id = " + id + ";");
+		mibd.finalize();
+	}
+	
 	public void borrarActividad() {
 		BD mibd = new BD();
 		mibd.Delete("DELETE FROM SEGUIMIENTO WHERE actividad = " + id + ";");
-		mibd.Delete("DELETE FROM ACTIVDIDADES WHERE id = " + id + ";");
+		mibd.Delete("DELETE FROM PARTICIPAR WHERE actividad = " + id + ";");
+		mibd.Delete("DELETE FROM SOLICITUDES WHERE actividad = " + id + ";");
+		mibd.Delete("DELETE FROM ACTIVIDADES WHERE id = " + id + ";");
 		mibd.finalize();
 		
 		this.id = -1;

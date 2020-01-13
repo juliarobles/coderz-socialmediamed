@@ -172,6 +172,29 @@ public class MenuPrincipalGestor extends JPanel {
 		lblGestinDeActividades.setBounds(517, 96, 193, 62);
 		add(lblGestinDeActividades);
 		
+		JLabel lblGestinDeAsignaturas = new JLabel("Gesti\u00F3n de asignaturas");
+		lblGestinDeAsignaturas.setForeground(Color.BLACK);
+		lblGestinDeAsignaturas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblGestinDeAsignaturas.setBounds(739, 96, 193, 62);
+		lblGestinDeAsignaturas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//Abrir ventana gestion propuestas
+				padre.cambiarAGestionAsignaturas();
+				lblGestinDeAsignaturas.setForeground(Color.BLACK);
+				
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblGestinDeAsignaturas.setForeground(new Color(51, 204, 204));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblGestinDeAsignaturas.setForeground(Color.BLACK);
+			}
+		});
+		add(lblGestinDeAsignaturas);
+		
 		
 	}
 }

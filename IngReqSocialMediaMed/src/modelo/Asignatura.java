@@ -8,21 +8,23 @@ public class Asignatura {
 	private int id;
 	private String nombre;
 	private PDI PDICargo;
+	private String grado;
 	
 	public static List<Asignatura> getAsignaturasSimple() {
 		List<Asignatura> lista = new ArrayList<>();
 		BD mibd = new BD();
 		for(Object[] tupla : mibd.Select("SELECT * FROM ASIGNATURAS")) {
-			lista.add(new Asignatura((Integer)tupla[0], (String)tupla[1], (String)tupla[2]));
+			lista.add(new Asignatura((Integer)tupla[0], (String)tupla[1], (String)tupla[2], (String) tupla[3]));
 		}
 		mibd.finalize();
 		return lista;
 	}
 	
-	private Asignatura(int id, String nombre, String pdi) { 
+	private Asignatura(int id, String nombre, String pdi, String grado) { 
 		this.id = id;
 		this.nombre = nombre;
 		this.PDICargo = new PDI(pdi);
+		this.grado = grado;
 	}
 	
 	public Asignatura(int id) { //Saca de la BD una asignatura
@@ -32,6 +34,7 @@ public class Asignatura {
 		this.id = (Integer) tupla[0];
 		this.nombre = (String) tupla[1];
 		this.PDICargo = new PDI((String) tupla[2]);
+		this.grado = (String) tupla[3];
 	}
 	
 	public static int getId(String nombre) { //Saca de la BD una asignatura
@@ -41,15 +44,28 @@ public class Asignatura {
 		return (Integer) tupla[0];
 	}
 
-	public Asignatura(String nombre, PDI pdi) { //Añade a la BD una nueva asignatura y crea el objeto correspondiente
+	public Asignatura(String nombre, PDI pdi, String grado) { //Añade a la BD una nueva asignatura y crea el objeto correspondiente
 		BD mibd = new BD();
-		mibd.Insert("INSERT INTO ASIGNATURAS (nombre, PDICargo) VALUES ('" + nombre + "', '" + pdi.getEmail() + "');");
+		mibd.Insert("INSERT INTO ASIGNATURAS (nombre, PDICargo, grado) VALUES ('" + nombre + "', '" + pdi.getEmail() + "', '" + grado + "');");
 		this.id = (Integer) mibd.SelectEscalar("SELECT MAX(id) FROM ASIGNATURAS;");
 		mibd.finalize();
 		this.nombre = nombre;
 		this.PDICargo = pdi;
+		this.grado = grado;
 	}
 
+	public void eliminarAsignatura() {
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id FROM ACTIVIDADES WHERE asignatura = " + id + ";")) {
+			Actividad.borrarActividad((Integer)tupla[0]);
+		}
+		mibd.Delete("DELETE FROM ASIGNATURAS WHERE id = " + id + ";");
+		mibd.finalize();
+		this.nombre = null;
+		this.PDICargo = null;
+		this.grado = null;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -75,6 +91,17 @@ public class Asignatura {
 		mibd.Update("UPDATE ASIGNATURAS SET PDICargo = '" + pDICargo.getEmail() + "' WHERE id = " + this.id + ";");
 		mibd.finalize();
 		this.PDICargo = pDICargo;
+	}
+	
+	public String getGrado() {
+		return grado;
+	}
+
+	public void setGrado(String grado) {
+		BD mibd = new BD();
+		mibd.Update("UPDATE ASIGNATURAS SET grado = '" + grado + "' WHERE id = " + this.id + ";");
+		mibd.finalize();
+		this.grado = grado;
 	}
 
 	@Override

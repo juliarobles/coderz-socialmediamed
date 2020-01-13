@@ -33,6 +33,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel listaActividades;
 	private EditarActividad editarActividad;
 	private ConsultarActividad consultar;
+	private GestionAsignaturas gestionAsignaturas;
 	
 
 	/**
@@ -172,6 +173,10 @@ public class MenuPrincipal extends JFrame {
 		if(gestionActividades != null) {
 			gestionActividades.setVisible(false);
 			gestionActividades = null;
+		}
+		if(gestionAsignaturas != null) {
+			gestionAsignaturas.setVisible(false);
+			gestionAsignaturas = null;
 		}
 		gestor.setVisible(true);
 		invitado.setVisible(false);
@@ -372,5 +377,12 @@ public class MenuPrincipal extends JFrame {
 		gestionPropuestasPDI.recargar();
 		volverAPropuestasPDI();
 		
+	}
+
+	public void cambiarAGestionAsignaturas() {
+		gestionAsignaturas = new GestionAsignaturas(this);
+		gestionAsignaturas.setVisible(true);
+		gestor.setVisible(false);
+		setContentPane(gestionAsignaturas);
 	}
 }
