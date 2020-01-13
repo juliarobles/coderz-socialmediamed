@@ -204,7 +204,7 @@ public class GestionPropuestas extends JPanel {
 		btnAceptarYCrear.setBounds(83, 416, 151, 43);
 		propuestapanel.add(btnAceptarYCrear);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton("Rechazar");
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {

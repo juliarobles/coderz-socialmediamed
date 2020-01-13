@@ -12,6 +12,7 @@ public abstract class Usuario{
 	protected ZonaAccion zonaAccion;
 	protected String imagenUrl;
 	protected String descripcion;
+	protected Ambito ambito;
 	
 	protected Usuario(String email) { //Saca un alumno de la base de datos
 		BD mibd = new BD();
@@ -26,13 +27,14 @@ public abstract class Usuario{
 		this.zonaAccion = ZonaAccion.valueOf((String) tupla[7]);
 		this.imagenUrl = ""; //POR AHORA HASTA QUE VEAMOS COMO HACER LO DE LAS IMAGENES
 		this.descripcion = (String) tupla[9];
+		this.ambito = Ambito.valueOf((String) tupla[10]);
 	}
 	
 	protected Usuario(String email, String nombre, String apellido1, String apellido2, int telefono, Disponibilidad disponibilidad,
-			TipoOferta tipoOferta, ZonaAccion zonaAccion, String url, String descripcion) { //Insertamos el usuario en la base de datos
+			TipoOferta tipoOferta, ZonaAccion zonaAccion, String url, String descripcion, Ambito ambito) { //Insertamos el usuario en la base de datos
 		BD mibd = new BD();
 		mibd.Insert("INSERT INTO PARTICIPANTES VALUES ('" + email + "', '" + nombre + "', '" + apellido1 + "', '" + apellido2 + "', " +
-				 telefono + ", '" + disponibilidad.toString() + "', '" + tipoOferta.toString() + "', '" + zonaAccion.toString() + "', NULL, '" + descripcion + "');");
+				 telefono + ", '" + disponibilidad.toString() + "', '" + tipoOferta.toString() + "', '" + zonaAccion.toString() + "', NULL, '" + descripcion + "', '" + ambito.toString() + "');");
 		this.email = email;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
@@ -43,6 +45,7 @@ public abstract class Usuario{
 		this.zonaAccion = zonaAccion;
 		this.imagenUrl = url; //POR AHORA HASTA QUE VEAMOS COMO HACER LO DE LAS IMAGENES
 		this.descripcion = descripcion;
+		this.ambito = ambito;
 	}
 	
 	protected Usuario(String email, String nombre, String apellido1, String apellido2) { //Este constructor es para insertar el usuario inicial
@@ -58,6 +61,7 @@ public abstract class Usuario{
 		this.zonaAccion = null;
 		this.imagenUrl = null; //POR AHORA HASTA QUE VEAMOS COMO HACER LO DE LAS IMAGENES
 		this.descripcion = null;
+		this.ambito = null;
 	}
 	
 	public void BorrarUsuario() {
@@ -76,6 +80,7 @@ public abstract class Usuario{
 		this.zonaAccion = null;
 		this.imagenUrl = null;
 		this.descripcion = null;
+		this.ambito = null;
 	}
 	
 	public String getEmail() {
@@ -155,10 +160,21 @@ public abstract class Usuario{
 		this.imagenUrl = imagenUrl;
 	}
 	*/
+	public Ambito getAmbito() {
+		return ambito;
+	}
+
+	public void setAmbito(Ambito ambito) {
+		BD mibd = new BD();
+		mibd.Update("UPDATE PARTICIPANTES SET ambito = '" + ambito.toString() + "' WHERE email = '" + this.email + "';");
+		mibd.finalize();
+		this.ambito = ambito;
+	}
 	
 	public String getDescripcion() {
 		return descripcion;
 	}
+	
 	public void setDescripcion(String descripcion) {
 		BD mibd = new BD();
 		mibd.Update("UPDATE PARTICIPANTES SET descripcion = '" + descripcion + "' WHERE email = '" + this.email + "';");

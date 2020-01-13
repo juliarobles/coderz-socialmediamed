@@ -28,6 +28,7 @@ import javax.swing.text.MaskFormatter;
 
 import controlador.CtrLoginUMA;
 import modelo.Alumno;
+import modelo.Ambito;
 import modelo.Asignatura;
 import modelo.BD;
 import modelo.BDException;
@@ -98,25 +99,25 @@ public class CompletarPerfil extends JFrame {
 		lblcuantoEstsDisponible.setHorizontalAlignment(SwingConstants.CENTER);
 		lblcuantoEstsDisponible.setForeground(Color.BLACK);
 		lblcuantoEstsDisponible.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
-		lblcuantoEstsDisponible.setBounds(0, 115, 400, 45);
+		lblcuantoEstsDisponible.setBounds(0, 95, 400, 45);
 		contentPane.add(lblcuantoEstsDisponible);
 		
 		JLabel lblcuantoEstsDispuesto = new JLabel("\u00BFCuanto est\u00E1s dispuesto a moverte?");
 		lblcuantoEstsDispuesto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblcuantoEstsDispuesto.setForeground(Color.BLACK);
 		lblcuantoEstsDispuesto.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
-		lblcuantoEstsDispuesto.setBounds(0, 189, 400, 45);
+		lblcuantoEstsDispuesto.setBounds(0, 158, 400, 45);
 		contentPane.add(lblcuantoEstsDispuesto);
 		
 		JLabel lblqueTipoDe = new JLabel("\u00BFQue tipo de actividades prefieres?");
 		lblqueTipoDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblqueTipoDe.setForeground(Color.BLACK);
 		lblqueTipoDe.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
-		lblqueTipoDe.setBounds(0, 263, 400, 45);
+		lblqueTipoDe.setBounds(0, 221, 400, 45);
 		contentPane.add(lblqueTipoDe);
 		
 		JComboBox disponibilidad = new JComboBox();
-		disponibilidad.setBounds(93, 160, 211, 21);
+		disponibilidad.setBounds(93, 135, 211, 21);
 		for(int cont = 0;Disponibilidad.values().length>cont; cont++) {
 			disponibilidad.addItem(Disponibilidad.values()[cont]);
 		}
@@ -124,26 +125,34 @@ public class CompletarPerfil extends JFrame {
 		contentPane.add(disponibilidad);
 		
 		JComboBox zona = new JComboBox();
-		zona.setBounds(93, 234, 211, 21);
+		zona.setBounds(93, 198, 211, 21);
 		for(int cont = 0;ZonaAccion.values().length>cont; cont++) {
 			zona.addItem(ZonaAccion.values()[cont]);
 		}
 		zona.setSelectedIndex(0);
 		contentPane.add(zona);
 		
-		JComboBox tipooferta = new JComboBox();
-		tipooferta.setBounds(93, 308, 211, 21);
+		JComboBox<TipoOferta> tipooferta = new JComboBox<TipoOferta>();
+		tipooferta.setBounds(93, 261, 211, 21);
 		for(int cont = 0;TipoOferta.values().length>cont; cont++) {
 			tipooferta.addItem(TipoOferta.values()[cont]);
 		}
 		tipooferta.setSelectedIndex(0);
 		contentPane.add(tipooferta);
 		
+		JComboBox<Ambito> ambito = new JComboBox<Ambito>();
+		for(int cont = 0;Ambito.values().length>cont; cont++) {
+			ambito.addItem(Ambito.values()[cont]);
+		}
+		ambito.setSelectedIndex(0);
+		ambito.setBounds(93, 324, 211, 21);
+		contentPane.add(ambito);
+		
 		JLabel lbltuTelefono = new JLabel("\u00BFTu telefono?");
 		lbltuTelefono.setHorizontalAlignment(SwingConstants.CENTER);
 		lbltuTelefono.setForeground(Color.BLACK);
 		lbltuTelefono.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
-		lbltuTelefono.setBounds(0, 476, 400, 40);
+		lbltuTelefono.setBounds(0, 484, 400, 40);
 		contentPane.add(lbltuTelefono);
 		
 		
@@ -159,7 +168,7 @@ public class CompletarPerfil extends JFrame {
         }
 		
 		telefono = new JFormattedTextField(mask);
-		telefono.setBounds(100, 514, 200, 29);
+		telefono.setBounds(100, 520, 200, 29);
 		contentPane.add(telefono);
 		telefono.setColumns(10);
 		
@@ -174,7 +183,7 @@ public class CompletarPerfil extends JFrame {
 		lblcuentanosUnPoco.setHorizontalAlignment(SwingConstants.CENTER);
 		lblcuentanosUnPoco.setForeground(Color.BLACK);
 		lblcuentanosUnPoco.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
-		lblcuentanosUnPoco.setBounds(0, 337, 400, 45);
+		lblcuentanosUnPoco.setBounds(0, 345, 400, 45);
 		contentPane.add(lblcuentanosUnPoco);
 		
 		JTextArea descripcion = new JTextArea();
@@ -190,7 +199,7 @@ public class CompletarPerfil extends JFrame {
 				num.setText(Integer.toString(255 - descripcion.getText().length()));
 			}
 		});
-		descripcion.setBounds(25, 382, 350, 90);
+		descripcion.setBounds(25, 390, 350, 90);
 		contentPane.add(descripcion);
 		
 		JFrame esto = this;
@@ -206,19 +215,19 @@ public class CompletarPerfil extends JFrame {
 						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 1);");
 						usu = new Alumno(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
 								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
-								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText());
+								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText(), (Ambito)ambito.getSelectedItem());
 						//Asignatura.cursar(email, ci);
 					} else if (tipo.equalsIgnoreCase("PDI")) {
 						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 2);");
 						usu = new PDI(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
 								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
-								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText());
+								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText(), (Ambito)ambito.getSelectedItem());
 						//Asignatura.impartir(email, ci);
 					} else {
 						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 3);");
 						usu = new PAS(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
 								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
-								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText());
+								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText(), (Ambito)ambito.getSelectedItem());
 					}
 					
 					principal.setEnabled(true);
@@ -244,6 +253,15 @@ public class CompletarPerfil extends JFrame {
 		loginong.setBounds(131, 570, 129, 40);
 		loginong.setBorder(border);
 		contentPane.add(loginong);
+		
+		JLabel lblyDeQue = new JLabel("\u00BFY de que \u00E1mbito?");
+		lblyDeQue.setHorizontalAlignment(SwingConstants.CENTER);
+		lblyDeQue.setForeground(Color.BLACK);
+		lblyDeQue.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 16));
+		lblyDeQue.setBounds(0, 284, 400, 45);
+		contentPane.add(lblyDeQue);
+		
+		
 	
 	}
 	}

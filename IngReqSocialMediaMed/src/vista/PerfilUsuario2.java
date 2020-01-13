@@ -167,6 +167,19 @@ public class PerfilUsuario2 extends JPanel{
 		  panelOferta.add(lblTipoDeOferta);
 		  lblTipoDeOferta.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  
+		  JPanel panel = new JPanel();
+		  panel.setLayout(null);
+		  panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "\u00C1mbito preferido", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		  panel.setBackground(Color.WHITE);
+		  panel.setBounds(534, 250, 250, 50);
+		  add(panel);
+		  
+		  JLabel ambito = new JLabel((String) null);
+		  ambito.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		  ambito.setBounds(10, 16, 234, 24);
+		  ambito.setText(UsuarioActivo.getAmbito().toString());
+		  panel.add(ambito);
+		  
 		  JLabel lblOferta = new JLabel("Nombre:");
 		  lblOferta.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		  lblOferta.setBounds(274, 57, 61, 14);
@@ -187,9 +200,9 @@ public class PerfilUsuario2 extends JPanel{
 		  add(lblDNIR);
 		  */
 		  
-		  JLabel lblIdiomas = new JLabel("Idiomas");
+		  JLabel lblIdiomas = new JLabel("Asignaturas");
 		  lblIdiomas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		  lblIdiomas.setBounds(650, 250, 66, 14);
+		  lblIdiomas.setBounds(534, 320, 107, 23);
 		  add(lblIdiomas);
 		  JLabel lblTelefonoR = new JLabel("");
 		  this.Telefono = lblTelefonoR;

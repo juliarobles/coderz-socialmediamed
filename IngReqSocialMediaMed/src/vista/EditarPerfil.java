@@ -14,7 +14,9 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
+import modelo.Ambito;
 import modelo.Disponibilidad;
 import modelo.TipoOferta;
 import modelo.Usuario;
@@ -28,14 +30,17 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 
 public class EditarPerfil extends JPanel{
 	
 	private Usuario UsuarioActivo;
 	private JFrame frameEditarPerfil;
+	public JFormattedTextField telefono;
 	private Perfil padre;
 
 	/**
@@ -53,6 +58,7 @@ public class EditarPerfil extends JPanel{
 	 * @param perfil 
 	 */
 	public EditarPerfil(Usuario usuario, Perfil perfil) {
+		setBackground(Color.WHITE);
 		UsuarioActivo = usuario;
 		padre = perfil;
 		//getContentPane().setBackground(Color.WHITE);
@@ -114,10 +120,22 @@ public class EditarPerfil extends JPanel{
 		panel.setBounds(185, 239, 162, 41);
 		add(panel);
 		
-		JTextPane rellenarTelefono = new JTextPane();
-		rellenarTelefono.setText(String.valueOf(UsuarioActivo.getTelf()));
-		rellenarTelefono.setBounds(10, 11, 142, 20);
-		panel.add(rellenarTelefono);
+		MaskFormatter mask = null;
+        try {
+            // Create a MaskFormatter for accepting phone number, the # symbol accept
+            // only a number. We can also set the empty value with a place holder
+            // character.
+            mask = new MaskFormatter("#########");
+            mask.setPlaceholderCharacter(' ');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+		
+		telefono = new JFormattedTextField(mask);
+		telefono.setText(String.valueOf(UsuarioActivo.getTelf()));
+		telefono.setBounds(10, 11, 142, 20);
+		panel.add(telefono);
+		telefono.setColumns(10);
 		
 		JLabel lblZona = new JLabel("Zona de acci\u00F3n:");
 		lblZona.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
@@ -164,12 +182,24 @@ public class EditarPerfil extends JPanel{
 		}
 		boxOferta.setSelectedIndex(index);
 		boxOferta.setBackground(Color.WHITE);
-		boxOferta.setBounds(185, 365, 162, 22);
+		boxOferta.setBounds(512, 302, 162, 22);
 		add(boxOferta);
+		
+		JComboBox<Ambito> ambito = new JComboBox<Ambito>();
+		for(int cont = 0;Ambito.values().length>cont; cont++) {
+			ambito.addItem(Ambito.values()[cont]);
+			if(Ambito.values()[cont] == UsuarioActivo.getAmbito()) {
+				index = cont;
+			}
+		}
+		ambito.setSelectedIndex(index);
+		ambito.setBackground(Color.WHITE);
+		ambito.setBounds(512, 333, 162, 22);
+		add(ambito);
 		
 		JLabel lblOfertaPreferida = new JLabel("Oferta preferida:");
 		lblOfertaPreferida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		lblOfertaPreferida.setBounds(75, 366, 106, 20);
+		lblOfertaPreferida.setBounds(396, 301, 106, 20);
 		add(lblOfertaPreferida);
 		
 		JPanel panelGuardarCambios = new JPanel();
@@ -193,11 +223,12 @@ public class EditarPerfil extends JPanel{
 				Border bordeArriba = new BevelBorder(0);
 	    		panelGuardarCambios.setBorder(bordeArriba);
 	    		
-	    		//UsuarioActivo.setTelf(Integer.parseInt(rellenarTelefono.getText()));
+	    		UsuarioActivo.setTelf(Integer.parseInt(telefono.getText()));
 	    		UsuarioActivo.setDisponibilidad((Disponibilidad)boxDispo.getSelectedItem());
 	    		UsuarioActivo.setZonaAccion((ZonaAccion)boxZona.getSelectedItem());
 	    		UsuarioActivo.setTipoOferta((TipoOferta)boxOferta.getSelectedItem());
 	    		UsuarioActivo.setDescripcion(textoDescripcion.getText());
+	    		UsuarioActivo.setAmbito((Ambito)ambito.getSelectedItem());
 	    		//Cambiar a perfil
 	    		//PerfilUsuario2 frame = new PerfilUsuario2(UsuarioActivo);
 				//frame.setVisible(true);
@@ -243,7 +274,12 @@ public class EditarPerfil extends JPanel{
 		panelSalir.add(salirSinGuardar);
 		
 		JLabel label = new JLabel("");
-		label.setBounds(383, 239, 120, 147);
+		label.setBounds(654, 316, 120, 147);
 		add(label);
+		
+		JLabel lblmbito = new JLabel("\u00C1mbito:");
+		lblmbito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		lblmbito.setBounds(396, 333, 106, 20);
+		add(lblmbito);
 	}
 }

@@ -5,8 +5,8 @@ public class PAS extends Usuario{
 
 	public PAS(String email, String nombre, String apellido1, String apellido2, int telefono,
 			Disponibilidad disponibilidad, TipoOferta tipoOferta, ZonaAccion zonaAccion, String url,
-			String descripcion) {
-		super(email, nombre, apellido1, apellido2, telefono, disponibilidad, tipoOferta, zonaAccion, url, descripcion);
+			String descripcion, Ambito ambito) {
+		super(email, nombre, apellido1, apellido2, telefono, disponibilidad, tipoOferta, zonaAccion, url, descripcion, ambito);
 		BD mibd = new BD();
 		mibd.Insert("INSERT INTO PAS VALUES ('" + email + "');");
 	}
