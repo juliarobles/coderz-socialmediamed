@@ -204,6 +204,26 @@ public class MenuPrincipalUsuario extends JPanel {
 		comunes.setLayoutOrientation(JList.VERTICAL);
 		scroll3.setViewportView(comunes);
 		
+		JLabel lblMisSolicitudes = new JLabel("Mis solicitudes");
+		lblMisSolicitudes.setForeground(Color.BLACK);
+		lblMisSolicitudes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblMisSolicitudes.setBounds(584, 24, 137, 62);
+		lblMisSolicitudes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				padre.cambiarAGestionSolicitudes(usu);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblMisSolicitudes.setForeground(new Color(51, 204, 204));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblMisSolicitudes.setForeground(Color.BLACK);
+			}
+		});
+		add(lblMisSolicitudes);
+		
 		
 		if(usu.getClass().equals(PDI.class)) {
 			JLabel lblGestionActividades = new JLabel("Gestion Actividades");

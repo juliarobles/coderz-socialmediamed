@@ -11,6 +11,33 @@ public class Solicitud {
 	
 	private String email;
 	
+	public static Object[][] getTodasSolicitudesParticipante(String email){
+		BD mibd = new BD();
+		List<Object[]> list = mibd.Select("SELECT a.titulo, o.nombre, a.fechainicio, a.fechafinal, s.aceptadopdi, s.aceptadoong, a.id FROM SOLICITUDES s, ACTIVIDADES a, USUARIOONG o WHERE s.actividad = a.id AND a.ong = o.email AND s.participante = '" + email + "';");
+		Object[][] res = new Object[list.size()][6];
+		int i = 0, acepPDI, acepONG;
+		for(Object[] tupla : list) {
+			res[i][0] = tupla[0]; //Nombre de la actividad
+			res[i][1] = tupla[1]; //Nombre de la ONG
+			res[i][2] = tupla[2]; //Fecha inicio
+			res[i][3] = tupla[3]; //Fecha fin
+			acepPDI = (Integer)tupla[4];
+			acepONG = (Integer)tupla[5];
+			if(acepPDI == 1 && acepONG == 1) {
+				res[i][4] = "Aceptada"; 
+			} else if (acepPDI == 2 || acepONG == 2) {
+				res[i][4] = "Rechazada"; 
+			} else {
+				res[i][4] = "Pendiente"; 
+			}
+			res[i][5] = tupla[6]; 
+			i++;
+		}
+		mibd.finalize();
+		return res;
+	}
+	
+	
 	public static List<Tupla> getTodasSolicitudesPDIGestorSimple(int idActividad){
 		List<Tupla> list = new ArrayList<>();
 		BD mibd = new BD();
@@ -158,5 +185,11 @@ public class Solicitud {
 		this.aceptadopdi = -1;
 		this.aceptadoong = -1;
 		this.email = null;
+	}
+	
+	public static void borrarSolicitud(String email, int idAct) {
+		BD mibd = new BD();
+		mibd.Delete("DELETE FROM SOLICITUDES WHERE participante = '" + email + "' AND actividad = " + idAct + ";");
+		mibd.finalize();
 	}
 }

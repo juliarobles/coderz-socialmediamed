@@ -34,6 +34,7 @@ public class MenuPrincipal extends JFrame {
 	private EditarActividad editarActividad;
 	private ConsultarActividad consultar;
 	private GestionAsignaturas gestionAsignaturas;
+	private GestionSolicitudes gestionSolicitudes;
 	
 
 	/**
@@ -115,6 +116,10 @@ public class MenuPrincipal extends JFrame {
 		if(gestionPropuestasPDI != null) {
 			gestionPropuestasPDI.setVisible(false);
 			gestionPropuestasPDI = null;
+		}
+		if(gestionSolicitudes != null) {
+			gestionSolicitudes.setVisible(false);
+			gestionSolicitudes = null;
 		}
 		usuario.setVisible(true);
 		
@@ -384,5 +389,12 @@ public class MenuPrincipal extends JFrame {
 		gestionAsignaturas.setVisible(true);
 		gestor.setVisible(false);
 		setContentPane(gestionAsignaturas);
+	}
+
+	public void cambiarAGestionSolicitudes(Usuario usu) {
+		gestionSolicitudes = new GestionSolicitudes(this, usu);
+		gestionSolicitudes.setVisible(true);
+		usuario.setVisible(false);
+		setContentPane(gestionSolicitudes);
 	}
 }
