@@ -9,13 +9,19 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 import java.awt.Font;
+
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import modelo.Alumno;
+import modelo.Asignatura;
 import modelo.Disponibilidad;
+import modelo.PDI;
+import modelo.Tupla;
 import modelo.Usuario;
 import modelo.ZonaAccion;
 
@@ -29,6 +35,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextArea;
+import javax.swing.JList;
 
 public class PerfilUsuario2 extends JPanel{
 	
@@ -59,6 +66,7 @@ public class PerfilUsuario2 extends JPanel{
 	 * @param perfil 
 	 */
 	public PerfilUsuario2(Usuario usuario, Perfil perfil) {
+		setBackground(Color.WHITE);
 		UsuarioActivo = usuario;
 		padre = perfil;
 		System.out.println("He entrado por constructor con argumento");
@@ -87,8 +95,37 @@ public class PerfilUsuario2 extends JPanel{
 	 */
 	private void initialize() {
 		
+		DefaultListModel<String> lista = new DefaultListModel<String>();
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBorder(new TitledBorder(null, "Asignaturas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(522, 274, 250, 130);
+		add(panel_1);
+		panel_1.setLayout(null);
+		
+		JScrollPane scroll= new JScrollPane();
+		scroll.setForeground(Color.BLACK);
+		scroll.setBorder(null);
+		scroll.setBounds(10, 15, 226, 102);
+		panel_1.add(scroll);
+		JList<String> asignaturas = new JList<String>(lista);
+		asignaturas.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		asignaturas.setLayoutOrientation(JList.VERTICAL);
+		scroll.setViewportView(asignaturas);
+		
+		if(UsuarioActivo.getClass() == Alumno.class) {
+			panel_1.setBorder(new TitledBorder(null, "Asignaturas que estudia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			lista.addAll(Asignatura.getAsignaturasEstudia(UsuarioActivo.getEmail()));
+		} else if (UsuarioActivo.getClass() == PDI.class) {
+			panel_1.setBorder(new TitledBorder(null, "Asignaturas que imparte", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			lista.addAll(Asignatura.getAsignaturasImparte(UsuarioActivo.getEmail()));
+		} else {
+			panel_1.setVisible(false);
+		}
+		
 		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
-		lblCopyright.setBounds(10, 440, 537, 14);
+		lblCopyright.setBounds(10, 441, 683, 14);
 		add(lblCopyright);
 		int width, height;
 		
@@ -104,14 +141,14 @@ public class PerfilUsuario2 extends JPanel{
 		 //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPictureBox user = new JPictureBox();
-		user.setBounds(121, 52, 90, 85);
+		user.setBounds(121, 65, 90, 85);
 		user.setIcon(imgus);
 		user.repaint();
 		setLayout(null);
 		 setLayout(null);
 		  
 		  JPictureBox asm = new JPictureBox();
-		  asm.setBounds(139, 213, 60, 60);
+		  asm.setBounds(682, 11, 60, 60);
 		  asm.setIcon(imgasm);
 		  add(asm);
 		  asm.repaint();
@@ -121,14 +158,14 @@ public class PerfilUsuario2 extends JPanel{
 		  
 		  JLabel lblTelfono = new JLabel("Tel\u00E9fono:");
 		  lblTelfono.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblTelfono.setBounds(274, 82, 61, 14);
+		  lblTelfono.setBounds(274, 53, 61, 14);
 		  add(lblTelfono);
 		  
 		  JPanel panelDispo = new JPanel();
 		  
 		  panelDispo.setBackground(Color.WHITE);
 		  panelDispo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Disponibilidad", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		  panelDispo.setBounds(274, 320, 250, 50);
+		  panelDispo.setBounds(262, 284, 250, 50);
 		  add(panelDispo);
 		  panelDispo.setLayout(null);
 		  
@@ -141,7 +178,7 @@ public class PerfilUsuario2 extends JPanel{
 		  JPanel panelZonaDeAccion = new JPanel();
 		  panelZonaDeAccion.setBackground(Color.WHITE);
 		  panelZonaDeAccion.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Zona de acci\u00F3n:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		  panelZonaDeAccion.setBounds(274, 250, 250, 50);
+		  panelZonaDeAccion.setBounds(262, 214, 250, 50);
 		  add(panelZonaDeAccion);
 		  panelZonaDeAccion.setLayout(null);
 		  
@@ -156,7 +193,7 @@ public class PerfilUsuario2 extends JPanel{
 		  
 		  panelOferta.setBackground(Color.WHITE);
 		  panelOferta.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Tipo de oferta preferida", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		  panelOferta.setBounds(274, 390, 250, 50);
+		  panelOferta.setBounds(262, 354, 250, 50);
 		  add(panelOferta);
 		  panelOferta.setLayout(null);
 		  
@@ -171,7 +208,7 @@ public class PerfilUsuario2 extends JPanel{
 		  panel.setLayout(null);
 		  panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "\u00C1mbito preferido", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		  panel.setBackground(Color.WHITE);
-		  panel.setBounds(534, 250, 250, 50);
+		  panel.setBounds(522, 214, 250, 50);
 		  add(panel);
 		  
 		  JLabel ambito = new JLabel((String) null);
@@ -182,34 +219,22 @@ public class PerfilUsuario2 extends JPanel{
 		  
 		  JLabel lblOferta = new JLabel("Nombre:");
 		  lblOferta.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblOferta.setBounds(274, 57, 61, 14);
+		  lblOferta.setBounds(274, 29, 61, 14);
 		  add(lblOferta);
 		  
 		  JLabel lblNombreR = new JLabel("");
 		  this.Nombre = lblNombreR;
 		  lblNombreR.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblNombreR.setBounds(333, 57, 383, 14);
+		  lblNombreR.setBounds(345, 29, 383, 14);
 		  lblNombreR.setText(UsuarioActivo.getNombre() + " " + UsuarioActivo.getApellido1()+ " " + UsuarioActivo.getApellido2());
 		  add(lblNombreR);
-		  /*
-		  JLabel lblDNIR = new JLabel("");
-		  this.DNI = lblDNIR;
-		  lblDNIR.setText(UsuarioActivo.getDNI());
-		  lblDNIR.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblDNIR.setBounds(304, 107, 95, 14);
-		  add(lblDNIR);
-		  */
-		  
-		  JLabel lblIdiomas = new JLabel("Asignaturas");
-		  lblIdiomas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
-		  lblIdiomas.setBounds(534, 320, 107, 23);
-		  add(lblIdiomas);
 		  JLabel lblTelefonoR = new JLabel("");
 		  this.Telefono = lblTelefonoR;
 		  lblTelefonoR.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		  lblTelefonoR.setBounds(333, 82, 150, 14);
+		  lblTelefonoR.setBounds(343, 53, 150, 14);
 		  lblTelefonoR.setText(String.valueOf(UsuarioActivo.getTelf()));
 		  add(lblTelefonoR);
+		 
 		  add(user);
 		    
 		    JPanel panelEditarPerfil = new JPanel();
@@ -255,7 +280,7 @@ public class PerfilUsuario2 extends JPanel{
 		    panelDescripcion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 11));
 		    panelDescripcion.setBackground(Color.WHITE);
 		    panelDescripcion.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Descripci\u00F3n personal", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		    panelDescripcion.setBounds(274, 107, 442, 123);
+		    panelDescripcion.setBounds(262, 81, 442, 123);
 		    add(panelDescripcion);
 		    panelDescripcion.setLayout(null);
 		   

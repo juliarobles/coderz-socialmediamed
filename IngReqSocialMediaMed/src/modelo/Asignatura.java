@@ -20,6 +20,26 @@ public class Asignatura {
 		return lista;
 	}
 	
+	public static List<String> getAsignaturasEstudia(String alumno) {
+		List<String> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT a.nombre FROM ESTUDIA e, ASIGNATURAS a WHERE a.id = e.asignatura AND e.alumno = '" + alumno + "';")) {
+			lista.add((String)tupla[0]);
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<String> getAsignaturasImparte(String pdi) {
+		List<String> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT a.nombre FROM IMPARTIR e, ASIGNATURAS a WHERE a.id = e.asignatura AND e.pdi = '" + pdi + "';")) {
+			lista.add((String)tupla[0]);
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
 	private Asignatura(int id, String nombre, String pdi, String grado) { 
 		this.id = id;
 		this.nombre = nombre;
@@ -59,6 +79,8 @@ public class Asignatura {
 		for(Object[] tupla : mibd.Select("SELECT id FROM ACTIVIDADES WHERE asignatura = " + id + ";")) {
 			Actividad.borrarActividad((Integer)tupla[0]);
 		}
+		mibd.Delete("DELETE FROM ESTUDIA WHERE asignatura = " + id + ";");
+		mibd.Delete("DELETE FROM IMPARTIR WHERE asignatura = " + id + ";");
 		mibd.Delete("DELETE FROM ASIGNATURAS WHERE id = " + id + ";");
 		mibd.finalize();
 		this.nombre = null;
@@ -137,37 +159,36 @@ public class Asignatura {
 			return false;
 		return true;
 	}
-/*
+
 	public static void cursar(String email, ConsultaiDuma ci) {
 		int idAsig;
+		BD mibd = new BD();
+		mibd.Delete("DELETE FROM ESTUDIA WHERE alumno = '" + email + "';");
 		for(String asig : ci.sacarAsignaturas()) {
-			BD mibd = new BD();
-			try {
-				idAsig = (new Asignatura(asig)).getId(); 
-			} catch (BDException e) {
-				System.out.println(e.getMessage());
-				idAsig = Asignatura.getId(asig);
+			List<Object[]> lista = mibd.Select("SELECT id FROM ASIGNATURAS WHERE nombre = '" + asig + "';");
+			idAsig = (lista.isEmpty()) ? -1 : (Integer)lista.get(0)[0];
+			if(idAsig >= 0) {
+				mibd.Insert("INSERT INTO ESTUDIA VALUES('" + email + "', " + idAsig + ");");
 			}
-			mibd.Insert("INSERT INTO ESTUDIA VALUES('" + email + "', " + idAsig + ");");
-			mibd.finalize();
 		}
+		mibd.finalize();
 		
 	}
-
+	
 	public static void impartir(String email, ConsultaiDuma ci) {
 		// TODO Auto-generated method stub
 		int idAsig;
+		BD mibd = new BD();
+		mibd.Delete("DELETE FROM IMPARTIR WHERE pdi = '" + email + "';");
 		for(String asig : ci.sacarAsignaturas()) {
-			BD mibd = new BD();
-			try {
-				idAsig = (new Asignatura(asig)).getId(); 
-			} catch (BDException e) {
-				idAsig = Asignatura.getId(asig);
+			List<Object[]> lista = mibd.Select("SELECT id FROM ASIGNATURAS WHERE nombre = '" + asig + "';");
+			idAsig = (lista.isEmpty()) ? -1 : (Integer)lista.get(0)[0];
+			if(idAsig >= 0) {
+				mibd.Insert("INSERT INTO IMPARTIR VALUES('" + email + "', " + idAsig + ");");
 			}
-			mibd.Insert("INSERT INTO IMPARTIR VALUES('" + email + "', " + idAsig + ");");
-			mibd.finalize();
 		}
+		mibd.finalize();
 	}
-	*/
+	
 	
 }

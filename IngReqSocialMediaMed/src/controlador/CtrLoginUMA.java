@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import modelo.Alumno;
+import modelo.Asignatura;
 import modelo.BD;
 import modelo.ConsultaiDuma;
 import modelo.PAS;
@@ -73,9 +74,11 @@ public class CtrLoginUMA implements MouseListener{
 					} else if (tipo == 1) { //Es alumno
 						usu = new Alumno((String)usuario[0]);
 						principal.cambiarUsuario(usu);
+						Asignatura.cursar(email, ci);
 					} else if (tipo == 2) {
 						usu = new PDI((String)usuario[0]);
 						principal.cambiarUsuario(usu);
+						Asignatura.impartir(email, ci);
 					} else {
 						usu = new PAS((String)usuario[0]);
 						principal.cambiarUsuario(usu);

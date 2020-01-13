@@ -116,7 +116,7 @@ public class CompletarPerfil extends JFrame {
 		lblqueTipoDe.setBounds(0, 221, 400, 45);
 		contentPane.add(lblqueTipoDe);
 		
-		JComboBox disponibilidad = new JComboBox();
+		JComboBox<Disponibilidad> disponibilidad = new JComboBox<Disponibilidad>();
 		disponibilidad.setBounds(93, 135, 211, 21);
 		for(int cont = 0;Disponibilidad.values().length>cont; cont++) {
 			disponibilidad.addItem(Disponibilidad.values()[cont]);
@@ -124,7 +124,7 @@ public class CompletarPerfil extends JFrame {
 		disponibilidad.setSelectedIndex(0);
 		contentPane.add(disponibilidad);
 		
-		JComboBox zona = new JComboBox();
+		JComboBox<ZonaAccion> zona = new JComboBox<ZonaAccion>();
 		zona.setBounds(93, 198, 211, 21);
 		for(int cont = 0;ZonaAccion.values().length>cont; cont++) {
 			zona.addItem(ZonaAccion.values()[cont]);
@@ -216,13 +216,13 @@ public class CompletarPerfil extends JFrame {
 						usu = new Alumno(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
 								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
 								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText(), (Ambito)ambito.getSelectedItem());
-						//Asignatura.cursar(email, ci);
+						Asignatura.cursar(email, ci);
 					} else if (tipo.equalsIgnoreCase("PDI")) {
 						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 2);");
 						usu = new PDI(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
 								(Disponibilidad)disponibilidad.getSelectedItem(), (TipoOferta)tipooferta.getSelectedItem(), 
 								(ZonaAccion) zona.getSelectedItem(), "NULL", descripcion.getText(), (Ambito)ambito.getSelectedItem());
-						//Asignatura.impartir(email, ci);
+						Asignatura.impartir(email, ci);
 					} else {
 						mibd.Insert("INSERT INTO USUARIOSUMA VALUES ('" + email + "', 3);");
 						usu = new PAS(email, ci.dameNombre(), ci.dameApellido1(), ci.dameApellido2(), Integer.parseInt(telefono.getText()), 
