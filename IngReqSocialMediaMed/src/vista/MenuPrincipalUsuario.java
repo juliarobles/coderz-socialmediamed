@@ -87,8 +87,8 @@ public class MenuPrincipalUsuario extends JPanel {
 			}
 		});
 		
-		JLabel lblActividades = new JLabel("Actividades");
-		lblActividades.setBounds(731, 24, 105, 62);
+		JLabel lblActividades = new JLabel("Ver todas las actividades");
+		lblActividades.setBounds(813, 124, 277, 62);
 		lblActividades.setForeground(Color.BLACK);
 		lblActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		
@@ -223,6 +223,26 @@ public class MenuPrincipalUsuario extends JPanel {
 			}
 		});
 		add(lblMisSolicitudes);
+		
+		JLabel lblMisActividades = new JLabel("Mis actividades");
+		lblMisActividades.setForeground(Color.BLACK);
+		lblMisActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		lblMisActividades.setBounds(725, 24, 137, 62);
+		lblMisActividades.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				padre.cambiarAMisActividades(usu);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblMisActividades.setForeground(new Color(51, 204, 204));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblMisActividades.setForeground(Color.BLACK);
+			}
+		});
+		add(lblMisActividades);
 		
 		//usu.getClass().equals(PDI.class)
 		if(usu.getClass().equals(PDI.class)) {

@@ -434,6 +434,26 @@ public class Actividad {
 		
 	}
 
+	public static List<Tupla> getActividadesSimpleParticipanteFinalizadas(String email) {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT a.id, a.titulo FROM ACTIVIDADES a, PARTICIPAR p WHERE p.actividad = a.id AND p.usuario = '" + email + "' AND " + filtroFecha() + ";")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<Tupla> getActividadesSimpleParticipanteProximas(String email) {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT a.id, a.titulo FROM ACTIVIDADES a, PARTICIPAR p WHERE p.actividad = a.id AND p.usuario = '" + email + "' AND NOT" + filtroFecha() + ";")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
 	public static List<Tupla> getActividadesSimpleConAccesoONGFinalizadas(String emailong) {
 		List<Tupla> lista = new ArrayList<>();
 		BD mibd = new BD();
@@ -452,6 +472,13 @@ public class Actividad {
 		}
 		mibd.finalize();
 		return lista;
+	}
+
+	public static void cancelarParticipacion(int id, String email) {
+		BD mibd = new BD();
+		mibd.Delete("DELETE FROM PARTICIPAR WHERE actividad = " + id + " AND usuario = '" + email + "';");
+		mibd.Delete("DELETE FROM SOLICITUDES WHERE actividad = " + id + " AND participante = '" + email + "';");
+		mibd.finalize();
 	}
 	
 	

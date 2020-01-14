@@ -36,6 +36,7 @@ public class MenuPrincipal extends JFrame {
 	private GestionAsignaturas gestionAsignaturas;
 	private GestionSolicitudes gestionSolicitudes;
 	private SeguimientoONGPDIGestor seguimientoEncargado;
+	private MisActividadesConSeguimiento misactividades;
 	
 
 	/**
@@ -125,6 +126,10 @@ public class MenuPrincipal extends JFrame {
 		if(seguimientoEncargado != null) {
 			seguimientoEncargado.setVisible(false);
 			seguimientoEncargado = null;
+		}
+		if(misactividades != null) {
+			misactividades.setVisible(false);
+			misactividades = null;
 		}
 		usuario.setVisible(true);
 		
@@ -425,5 +430,12 @@ public class MenuPrincipal extends JFrame {
 		}
 		setContentPane(seguimientoEncargado);
 		
+	}
+
+	public void cambiarAMisActividades(Usuario usu) {
+		misactividades = new MisActividadesConSeguimiento(this, usu);
+		misactividades.setVisible(true);
+		usuario.setVisible(false);
+		setContentPane(misactividades);
 	}
 }
