@@ -35,6 +35,7 @@ public class MenuPrincipal extends JFrame {
 	private ConsultarActividad consultar;
 	private GestionAsignaturas gestionAsignaturas;
 	private GestionSolicitudes gestionSolicitudes;
+	private SeguimientoONGPDIGestor seguimientoEncargado;
 	
 
 	/**
@@ -121,6 +122,10 @@ public class MenuPrincipal extends JFrame {
 			gestionSolicitudes.setVisible(false);
 			gestionSolicitudes = null;
 		}
+		if(seguimientoEncargado != null) {
+			seguimientoEncargado.setVisible(false);
+			seguimientoEncargado = null;
+		}
 		usuario.setVisible(true);
 		
 		setContentPane(usuario);
@@ -152,6 +157,10 @@ public class MenuPrincipal extends JFrame {
 			gestionPropuestasONG.setVisible(false);
 			gestionPropuestasONG = null;
 		}
+		if(seguimientoEncargado != null) {
+			seguimientoEncargado.setVisible(false);
+			seguimientoEncargado = null;
+		}
 		setContentPane(ong);
 	}
 
@@ -182,6 +191,10 @@ public class MenuPrincipal extends JFrame {
 		if(gestionAsignaturas != null) {
 			gestionAsignaturas.setVisible(false);
 			gestionAsignaturas = null;
+		}
+		if(seguimientoEncargado != null) {
+			seguimientoEncargado.setVisible(false);
+			seguimientoEncargado = null;
 		}
 		gestor.setVisible(true);
 		invitado.setVisible(false);
@@ -396,5 +409,21 @@ public class MenuPrincipal extends JFrame {
 		gestionSolicitudes.setVisible(true);
 		usuario.setVisible(false);
 		setContentPane(gestionSolicitudes);
+	}
+
+	public void cambiarASeguimientoEncargados(ONG ong, PDI pdi) {
+		seguimientoEncargado = new SeguimientoONGPDIGestor(this, ong, pdi);
+		seguimientoEncargado.setVisible(true);
+		if(usuario != null) {
+			usuario.setVisible(false);
+		}
+		if(gestor != null) {
+			gestor.setVisible(false);
+		}
+		if(this.ong != null) {
+			this.ong.setVisible(false);
+		}
+		setContentPane(seguimientoEncargado);
+		
 	}
 }

@@ -195,6 +195,29 @@ public class MenuPrincipalGestor extends JPanel {
 		});
 		add(lblGestinDeAsignaturas);
 		
+		JLabel seguimientos = new JLabel("Seguimientos");
+		seguimientos.setForeground(Color.BLACK);
+		seguimientos.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		seguimientos.setBounds(352, 96, 123, 62);
+		seguimientos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//Abrir ventana gestion propuestas
+				padre.cambiarASeguimientoEncargados(null, null);
+				seguimientos.setForeground(Color.BLACK);
+				
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				seguimientos.setForeground(new Color(51, 204, 204));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				seguimientos.setForeground(Color.BLACK);
+			}
+		});
+		add(seguimientos);
+		
 		
 	}
 }

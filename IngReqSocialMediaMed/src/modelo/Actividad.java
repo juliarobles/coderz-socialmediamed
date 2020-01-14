@@ -1,6 +1,8 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import utilidades.DiaSemana;
@@ -88,6 +90,16 @@ public class Actividad {
 	
 	public boolean esVoluntariado() {
 		return asignatura == null && investigador == null;
+	}
+	
+	public static List<Tupla> getParticipantesSimple(String id) {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT u.email, u.nombre, u.apellido1, u.apellido2 FROM PARTICIPAR p, PARTICIPANTES u WHERE u.email = p.usuario AND p.actividad = " + id + ";")) {
+			lista.add(new Tupla((String) tupla[0], (String) tupla[1] + " " + (String) tupla[2] + " " + (String) tupla[3]));
+		}
+		mibd.finalize();
+		return lista;
 	}
 	
 	public List<Tupla> getParticipantes() {
@@ -404,8 +416,43 @@ public class Actividad {
 		this.ambito = ambito;
 	}
 
+	public static List<Tupla> getActividadesSimpleConAccesoPDIFinalizadas(String emailpdi) {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT DISTINCT a.id, a.titulo FROM ACTIVIDADES a LEFT OUTER JOIN PROYECTO p ON a.proyecto = p.id LEFT OUTER JOIN ASIGNATURAS s ON a.asignatura = s.id WHERE (a.investigador = '" + 
+				emailpdi + "' OR p.pdi = '" + emailpdi + "' OR s.PDICargo = '" + emailpdi + "') AND " + filtroFecha() + ";")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
 	
+	private static String filtroFecha() {
+		Calendar cal= Calendar.getInstance();
+		return " (SUBSTRING(fechafinal,7,4) < " + cal.get(Calendar.YEAR) + " OR ( SUBSTRING(fechafinal,4,2) < " + (cal.get(Calendar.MONTH)+1) + " AND SUBSTRING(fechafinal,7,4) = " + cal.get(Calendar.YEAR) 
+		+ ") OR (SUBSTRING(fechafinal,1,2) <= " + cal.get(Calendar.DAY_OF_MONTH) + " AND SUBSTRING(fechafinal,4,2) = " + (cal.get(Calendar.MONTH)+1) + " AND SUBSTRING(fechafinal,7,4) = " + cal.get(Calendar.YEAR) + "))";
+		
+	}
 
+	public static List<Tupla> getActividadesSimpleConAccesoONGFinalizadas(String emailong) {
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES WHERE ong = '" + emailong + "' AND " + filtroFecha() + ";")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<Tupla> getActividadesSimpleFinalizadas(){
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES WHERE " + filtroFecha() + ";")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
 	
 	
 }

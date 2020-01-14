@@ -224,12 +224,12 @@ public class MenuPrincipalUsuario extends JPanel {
 		});
 		add(lblMisSolicitudes);
 		
-		
+		//usu.getClass().equals(PDI.class)
 		if(usu.getClass().equals(PDI.class)) {
 			JLabel lblGestionActividades = new JLabel("Gestion Actividades");
 			lblGestionActividades.setForeground(Color.BLACK);
 			lblGestionActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-			lblGestionActividades.setBounds(533, 26, 171, 62);
+			lblGestionActividades.setBounds(861, 84, 171, 62);
 			add(lblGestionActividades);
 			
 			lblGestionActividades.addMouseListener(new MouseAdapter() {
@@ -248,7 +248,7 @@ public class MenuPrincipalUsuario extends JPanel {
 			});
 			
 			JLabel lblGestionPropuestas = new JLabel("Gestion propuestas");
-			lblGestionPropuestas.setBounds(355, 26, 168, 62);
+			lblGestionPropuestas.setBounds(668, 84, 168, 62);
 			lblGestionPropuestas.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -269,6 +269,29 @@ public class MenuPrincipalUsuario extends JPanel {
 			lblGestionPropuestas.setForeground(Color.BLACK);
 			lblGestionPropuestas.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 			add(lblGestionPropuestas);
+			
+			JLabel seguimientos = new JLabel("Seguimientos");
+			seguimientos.setForeground(Color.BLACK);
+			seguimientos.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+			seguimientos.setBounds(523, 84, 123, 62);
+			seguimientos.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					//Abrir ventana gestion propuestas
+					padre.cambiarASeguimientoEncargados(null, (PDI)usu);
+					seguimientos.setForeground(Color.BLACK);
+					
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					seguimientos.setForeground(new Color(51, 204, 204));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					seguimientos.setForeground(Color.BLACK);
+				}
+			});
+			add(seguimientos);
 		}
 	}
 	
