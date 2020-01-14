@@ -161,15 +161,8 @@ public class SeguimientoONGPDIGestor extends JPanel {
 		lblListaDeProyectos.setBounds(20, 82, 261, 30);
 		add(lblListaDeProyectos);
 		
-		ponerModoVacio();
-		//ponerModoSeguimiento();
-		
-						
-						JLabel seguimiento = new JLabel("Seguimiento");
-						seguimiento.setHorizontalAlignment(SwingConstants.CENTER);
-						seguimiento.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-						seguimiento.setBounds(571, 82, 496, 30);
-						add(seguimiento);
+		//ponerModoVacio();
+		ponerModoSeguimiento();
 
 						
 						listaparticipantes = new DefaultListModel<Tupla>();
@@ -198,6 +191,8 @@ public class SeguimientoONGPDIGestor extends JPanel {
 						lblListaDeParticipantes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 						lblListaDeParticipantes.setBounds(299, 82, 251, 30);
 						add(lblListaDeParticipantes);
+						
+						
 		
 						listaActividades.addListSelectionListener(new ListSelectionListener() {
 							public void valueChanged(ListSelectionEvent e) {
@@ -403,6 +398,39 @@ public class SeguimientoONGPDIGestor extends JPanel {
 		nota.setBounds(292, 406, 82, 25);
 		gestionarPersonas.add(nota);
 		
+		JLabel info = new JLabel("\"\"");
+		info.setVisible(false);
+		info.setHorizontalAlignment(SwingConstants.CENTER);
+		info.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		info.setBounds(571, 82, 335, 30);
+		add(info);
+		
+		JButton guardarcambio = new JButton("Guardar cambios");
+		guardarcambio.setEnabled(false);
+		guardarcambio.setVisible(false);
+		guardarcambio.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				/*
+				 * if(modo == Modo.ONG) { if(numHoras.getText().isEmpty()) {
+				 * info.setText("Número de horas vacio"); info.setForeground(Color.RED); } else
+				 * if (comentarioONG.getText().isEmpty()) { info.setText("Comentario vacio");
+				 * info.setForeground(Color.RED); } else {
+				 * if(!consultado.getComentarioONG().equals(comentarioONG.getText()))
+				 * consultado.setComentarioONG(comentarioONG.getText());
+				 * info.setText("Guardado correctamente"); info.setForeground(Color.GREEN); } }
+				 * else {
+				 * 
+				 * }
+				 */
+				
+			}
+		});
+		guardarcambio.setForeground(Color.WHITE);
+		guardarcambio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 15));
+		guardarcambio.setBackground(new Color(51, 204, 204));
+		guardarcambio.setBounds(916, 83, 151, 30);
+		add(guardarcambio);
 		
 		if(modo == Modo.PDI){
 			lblEscribeUnComentario.setText("Comentario:");
@@ -443,8 +471,6 @@ public class SeguimientoONGPDIGestor extends JPanel {
 				lblEscribeUnComentario_1.setText("Comentario:");
 			}
 		}
-		
-		
 		
 	}
 
