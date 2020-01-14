@@ -52,7 +52,8 @@ public class ListaActividades extends JPanel {
 	public ListaActividades(MenuPrincipal padre, Usuario usu) {
 		
 		ImageIcon imglupa = new ImageIcon(PerfilUsuario2.class.getResource("/resources/lupita.png"));
-		
+		ImageIcon imglupaz = new ImageIcon(PerfilUsuario2.class.getResource("/resources/search.png"))
+		;
 		control = new CtrListaActividades(padre, usu, this);
 		this.setSize(1100,715);
 		
@@ -77,11 +78,25 @@ public class ListaActividades extends JPanel {
 		setLayout(null);
 		
 		JPictureBox lupa = new JPictureBox();
-		lupa.setBounds(853, 78, 34, 34);
+		
+		lupa.setBounds(857, 83, 24, 24);
 		add(lupa);
 		
 		lupa.setIcon(imglupa);
 		lupa.repaint();
+		lupa.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+				lupa.setIcon(imglupaz);
+				lupa.repaint();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lupa.setIcon(imglupa);
+				lupa.repaint();
+			}
+		});
 		lblxb.setForeground(Color.BLACK);
 		lblxb.setBounds(40, 5, 46, 56);
 		lblxb.setFont(new Font("Tahoma", Font.PLAIN, 46));
