@@ -142,7 +142,7 @@ public class ConsultarActividad extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				//Abrir ventana gestion
 				//padre.cambiarGestor();
-				padre.cambiarAListaActividades(usu);
+				padre.volverAtras();
 				
 			}
 			@Override

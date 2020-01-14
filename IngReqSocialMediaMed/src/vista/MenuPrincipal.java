@@ -1,6 +1,7 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 
@@ -37,6 +38,7 @@ public class MenuPrincipal extends JFrame {
 	private GestionSolicitudes gestionSolicitudes;
 	private SeguimientoONGPDIGestor seguimientoEncargado;
 	private MisActividadesConSeguimiento misactividades;
+	private Container anterior;
 	
 
 	/**
@@ -345,15 +347,8 @@ public class MenuPrincipal extends JFrame {
 	}
 	public void cambiarAConsultarActividad (Actividad a, Usuario usu) {
 		consultar = new ConsultarActividad (this, usu, a);
-		if(listaActividades != null) {
-			listaActividades.setVisible(false);
-			listaActividades = null;
-		}
-		if(usuario != null) {
-			usuario.setVisible(false);
-			usuario = null;
-		}
-		
+		anterior = getContentPane();
+		anterior.setVisible(false);
 		consultar.setVisible(true);
 		setContentPane(consultar);
 	}
@@ -437,5 +432,12 @@ public class MenuPrincipal extends JFrame {
 		misactividades.setVisible(true);
 		usuario.setVisible(false);
 		setContentPane(misactividades);
+	}
+
+	public void volverAtras() {
+		if(anterior != null) {
+			anterior.setVisible(true);
+			setContentPane(anterior);
+		}
 	}
 }
