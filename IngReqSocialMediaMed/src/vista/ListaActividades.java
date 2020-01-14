@@ -22,12 +22,18 @@ import javax.swing.JList;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
+import utilidades.JPictureBox;
 
 public class ListaActividades extends JPanel {
 	
 	 private CtrListaActividades control;
 	 private JList <Tupla> lista;
 	 private JButton consultar;
+	 private JTextField busqueda;
 	 
 	 
 	public JList<Tupla> getLista() {
@@ -45,6 +51,9 @@ public class ListaActividades extends JPanel {
 	 */
 	public ListaActividades(MenuPrincipal padre, Usuario usu) {
 		
+		ImageIcon imglupa = new ImageIcon(PerfilUsuario2.class.getResource("/resources/lupita.png"));
+		ImageIcon imglupaz = new ImageIcon(PerfilUsuario2.class.getResource("/resources/search.png"))
+		;
 		control = new CtrListaActividades(padre, usu, this);
 		this.setSize(1100,715);
 		
@@ -67,6 +76,27 @@ public class ListaActividades extends JPanel {
 			}
 		});
 		setLayout(null);
+		
+		JPictureBox lupa = new JPictureBox();
+		
+		lupa.setBounds(857, 83, 24, 24);
+		add(lupa);
+		
+		lupa.setIcon(imglupa);
+		lupa.repaint();
+		lupa.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+				lupa.setIcon(imglupaz);
+				lupa.repaint();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lupa.setIcon(imglupa);
+				lupa.repaint();
+			}
+		});
 		lblxb.setForeground(Color.BLACK);
 		lblxb.setBounds(40, 5, 46, 56);
 		lblxb.setFont(new Font("Tahoma", Font.PLAIN, 46));
@@ -111,6 +141,25 @@ public class ListaActividades extends JPanel {
 		add(btnConsultar);
 		
 		consultar = btnConsultar;
+		
+		busqueda = new JTextField();
+		busqueda.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				for(Tupla t : Actividad.getActividadesSimple()) {
+					listmodel.removeAllElements();
+					if(t.elemento2.contains(busqueda.getText())) {
+						System.out.println("Añadido elemento");
+						listmodel.addElement(t);
+					}
+					
+				}
+			}
+		});
+		busqueda.setBounds(413, 78, 421, 34);
+		add(busqueda);
+		busqueda.setColumns(10);
+		
 		btnConsultar.addMouseListener(control);
 		
 		

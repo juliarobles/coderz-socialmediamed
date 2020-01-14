@@ -159,6 +159,8 @@ public class MenuPrincipalONG extends JPanel {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				
+				//Menú color cuando pones ratón encima de una opción (Azul)
 				lblGestionarActividades.setForeground(new Color(51, 204, 204));
 			}
 			@Override
