@@ -78,6 +78,7 @@ public class SeguimientoONGPDIGestor extends JPanel {
 	private JTextField nota;
 	private Seguimiento consultado;
 	private boolean tieneValONG;
+	private JTextArea comentarioONG;
 
 	
 	
@@ -161,8 +162,8 @@ public class SeguimientoONGPDIGestor extends JPanel {
 		lblListaDeProyectos.setBounds(20, 82, 261, 30);
 		add(lblListaDeProyectos);
 		
-		//ponerModoVacio();
-		ponerModoSeguimiento();
+		ponerModoVacio();
+		//ponerModoSeguimiento();
 
 						
 						listaparticipantes = new DefaultListModel<Tupla>();
@@ -246,7 +247,7 @@ public class SeguimientoONGPDIGestor extends JPanel {
 		numONG.setBounds(408, 67, 56, 21);
 		gestionarPersonas.add(numONG);
 		
-		JTextArea comentarioONG = new JTextArea();
+		comentarioONG = new JTextArea();
 		comentarioONG.setEditable(false);
 		comentarioONG.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 12));
 		comentarioONG.setWrapStyleWord(true);
@@ -349,18 +350,22 @@ public class SeguimientoONGPDIGestor extends JPanel {
 		
 		gestionarPersonas.add(lblNmeroDeHoras);
 		
-		MaskFormatter mask = null;
-        try {
-            // Create a MaskFormatter for accepting phone number, the # symbol accept
-            // only a number. We can also set the empty value with a place holder
-            // character.
-            mask = new MaskFormatter("######");
-            mask.setPlaceholderCharacter(' ');
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-		
-		numHoras = new JFormattedTextField(mask);
+		numHoras = new JTextField(6);
+		numHoras.addKeyListener(new KeyAdapter()
+		{
+		   public void keyTyped(KeyEvent e)
+		   {
+		      char caracter = e.getKeyChar();
+
+		      // Verificar si la tecla pulsada no es un digito
+		      if(((caracter < '0') ||
+		         (caracter > '9')) &&
+		         (caracter != '\b' /*corresponde a BACK_SPACE*/))
+		      {
+		         e.consume();  // ignorar el evento de teclado
+		      }
+		   }
+		});
 		numHoras.setEditable(false);
 		numHoras.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		numHoras.setBounds(382, 39, 82, 25);
@@ -411,19 +416,47 @@ public class SeguimientoONGPDIGestor extends JPanel {
 		guardarcambio.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				/*
-				 * if(modo == Modo.ONG) { if(numHoras.getText().isEmpty()) {
-				 * info.setText("Número de horas vacio"); info.setForeground(Color.RED); } else
-				 * if (comentarioONG.getText().isEmpty()) { info.setText("Comentario vacio");
-				 * info.setForeground(Color.RED); } else {
-				 * if(!consultado.getComentarioONG().equals(comentarioONG.getText()))
-				 * consultado.setComentarioONG(comentarioONG.getText());
-				 * info.setText("Guardado correctamente"); info.setForeground(Color.GREEN); } }
-				 * else {
-				 * 
-				 * }
-				 */
-				
+				if(modo == Modo.ONG) {
+					if(numHoras.getText().isEmpty()) {
+						info.setText("Número de horas vacio");
+						info.setForeground(Color.RED);
+					} else if (comentarioONG.getText().isEmpty()) {
+						info.setText("Comentario vacio");
+						info.setForeground(Color.RED);
+					} else {
+						System.out.println(consultado.getComentarioONG() +" !! " + comentarioONG.getText());
+						if(!consultado.getComentarioONG().equals(comentarioONG.getText())) consultado.setComentarioONG(comentarioONG.getText());
+						System.out.println(consultado.getValoracionONG() +" !! " + valoracionONG.getSelectedItem().toString());
+						if(!consultado.getValoracionONG().equals((Valoracion)valoracionONG.getSelectedItem())) consultado.setValoracionONG((Valoracion)valoracionONG.getSelectedItem());
+						if(!(consultado.getNumHoras() == Integer.parseInt(numHoras.getText()))) consultado.setNumHoras(Integer.parseInt(numHoras.getText()));
+						info.setText("Guardado correctamente");
+						info.setForeground(Color.GREEN);
+					}
+				} else {
+					if(nota.getText().isEmpty()) {
+						info.setText("Nota vacio");
+						info.setForeground(Color.RED);
+					} else {
+						if(!consultado.getComentarioPDI().equals(comentarioPDI.getText())) consultado.setComentarioPDI(comentarioPDI.getText());
+						if(!(consultado.getNota() == Integer.parseInt(nota.getText()))) consultado.setNota(Integer.parseInt(nota.getText()));
+						info.setText("Guardado correctamente");
+						info.setForeground(Color.GREEN);
+					}
+				}
+				info.setVisible(true);
+				Timer timer = new Timer (6000, new ActionListener () 
+				{ 
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(e.getWhen() >= 5000) {
+							info.setVisible(false);
+						} else {
+							info.setVisible(true);
+						}
+					} 
+				}); 
+				timer.start();
+				timer.setRepeats(false);
 			}
 		});
 		guardarcambio.setForeground(Color.WHITE);
@@ -437,6 +470,8 @@ public class SeguimientoONGPDIGestor extends JPanel {
 			if(ActConsultada.getAsignatura() != null) { //Es de aprendizaje y ademas soy su profe ole
 				nota.setEditable(true);
 				comentarioPDI.setEditable(true);
+				guardarcambio.setEnabled(true);
+				guardarcambio.setVisible(true);
 			} else {
 				lblEscribeUnComentario_1.setText("");
 				lblComentarioPdiA.setVisible(false);
@@ -452,6 +487,8 @@ public class SeguimientoONGPDIGestor extends JPanel {
 			if(modo == Modo.ONG) {
 				valoracionONG.setEditable(true);
 				valoracionONG.setEnabled(true);
+				guardarcambio.setEnabled(true);
+				guardarcambio.setVisible(true);
 				numHoras.setEditable(true);
 				comentarioONG.setEditable(true);
 			} else {
