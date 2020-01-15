@@ -72,11 +72,13 @@ public class MisActividadesConSeguimiento extends JPanel {
 	private JComboBox<Valoracion> valoracionUSU;
 	private Pantalla pantalla;
 	private JTextArea comentarioUSU;
+	private int act;
+	private Usuario usuario;
 
 	
 	
 	public MisActividadesConSeguimiento(MenuPrincipal padre, Usuario usu) { 	
-		
+		this.usuario = usu;
 		setBackground(Color.WHITE);
 		setBounds(100, 100, 1100, 715);
 		setLayout(null);
@@ -144,7 +146,7 @@ public class MisActividadesConSeguimiento extends JPanel {
 						finalizadas.addListSelectionListener(new ListSelectionListener() {
 							public void valueChanged(ListSelectionEvent e) {
 								if(!finalizadas.isSelectionEmpty()) {
-									int act = Integer.parseInt(finalizadas.getSelectedValue().elemento1);
+									act = Integer.parseInt(finalizadas.getSelectedValue().elemento1);
 									consultado = new Seguimiento(usu.getEmail(), act);
 									ponerModoSeguimiento();
 								}
@@ -204,6 +206,8 @@ public class MisActividadesConSeguimiento extends JPanel {
 						btnCancelarParticipacin.setBackground(new Color(51, 204, 204));
 						btnCancelarParticipacin.setBounds(33, 621, 241, 36);
 						add(btnCancelarParticipacin);
+						
+						
 						
 						
 		
@@ -396,7 +400,7 @@ public class MisActividadesConSeguimiento extends JPanel {
 		info.setVisible(false);
 		info.setHorizontalAlignment(SwingConstants.CENTER);
 		info.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		info.setBounds(571, 82, 335, 30);
+		info.setBounds(657, 53, 335, 30);
 		add(info);
 		
 		JButton guardarcambios = new JButton("Guardar cambios");
@@ -435,6 +439,20 @@ public class MisActividadesConSeguimiento extends JPanel {
 		guardarcambios.setBackground(new Color(51, 204, 204));
 		guardarcambios.setBounds(916, 83, 151, 30);
 		add(guardarcambios);
+		
+		JButton btnCertificado = new JButton("Certificado");
+		btnCertificado.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Certificado cer = new Certificado(new Actividad(act), usuario);
+				cer.setVisible(true);
+			}
+		});
+		btnCertificado.setForeground(Color.WHITE);
+		btnCertificado.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 15));
+		btnCertificado.setBackground(new Color(51, 204, 204));
+		btnCertificado.setBounds(570, 82, 151, 30);
+		add(btnCertificado);
 		repaint();
 		
 	}
