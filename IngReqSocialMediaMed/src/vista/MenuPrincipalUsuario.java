@@ -20,6 +20,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import utilidades.JPictureBox;
 import javax.swing.JList;
+import javax.swing.border.LineBorder;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class MenuPrincipalUsuario extends JPanel {
@@ -42,7 +44,7 @@ public class MenuPrincipalUsuario extends JPanel {
 		//setContentPane(contentPane);
 		
 		JLabel login = new JLabel("Logout");
-		login.setBounds(971, 24, 105, 62);
+		login.setBounds(951, 24, 105, 62);
 		login.setForeground(Color.BLACK);
 		login.addMouseListener(new MouseAdapter() {
 			@Override
@@ -64,11 +66,12 @@ public class MenuPrincipalUsuario extends JPanel {
 		
 		
 		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
-		lblCopyright.setBounds(10, 691, 537, 14);
+		lblCopyright.setForeground(Color.BLACK);
+		lblCopyright.setBounds(10, 665, 629, 14);
 		add(lblCopyright);
 		
 		JLabel lblPerfil = new JLabel("Perfil");
-		lblPerfil.setBounds(872, 24, 105, 62);
+		lblPerfil.setBounds(850, 24, 46, 62);
 		lblPerfil.setForeground(Color.BLACK);
 		lblPerfil.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblPerfil.addMouseListener(new MouseAdapter() {
@@ -76,6 +79,7 @@ public class MenuPrincipalUsuario extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				Perfil pu = new Perfil(usu);
 				pu.setVisible(true);
+				lblPerfil.setForeground(Color.BLACK);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -88,7 +92,8 @@ public class MenuPrincipalUsuario extends JPanel {
 		});
 		
 		JLabel lblActividades = new JLabel("Ver todas las actividades");
-		lblActividades.setBounds(813, 124, 277, 62);
+		lblActividades.setHorizontalAlignment(SwingConstants.CENTER);
+		lblActividades.setBounds(43, 606, 967, 62);
 		lblActividades.setForeground(Color.BLACK);
 		lblActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		
@@ -149,7 +154,7 @@ public class MenuPrincipalUsuario extends JPanel {
 		
 		JScrollPane scroll = new JScrollPane();
 		scroll.setBorder(null);
-		scroll.setBounds(43, 171, 967, 119);
+		scroll.setBounds(43, 171, 704, 119);
 		add(scroll);
 		
 		JList<Tupla> match = new JList<Tupla>(listamatch);
@@ -168,7 +173,7 @@ public class MenuPrincipalUsuario extends JPanel {
 		
 		JScrollPane scroll2 = new JScrollPane();
 		scroll2.setBorder(null);
-		scroll2.setBounds(43, 336, 967, 119);
+		scroll2.setBounds(43, 336, 704, 119);
 		add(scroll2);
 		
 		JList<Tupla> nuevas = new JList<Tupla>(listanuevos);
@@ -188,7 +193,7 @@ public class MenuPrincipalUsuario extends JPanel {
 		
 		JScrollPane scroll3 = new JScrollPane();
 		scroll3.setBorder(null);
-		scroll3.setBounds(43, 505, 967, 119);
+		scroll3.setBounds(43, 505, 704, 119);
 		add(scroll3);
 		
 		JList<Tupla> comunes = new JList<Tupla>(listamassolicitados);
@@ -207,11 +212,12 @@ public class MenuPrincipalUsuario extends JPanel {
 		JLabel lblMisSolicitudes = new JLabel("Mis solicitudes");
 		lblMisSolicitudes.setForeground(Color.BLACK);
 		lblMisSolicitudes.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblMisSolicitudes.setBounds(584, 24, 137, 62);
+		lblMisSolicitudes.setBounds(486, 24, 122, 62);
 		lblMisSolicitudes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				padre.cambiarAGestionSolicitudes(usu);
+				lblMisSolicitudes.setForeground(Color.BLACK);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -227,11 +233,12 @@ public class MenuPrincipalUsuario extends JPanel {
 		JLabel lblMisActividades = new JLabel("Mis actividades");
 		lblMisActividades.setForeground(Color.BLACK);
 		lblMisActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblMisActividades.setBounds(725, 24, 137, 62);
+		lblMisActividades.setBounds(662, 24, 131, 62);
 		lblMisActividades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				padre.cambiarAMisActividades(usu);
+				lblMisActividades.setForeground(Color.BLACK);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -244,12 +251,17 @@ public class MenuPrincipalUsuario extends JPanel {
 		});
 		add(lblMisActividades);
 		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(MenuPrincipalUsuario.class.getResource("/resources/intento de fondo.png")));
+		label.setBounds(506, 86, 594, 629);
+		add(label);
+		
 		//usu.getClass().equals(PDI.class)
 		if(usu.getClass().equals(PDI.class)) {
 			JLabel lblGestionActividades = new JLabel("Gestion Actividades");
 			lblGestionActividades.setForeground(Color.BLACK);
 			lblGestionActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-			lblGestionActividades.setBounds(861, 84, 171, 62);
+			lblGestionActividades.setBounds(854, 71, 171, 62);
 			add(lblGestionActividades);
 			
 			lblGestionActividades.addMouseListener(new MouseAdapter() {
@@ -268,7 +280,7 @@ public class MenuPrincipalUsuario extends JPanel {
 			});
 			
 			JLabel lblGestionPropuestas = new JLabel("Gestion propuestas");
-			lblGestionPropuestas.setBounds(668, 84, 168, 62);
+			lblGestionPropuestas.setBounds(646, 71, 168, 62);
 			lblGestionPropuestas.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -293,7 +305,7 @@ public class MenuPrincipalUsuario extends JPanel {
 			JLabel seguimientos = new JLabel("Seguimientos");
 			seguimientos.setForeground(Color.BLACK);
 			seguimientos.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-			seguimientos.setBounds(523, 84, 123, 62);
+			seguimientos.setBounds(486, 71, 123, 62);
 			seguimientos.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -312,6 +324,8 @@ public class MenuPrincipalUsuario extends JPanel {
 				}
 			});
 			add(seguimientos);
+			
+			
 		}
 	}
 	

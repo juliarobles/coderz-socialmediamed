@@ -27,6 +27,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import utilidades.JPictureBox;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class ListaActividades extends JPanel {
 	
@@ -50,6 +52,7 @@ public class ListaActividades extends JPanel {
 	 * Create the panel.
 	 */
 	public ListaActividades(MenuPrincipal padre, Usuario usu) {
+		setBackground(Color.WHITE);
 		
 		ImageIcon imglupa = new ImageIcon(PerfilUsuario2.class.getResource("/resources/lupita.png"));
 		ImageIcon imglupaz = new ImageIcon(PerfilUsuario2.class.getResource("/resources/search.png"))
@@ -103,11 +106,12 @@ public class ListaActividades extends JPanel {
 		add(lblxb);
 		
 		JLabel lblListaActividades = new JLabel("Lista de actividades");
-		lblListaActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 34));
-		lblListaActividades.setBounds(101, 62, 289, 46);
+		lblListaActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 30));
+		lblListaActividades.setBounds(63, 71, 325, 46);
 		add(lblListaActividades);
 		
 		JScrollPane sclActividades = new JScrollPane();
+		sclActividades.setBorder(new EmptyBorder(0, 0, 0, 0));
 		sclActividades.setBounds(65, 131, 965, 530);
 		add(sclActividades);
 		
@@ -120,6 +124,7 @@ public class ListaActividades extends JPanel {
 			listmodel.addElement(t);
 		}
 		JList<Tupla> listaActividades = new JList<Tupla>(listmodel);
+		listaActividades.setBorder(new EmptyBorder(0, 0, 0, 0));
 		listaActividades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -39,14 +39,14 @@ public class MenuPrincipalONG extends JPanel {
 		add(pictureBox);
 		
 		JLabel lblCopyright = new JLabel("2019 AccionSocialMed\u00AE es una marca registrada de CoderZ. Reservados todos los derechos. Versi\u00F3n 2.1.29.15");
-		lblCopyright.setBounds(10, 660, 537, 14);
+		lblCopyright.setBounds(10, 660, 699, 14);
 		add(lblCopyright);
 		setBackground(Color.WHITE);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(contentPane);
 		
 		JLabel login = new JLabel("Logout");
-		login.setBounds(990, 24, 105, 62);
+		login.setBounds(965, 24, 105, 62);
 		login.setForeground(Color.BLACK);
 		login.addMouseListener(new MouseAdapter() {
 			@Override
@@ -57,7 +57,7 @@ public class MenuPrincipalONG extends JPanel {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				login.setForeground(new Color(51, 204, 204));
+				login.setForeground(new Color(51, 204, 204)); //#33CCCC
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
@@ -67,7 +67,11 @@ public class MenuPrincipalONG extends JPanel {
 		login.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		
 		JLabel lblPerfil = new JLabel("Perfil");
-		lblPerfil.setBounds(875, 24, 105, 62);
+		lblPerfil.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblPerfil.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPerfil.setVerticalTextPosition(SwingConstants.BOTTOM);
+		lblPerfil.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/perfil.png")));
+		lblPerfil.setBounds(421, 175, 241, 177);
 		lblPerfil.setForeground(Color.BLACK);
 		lblPerfil.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
 		lblPerfil.addMouseListener(new MouseAdapter() {
@@ -79,15 +83,21 @@ public class MenuPrincipalONG extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lblPerfil.setForeground(new Color(51, 204, 204));
+				lblPerfil.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/perfilAZUL.png")));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblPerfil.setForeground(Color.BLACK);
+				lblPerfil.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/perfil.png")));
 			}
 		});
 		
-		JLabel lblEnviarPropuesta = new JLabel("Enviar propuesta");
-		lblEnviarPropuesta.setBounds(681, 24, 184, 62);
+		JLabel lblEnviarPropuesta = new JLabel("  Enviar propuesta");
+		lblEnviarPropuesta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnviarPropuesta.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblEnviarPropuesta.setVerticalTextPosition(SwingConstants.BOTTOM);
+		lblEnviarPropuesta.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/enviarpropuesta.png")));
+		lblEnviarPropuesta.setBounds(110, 175, 241, 177);
 		lblEnviarPropuesta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -97,10 +107,12 @@ public class MenuPrincipalONG extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lblEnviarPropuesta.setForeground(new Color(51, 204, 204));
+				lblEnviarPropuesta.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/enviarpropuestaAZUL.png")));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblEnviarPropuesta.setForeground(Color.BLACK);
+				lblEnviarPropuesta.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/enviarpropuesta.png")));
 			}
 		});
 		lblEnviarPropuesta.setForeground(Color.BLACK);
@@ -109,8 +121,8 @@ public class MenuPrincipalONG extends JPanel {
 		
 		JLabel lblBienvenida = new JLabel("");
 		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBienvenida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 67));
-		lblBienvenida.setBounds(-21, 147, 1166, 460);
+		lblBienvenida.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 23));
+		lblBienvenida.setBounds(10, 88, 1080, 42);
 		add(lblBienvenida);
 		lblBienvenida.setText("¡Bienvenid@ "+usu.getNombre()+"!");
 		setLayout(null);
@@ -123,7 +135,11 @@ public class MenuPrincipalONG extends JPanel {
 		add(login);
 		
 		JLabel lblGestionPropuestas = new JLabel("Gestion propuestas");
-		lblGestionPropuestas.setBounds(895, 75, 168, 62);
+		lblGestionPropuestas.setVerticalTextPosition(SwingConstants.BOTTOM);
+		lblGestionPropuestas.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblGestionPropuestas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGestionPropuestas.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/gestionpropuestas.png")));
+		lblGestionPropuestas.setBounds(122, 395, 241, 177);
 		lblGestionPropuestas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -135,10 +151,12 @@ public class MenuPrincipalONG extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lblGestionPropuestas.setForeground(new Color(51, 204, 204));
+				lblGestionPropuestas.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/gestionpropuestasAZUL.png")));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblGestionPropuestas.setForeground(Color.BLACK);
+				lblGestionPropuestas.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/gestionpropuestas.png")));
 			}
 		});
 		lblGestionPropuestas.setForeground(Color.BLACK);
@@ -146,9 +164,13 @@ public class MenuPrincipalONG extends JPanel {
 		add(lblGestionPropuestas);
 		
 		JLabel lblGestionarActividades = new JLabel("Gesti\u00F3n de actividades");
+		lblGestionarActividades.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/gestionActividades.png")));
+		lblGestionarActividades.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblGestionarActividades.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGestionarActividades.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblGestionarActividades.setForeground(Color.BLACK);
 		lblGestionarActividades.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		lblGestionarActividades.setBounds(454, 24, 184, 62);
+		lblGestionarActividades.setBounds(421, 395, 241, 177);
 		lblGestionarActividades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -162,18 +184,25 @@ public class MenuPrincipalONG extends JPanel {
 				
 				//Menú color cuando pones ratón encima de una opción (Azul)
 				lblGestionarActividades.setForeground(new Color(51, 204, 204));
+				lblGestionarActividades.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/gestionActividadesAZUL.png")));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblGestionarActividades.setForeground(Color.BLACK);
+				lblGestionarActividades.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/gestionActividades.png")));
 			}
 		});
 		add(lblGestionarActividades);
 		
 		JLabel seguimientos = new JLabel("Seguimientos");
+		seguimientos.setVerticalTextPosition(SwingConstants.BOTTOM);
+		seguimientos.setHorizontalTextPosition(SwingConstants.CENTER);
+		seguimientos.setHorizontalAlignment(SwingConstants.CENTER);
+		seguimientos.setIconTextGap(5);
+		seguimientos.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/seguimiento.png")));
 		seguimientos.setForeground(Color.BLACK);
 		seguimientos.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
-		seguimientos.setBounds(742, 75, 123, 62);
+		seguimientos.setBounds(732, 395, 241, 177);
 		seguimientos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -185,13 +214,44 @@ public class MenuPrincipalONG extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				seguimientos.setForeground(new Color(51, 204, 204));
+				seguimientos.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/seguimientoAZUL.png")));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				seguimientos.setForeground(Color.BLACK);
+				seguimientos.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/seguimiento.png")));
 			}
 		});
 		add(seguimientos);
+		
+		JLabel chat = new JLabel("Chat");
+		chat.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/chat.png")));
+		chat.setVerticalTextPosition(SwingConstants.BOTTOM);
+		chat.setHorizontalTextPosition(SwingConstants.CENTER);
+		chat.setHorizontalAlignment(SwingConstants.CENTER);
+		chat.setForeground(Color.BLACK);
+		chat.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		chat.setBounds(732, 175, 241, 177);
+		chat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//CAMBIAR A CHAT
+				chat.setForeground(Color.BLACK);
+				
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				chat.setForeground(new Color(51, 204, 204));
+				chat.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/chatAZUL.png")));
+				
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				chat.setForeground(Color.BLACK);
+				chat.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/chat.png")));
+			}
+		});
+		add(chat);
+		
 	}
-
 }
