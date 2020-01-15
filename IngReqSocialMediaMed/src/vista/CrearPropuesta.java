@@ -57,6 +57,7 @@ public class CrearPropuesta extends JPanel {
 	private JTextArea campoExplicacion;
 	public JComboBox zonaaccion, ambito, tipooferta;
 	private JDateChooser fechaini, fechafin;
+	public JLabel info;
 	
 	//private Propuesta propuestaActiva;
 	
@@ -271,6 +272,13 @@ public class CrearPropuesta extends JPanel {
 		}
 		tipooferta.setSelectedIndex(0);
 		add(tipooferta);
+		
+		info = new JLabel("New label");
+		info.setHorizontalAlignment(SwingConstants.CENTER);
+		info.setVisible(false);
+		info.setBounds(281, 500, 348, 48);
+		info.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		add(info);
 		
 	
 		

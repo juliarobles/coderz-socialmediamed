@@ -1,6 +1,9 @@
 package controlador;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
@@ -10,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -48,6 +52,22 @@ public class CtrCrearPropuesta implements MouseListener{
 					new Propuesta( panel.getCampoTitulo(), panel.getCampoExplicacion(), panel.getFechaIni(), panel.getFechaFin(), 
 							(ZonaAccion)panel.zonaaccion.getSelectedItem(), (TipoOferta)panel.tipooferta.getSelectedItem(), (Ambito)panel.ambito.getSelectedItem(),
 							null, null, ong, null, 0, 0);
+					panel.info.setText("Propuesta creada correctamente");
+					panel.info.setForeground(Color.GREEN);
+					panel.info.setVisible(true);
+					Timer timer = new Timer (8000, new ActionListener () 
+					{ 
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(e.getWhen() >= 7000) {
+								panel.info.setVisible(false);
+							} else {
+								panel.info.setVisible(true);
+							}
+						} 
+					}); 
+					timer.start();
+					timer.setRepeats(false);
 					System.out.println("propuesta creada correctamente");
 				}else {
 					JFrame error = new Toast(todoCorrecto());
