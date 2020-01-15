@@ -480,6 +480,14 @@ public class Actividad {
 		mibd.Delete("DELETE FROM SOLICITUDES WHERE actividad = " + id + " AND participante = '" + email + "';");
 		mibd.finalize();
 	}
+
+	public static boolean esDeAprendizaje(int id) {
+		BD mibd = new BD();
+		Object[] o = mibd.Select("SELECT asignatura FROM ACTIVIDADES WHERE id = " + id + ";").get(0);
+		mibd.finalize();
+		return (o[0] == null) ? false : true; 
+		
+	}
 	
 	
 }

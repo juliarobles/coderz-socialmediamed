@@ -251,10 +251,7 @@ public class MenuPrincipalUsuario extends JPanel {
 		});
 		add(lblMisActividades);
 		
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(MenuPrincipalUsuario.class.getResource("/resources/intento de fondo.png")));
-		label.setBounds(506, 86, 594, 629);
-		add(label);
+		
 		
 		//usu.getClass().equals(PDI.class)
 		if(usu.getClass().equals(PDI.class)) {
@@ -327,6 +324,11 @@ public class MenuPrincipalUsuario extends JPanel {
 			
 			
 		}
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(MenuPrincipalUsuario.class.getResource("/resources/intento de fondo.png")));
+		label.setBounds(506, 86, 594, 629);
+		add(label);
 	}
 	
 	public void actualizarMatch(){

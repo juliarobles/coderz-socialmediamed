@@ -67,8 +67,7 @@ public class SeguimientoONGPDIGestor extends JPanel {
 	private DefaultListModel<Tupla> actividades;
 	private JList<Tupla> listaActividades;
 	private SeguimientoONGPDIGestor yo;
-	private Actividad ActConsultada;
-	private String UsuConsultado;
+	private int ActConsultada;
 	private Modo modo;
 	private Pantalla pantalla;
 	private PDI pdi;
@@ -80,6 +79,7 @@ public class SeguimientoONGPDIGestor extends JPanel {
 	private boolean tieneValONG;
 	private JTextArea comentarioONG, comentarioPDI;
 	private JComboBox<Valoracion> valoracionONG;
+	private JButton guardarcambio;
 
 	
 	
@@ -100,8 +100,6 @@ public class SeguimientoONGPDIGestor extends JPanel {
 		setBounds(100, 100, 1100, 715);
 		setLayout(null);
 		
-		ActConsultada = null;
-		UsuConsultado = null;
 		yo = this;
 		JLabel lblxb = new JLabel("<html>&larr;<html>");
 		lblxb.addMouseListener(new MouseAdapter() {
@@ -174,7 +172,7 @@ public class SeguimientoONGPDIGestor extends JPanel {
 							public void valueChanged(ListSelectionEvent e) {
 								if(!participantes.isSelectionEmpty()) {
 									String part = participantes.getSelectedValue().elemento1;
-									consultado = new Seguimiento(part, ActConsultada.getId());
+									consultado = new Seguimiento(part, ActConsultada);
 									ponerModoSeguimiento();
 								}
 							}
@@ -186,6 +184,15 @@ public class SeguimientoONGPDIGestor extends JPanel {
 						scroll.setBounds(301, 116, 249, 541);
 						scroll.setViewportView(participantes);
 						add(scroll);
+						
+						guardarcambio = new JButton("Guardar cambios");
+						guardarcambio.setEnabled(false);
+						guardarcambio.setVisible(false);
+						guardarcambio.setForeground(Color.WHITE);
+						guardarcambio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 15));
+						guardarcambio.setBackground(new Color(51, 204, 204));
+						guardarcambio.setBounds(916, 83, 151, 30);
+						add(guardarcambio);
 						
 						
 						JLabel lblListaDeParticipantes = new JLabel("Lista de participantes");
@@ -200,10 +207,11 @@ public class SeguimientoONGPDIGestor extends JPanel {
 							public void valueChanged(ListSelectionEvent e) {
 								listaparticipantes.clear();
 								if(!listaActividades.isSelectionEmpty()) {
-									String act = listaActividades.getSelectedValue().elemento1;
-									ActConsultada = new Actividad(Integer.parseInt(act));
-									listaparticipantes.addAll(Actividad.getParticipantesSimple(act));
+									ActConsultada = Integer.parseInt(listaActividades.getSelectedValue().elemento1);
+									listaparticipantes.addAll(Actividad.getParticipantesSimple(Integer.toString(ActConsultada)));
 									ponerModoVacio();
+									guardarcambio.setEnabled(false);
+									guardarcambio.setVisible(false);
 								}
 							}
 						});
@@ -382,10 +390,10 @@ public class SeguimientoONGPDIGestor extends JPanel {
 		valoracionUSU.setHorizontalAlignment(SwingConstants.LEFT);
 		valoracionUSU.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 15));
 		valoracionUSU.setBounds(351, 224, 113, 25);
-		if(consultado.getComentarioPAR().equals(Valoracion.No)) {
+		if(consultado.getValoracionPAR().equals(Valoracion.No)) {
 			valoracionUSU.setText("");
 		} else {
-			valoracionUSU.setText(consultado.getComentarioPAR().toString());
+			valoracionUSU.setText(consultado.getValoracionPAR().toString());
 		}
 		gestionarPersonas.add(valoracionUSU);
 		
@@ -413,9 +421,7 @@ public class SeguimientoONGPDIGestor extends JPanel {
 		info.setBounds(571, 82, 335, 30);
 		add(info);
 		
-		JButton guardarcambio = new JButton("Guardar cambios");
-		guardarcambio.setEnabled(false);
-		guardarcambio.setVisible(false);
+		
 		guardarcambio.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -462,15 +468,11 @@ public class SeguimientoONGPDIGestor extends JPanel {
 				timer.setRepeats(false);
 			}
 		});
-		guardarcambio.setForeground(Color.WHITE);
-		guardarcambio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 15));
-		guardarcambio.setBackground(new Color(51, 204, 204));
-		guardarcambio.setBounds(916, 83, 151, 30);
-		add(guardarcambio);
+		
 		
 		if(modo == Modo.PDI){
 			lblEscribeUnComentario.setText("Comentario:");
-			if(ActConsultada.getAsignatura() != null) { //Es de aprendizaje y ademas soy su profe ole
+			if(Actividad.esDeAprendizaje(ActConsultada)) { //Es de aprendizaje y ademas soy su profe ole
 				nota.setEditable(true);
 				comentarioPDI.setEditable(true);
 				guardarcambio.setEnabled(true);
@@ -483,6 +485,8 @@ public class SeguimientoONGPDIGestor extends JPanel {
 				lblNota.setVisible(false);
 				comentarioPDI.setVisible(false);
 				numPDI.setVisible(false);
+				guardarcambio.setEnabled(false);
+				guardarcambio.setVisible(false);
 			}
 			if(!tieneValONG) {
 				valoracionONG.setVisible(false);
@@ -497,12 +501,14 @@ public class SeguimientoONGPDIGestor extends JPanel {
 				comentarioONG.setEditable(true);
 				numONG.setVisible(true);
 			} else {
+				guardarcambio.setEnabled(false);
+				guardarcambio.setVisible(false);
 				lblEscribeUnComentario.setText("Comentario:");
 				if(!tieneValONG) {
 					valoracionONG.setVisible(false);
 				}
 			}
-			if(ActConsultada.getAsignatura() == null) { //Es de aprendizaje y ademas soy su profe ole
+			if(Actividad.esDeAprendizaje(ActConsultada)) { //Es de aprendizaje y ademas soy su profe ole
 				nota.setVisible(false);
 				lblNota.setVisible(false);
 				comentarioPDI.setVisible(false);

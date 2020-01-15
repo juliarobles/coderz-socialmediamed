@@ -63,7 +63,6 @@ public class MisActividadesConSeguimiento extends JPanel {
 	private JPanel gestionarPersonas;
 	private DefaultListModel<Tupla> actProximas;
 	private JList<Tupla> proximas;
-	private Actividad ActConsultada;
 	private DefaultListModel<Tupla> actFinalizadas;
 	private JTextField numHoras;
 	private JTextField nota;
@@ -82,7 +81,6 @@ public class MisActividadesConSeguimiento extends JPanel {
 		setBounds(100, 100, 1100, 715);
 		setLayout(null);
 		
-		ActConsultada = null;
 		JLabel lblxb = new JLabel("<html>&larr;<html>");
 		lblxb.addMouseListener(new MouseAdapter() {
 			@Override
