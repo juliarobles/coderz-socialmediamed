@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class ONG {
+public class ONG extends todosUsuarios{
 	
 	private String email;
 	private String nombre;

@@ -250,6 +250,10 @@ public class MenuPrincipalONG extends JPanel {
 				chat.setForeground(Color.BLACK);
 				chat.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/chat.png")));
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			
+			}
 		});
 		add(chat);
 		

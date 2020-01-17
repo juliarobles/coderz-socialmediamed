@@ -1,6 +1,6 @@
 package modelo;
 
-public abstract class Usuario{
+public abstract class Usuario extends todosUsuarios{
 	
 	protected String email;
 	protected String nombre;

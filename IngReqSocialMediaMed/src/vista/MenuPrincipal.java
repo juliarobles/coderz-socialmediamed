@@ -14,6 +14,7 @@ import modelo.ONG;
 import modelo.PDI;
 import modelo.Propuesta;
 import modelo.Usuario;
+import modelo.todosUsuarios;
 
 public class MenuPrincipal extends JFrame {
 
@@ -39,6 +40,7 @@ public class MenuPrincipal extends JFrame {
 	private SeguimientoONGPDIGestor seguimientoEncargado;
 	private MisActividadesConSeguimiento misactividades;
 	private Container anterior;
+	private Chat chat;
 	
 
 	/**
@@ -81,6 +83,10 @@ public class MenuPrincipal extends JFrame {
 		setContentPane(crearPropuesta);
 	}
 	
+	public void cambiarAChatDesdeONG(todosUsuarios t) {
+		chat = new Chat(t);
+		chat.setVisible(true);
+	}
 	public void cambiarAInvitado() {
 		if(usuario != null) {
 			usuario.setVisible(false);
