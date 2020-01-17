@@ -42,7 +42,7 @@ public class Certificado extends JDialog {
 		nombre.setHorizontalAlignment(SwingConstants.CENTER);
 		nombre.setFont(new Font("Tahoma", Font.PLAIN, 29));
 		nombre.setBounds(138, 175, 431, 35);
-		nombre.setText(usu.getNombre() + " " + usu.getApellido1() + " " + usu.getApellido1());
+		nombre.setText(usu.getNombre() + " " + usu.getApellido1() + " " + usu.getApellido2());
 		contentPanel.add(nombre);
 		
 		JLabel lblPorHaberRealizado = new JLabel("Por haber realizado la actividad");

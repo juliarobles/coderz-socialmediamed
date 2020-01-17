@@ -53,7 +53,7 @@ public class ListaActividades extends JPanel {
 	 */
 	public ListaActividades(MenuPrincipal padre, Usuario usu) {
 		setBackground(Color.WHITE);
-		
+		DefaultListModel <Tupla> listmodel = new DefaultListModel<Tupla>();
 		ImageIcon imglupa = new ImageIcon(PerfilUsuario2.class.getResource("/resources/lupita.png"));
 		ImageIcon imglupaz = new ImageIcon(PerfilUsuario2.class.getResource("/resources/search.png"))
 		;
@@ -99,6 +99,20 @@ public class ListaActividades extends JPanel {
 				lupa.setIcon(imglupa);
 				lupa.repaint();
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				listmodel.clear();
+				for(Tupla t : Actividad.getActividadesSimple()) {
+					if(t.elemento2.contains(busqueda.getText())) {
+						System.out.println(t.elemento2);
+						System.out.println(busqueda.getText());
+						System.out.println("Añadido elemento");
+						listmodel.addElement(t);
+					}
+					
+				}
+				System.out.println("He añadido ");
+			}
 		});
 		lblxb.setForeground(Color.BLACK);
 		lblxb.setBounds(40, 5, 46, 56);
@@ -117,7 +131,7 @@ public class ListaActividades extends JPanel {
 		
 		
 		
-		DefaultListModel <Tupla> listmodel = new DefaultListModel<Tupla>();
+		
 		System.out.println("Hola??????????????????????");
 		for(Tupla t : Actividad.getActividadesSimple()) {
 			System.out.println("Añadido elemento");
@@ -148,19 +162,6 @@ public class ListaActividades extends JPanel {
 		consultar = btnConsultar;
 		
 		busqueda = new JTextField();
-		busqueda.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				for(Tupla t : Actividad.getActividadesSimple()) {
-					listmodel.removeAllElements();
-					if(t.elemento2.contains(busqueda.getText())) {
-						System.out.println("Añadido elemento");
-						listmodel.addElement(t);
-					}
-					
-				}
-			}
-		});
 		busqueda.setBounds(413, 78, 421, 34);
 		add(busqueda);
 		busqueda.setColumns(10);
