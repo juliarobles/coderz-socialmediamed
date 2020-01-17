@@ -27,7 +27,7 @@ public class Chat extends JPanel {
 		add(paneConversaciones);
 		
 		
-		JList listaConversaciones = new JList(Mensaje.getChat());
+		JList listaConversaciones = new JList();
 		paneConversaciones.setViewportView(listaConversaciones);
 		
 		JLabel lblConversaciones = new JLabel("Conversaciones");
