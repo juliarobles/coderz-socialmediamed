@@ -14,6 +14,7 @@ public class Mensaje {
 	//WANY, CUANDO QUIERAS ENVIAR O RECIBIR ALGO DEL GESTOR PON "gestor" COMO SI FUERA SU EMAIL
 	//emisor y receptor son los email de cada uno de ellos
 	//Si te hace falta alguna funcion dimelo
+	//0 gestor, 1 participante, 2 ong 
 	
 	public static List<Mensaje> getMensajes(String emisor, String receptor){
 		List<Mensaje> lista = new ArrayList<Mensaje>();
@@ -25,19 +26,29 @@ public class Mensaje {
 		return lista;
 	}
 	
-	public static List<String> getChat(String usuario){
-		List<String> lista = new ArrayList<String>();
+	public static List<Tupla> getChat(String usuario){
+		List<Tupla> lista = new ArrayList<Tupla>();
 		BD mibd = new BD();
-		for(Object[] tupla : mibd.Select("SELECT receptor FROM MENSAJE WHERE emisor = '" + usuario + "' UNION SELECT emisor FROM MENSAJE WHERE receptor = '" + usuario + "';")) {
-			lista.add((String)tupla[0]);
+		for(Object[] tupla : mibd.Select("SELECT receptor, tiporeceptor FROM MENSAJE WHERE emisor = '" + usuario + "' UNION SELECT emisor FROM MENSAJE WHERE receptor = '" + usuario + "';")) {
+			int tipo = (int) tupla[1];
+			if(tipo == 0) { //gestor
+				lista.add(new Tupla((String)tupla[0], "Gestor"));
+			} else if (tipo == 1) { //participante
+				Object[] tupla2 = mibd.Select("SELECT nombre, apellido1, apellido2 FROM PARTICIPANTES WHERE email = '" + usuario + "';").get(0);
+				lista.add(new Tupla((String)tupla[0], (String)tupla2[0] + " " + (String)tupla2[1] + " " + (String)tupla2[2]));
+			} else if (tipo == 2) { //ong
+				Object[] tupla2 = mibd.Select("SELECT nombre FROM USUARIOONG WHERE email = '" + usuario + "';").get(0);
+				lista.add(new Tupla((String)tupla[0], (String)tupla2[0]));
+			}
 		}
 		mibd.finalize();
 		return lista;
 	}
 	
-	public static void enviarMensaje(String emisor, String receptor, String mensaje){
+	//En tipo receptor tiene que poner 0 si es gestor, 1 si es participante y 2 si es ong
+	public static void enviarMensaje(String emisor, String receptor, String mensaje, int tipoReceptor){
 		BD mibd = new BD();
-		mibd.Insert("INSERT INTO MENSAJE (emisor, receptor, mensaje) VALUES('" + emisor + "', '" + receptor + "', '" + mensaje + "');");
+		mibd.Insert("INSERT INTO MENSAJE (emisor, receptor, mensaje, tipoReceptor) VALUES('" + emisor + "', '" + receptor + "', '" + mensaje + "', " + tipoReceptor + ");");
 		mibd.finalize();
 	}
 
