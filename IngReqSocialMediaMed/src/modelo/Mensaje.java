@@ -31,7 +31,7 @@ public class Mensaje {
 	public static List<Mensaje> getMensajes(String emisor, String receptor){
 		List<Mensaje> lista = new ArrayList<Mensaje>();
 		BD mibd = new BD();
-		for(Object[] tupla : mibd.Select("SELECT emisor, receptor, mensaje FROM MENSAJE WHERE emisor = '" + emisor + "' AND receptor = '" + receptor +"' ORDER BY id;")) {
+		for(Object[] tupla : mibd.Select("SELECT emisor, receptor, mensaje FROM MENSAJE WHERE (emisor = '" + emisor + "' AND receptor = '" + receptor +"') OR (emisor = '" + receptor + "' AND receptor = '" + emisor + "') ORDER BY id;")) {
 			lista.add(new Mensaje((String)tupla[0], (String)tupla[1], (String)tupla[2]));
 		}
 		mibd.finalize();
