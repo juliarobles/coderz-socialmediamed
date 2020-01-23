@@ -31,18 +31,25 @@ public class Chat extends JFrame
 		getContentPane().setLayout(null);
 		
 		JScrollPane paneConversaciones = new JScrollPane();
-		paneConversaciones.setBounds(35, 73, 320, 631);
+		paneConversaciones.setBounds(35, 73, 320, 579);
 		getContentPane().add(paneConversaciones);
 		
 		
 		//Crea el adaptador
 		
-		JList<AdapterChat> listaConversaciones = new JList<AdapterChat>();
-		paneConversaciones.setViewportView(listaConversaciones);
+		/*
+		 * JList<AdapterChat> listaConversaciones = new JList<AdapterChat>();
+		 * paneConversaciones.setViewportView(listaConversaciones);
+		 */
 		
 		List<Tupla> l = Mensaje.getChat(usu.getEmail());
+		int x = 0;
 		for (Tupla t: l){
-			listaConversaciones.add(new AdapterChat(t.elemento1));
+			JPanel conv = new AdapterChat(t.elemento1);
+			paneConversaciones.add(conv);
+			conv.setVisible(true);
+			conv.setLocation(0, x);
+			x+=80;
 			System.out.println("Añadida conversación nueva");
 		}
 		
@@ -54,7 +61,7 @@ public class Chat extends JFrame
 		getContentPane().add(lblConversaciones);
 		
 		JScrollPane AreaConversacion = new JScrollPane();
-		AreaConversacion.setBounds(417, 73, 638, 631);
+		AreaConversacion.setBounds(417, 73, 638, 579);
 		getContentPane().add(AreaConversacion);
 		
 		JTextArea textConversacion = new JTextArea();

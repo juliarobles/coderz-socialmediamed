@@ -5,6 +5,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import modelo.Actividad;
+import modelo.PDI;
 import modelo.Solicitud;
 import modelo.Usuario;
 import javax.swing.JLabel;
@@ -222,5 +223,22 @@ public class ConsultarActividad extends JPanel {
 		label.setIcon(new ImageIcon(ConsultarActividad.class.getResource("/resources/fondo 6 asm.png")));
 		label.setBounds(0, 0, 1100, 715);
 		add(label);
+		
+		JLabel lblTipoActividad = new JLabel("");
+		lblTipoActividad.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		lblTipoActividad.setBounds(557, 459, 46, 14);
+		add(lblTipoActividad);
+		String tipoActividad;
+		if(act.getInvestigador() != null) {
+			//INvestigacion
+			tipoActividad = " investigación";
+		} else if (act.getAsignatura() != null) {
+			//Aprendizaje
+			tipoActividad = " aprendizaje";
+		} else {
+			tipoActividad = " voluntariado";
+			}
+		lblTipoActividad.setText("Actividad de "+ tipoActividad) ;
+		lblTipoActividad.setSize(lblTipoActividad.getPreferredSize());
 	}
 }
