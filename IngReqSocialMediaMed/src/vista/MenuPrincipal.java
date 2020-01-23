@@ -85,7 +85,7 @@ public class MenuPrincipal extends JFrame {
 		setContentPane(crearPropuesta);
 	}
 	
-	public void cambiarAChatDesdeONG(todosUsuarios t) {
+	public void cambiarAChat(todosUsuarios t) {
 		chat = new Chat(t);
 		chat.setVisible(true);
 	}

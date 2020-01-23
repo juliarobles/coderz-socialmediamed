@@ -70,7 +70,7 @@ public class CtrCrearPropuesta implements MouseListener{
 					timer.setRepeats(false);
 					System.out.println("propuesta creada correctamente");
 				}else {
-					JFrame error = new Toast(todoCorrecto());
+					JFrame error = new Toast(todoCorrecto(), false);
 					error.setVisible(true);
 				}
 			

@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import modelo.Mensaje;
@@ -12,6 +13,7 @@ import modelo.Usuario;
 import modelo.todosUsuarios;
 import vista.MenuPrincipal;
 import vista.NuevoMensaje;
+import vista.Toast;
 
 public class CtrNuevoMensaje implements MouseListener {
 	private NuevoMensaje panel;
@@ -48,6 +50,10 @@ public class CtrNuevoMensaje implements MouseListener {
 				System.out.println("Mensaje aún no enviado");
 				Mensaje.enviarMensaje(emisor.getEmail(), receptor.getEmail(), panel.getMensaje().getText(), rec);
 				System.out.println("Mensaje enviado");
+				
+				panel.dispose();
+				JFrame t =new Toast("Mensaje enviado correctamente", true);
+				t.setVisible(true);
 			}
 		}
 	}

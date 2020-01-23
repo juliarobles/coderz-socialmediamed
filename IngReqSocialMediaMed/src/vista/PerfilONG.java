@@ -68,7 +68,7 @@ public class PerfilONG extends JPanel {
 		lblxb.setFont(new Font("Tahoma", Font.PLAIN, 46));
 		add(lblxb);
 	   
-	   // if(editar) {
+	    if(editar) {
 			
 			
 	    	 JPanel panelEditarPerfil = new JPanel();
@@ -108,48 +108,50 @@ public class PerfilONG extends JPanel {
 		    lblEditarPerfil.setForeground(Color.WHITE);
 		    lblEditarPerfil.setHorizontalAlignment(SwingConstants.CENTER);
 		    lblEditarPerfil.setBackground(new Color(93,103,175));
-	   // }
+	    }else {
+	    	 JPanel panelEnviarMensaje = new JPanel();
+			    panelEnviarMensaje.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+			    panelEnviarMensaje.setBounds(135, 457, 140, 50);
+			    panelEnviarMensaje.setBackground(new Color(93,103,175));
+		 	    add(panelEnviarMensaje);
+		 	   panelEnviarMensaje.setLayout(null);
+		 	    
+		 	    JLabel lblEnviarMensaje = new JLabel("Enviar mensaje");
+		 	    lblEnviarMensaje.addMouseListener(new MouseAdapter() {
+		 	    	@Override
+		 	    	public void mousePressed(MouseEvent e) {
+		 	    		
+		 	    		Border bordeAbajo = new BevelBorder(1);
+		 	    		
+		 	    		panelEnviarMensaje.setBorder(bordeAbajo);
+		 	    		
+		 	    		System.out.println("Boton abajo");
+		 	    		//panelEditarPerfil.setBorder(bordeArriba);
+		 	    		
+		 	    	}
+		 	    	
+		 	    	@Override
+		 	    	public void mouseClicked(MouseEvent e) {
+		 	    		Border bordeArriba = new BevelBorder(0);
+		 	    		panelEnviarMensaje.setBorder(bordeArriba);
+		 	    		//Cambiar a nuevo mensaje
+		 	    		System.out.println("Entrando a nuevo mensaje");
+		 	    		padre.cambiarNuevoMensaje(ong);
+		 	    		
+		 				//dispose();
+		 				
+		 	    	}
+		 	    });
+			    lblEnviarMensaje.setFont(new Font("Tahoma", Font.BOLD, 14));
+			    lblEnviarMensaje.setBounds(0, 0, 140, 50);
+			    panelEnviarMensaje.add(lblEnviarMensaje);
+			    lblEnviarMensaje.setForeground(Color.WHITE);
+			    lblEnviarMensaje.setHorizontalAlignment(SwingConstants.CENTER);
+			    lblEnviarMensaje.setBackground(new Color(93,103,175));
+	    }
 
 	    
-		    JPanel panelEnviarMensaje = new JPanel();
-		    panelEnviarMensaje.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		    panelEnviarMensaje.setBounds(135, 457, 140, 50);
-		    panelEnviarMensaje.setBackground(new Color(93,103,175));
-	 	    add(panelEnviarMensaje);
-	 	   panelEnviarMensaje.setLayout(null);
-	 	    
-	 	    JLabel lblEnviarMensaje = new JLabel("Enviar mensaje");
-	 	    lblEnviarMensaje.addMouseListener(new MouseAdapter() {
-	 	    	@Override
-	 	    	public void mousePressed(MouseEvent e) {
-	 	    		
-	 	    		Border bordeAbajo = new BevelBorder(1);
-	 	    		
-	 	    		panelEnviarMensaje.setBorder(bordeAbajo);
-	 	    		
-	 	    		System.out.println("Boton abajo");
-	 	    		//panelEditarPerfil.setBorder(bordeArriba);
-	 	    		
-	 	    	}
-	 	    	
-	 	    	@Override
-	 	    	public void mouseClicked(MouseEvent e) {
-	 	    		Border bordeArriba = new BevelBorder(0);
-	 	    		panelEnviarMensaje.setBorder(bordeArriba);
-	 	    		//Cambiar a nuevo mensaje
-	 	    		System.out.println("Entrando a nuevo mensaje");
-	 	    		padre.cambiarNuevoMensaje(ong);
-	 	    		
-	 				//dispose();
-	 				
-	 	    	}
-	 	    });
-		    lblEnviarMensaje.setFont(new Font("Tahoma", Font.BOLD, 14));
-		    lblEnviarMensaje.setBounds(0, 0, 140, 50);
-		    panelEnviarMensaje.add(lblEnviarMensaje);
-		    lblEnviarMensaje.setForeground(Color.WHITE);
-		    lblEnviarMensaje.setHorizontalAlignment(SwingConstants.CENTER);
-		    lblEnviarMensaje.setBackground(new Color(93,103,175));
+		   
 	   
 	    
 	    //Aqui continua la flecha para volver atrás --- Todo lo que tiene lblxb

@@ -13,6 +13,8 @@ import javax.swing.JTextArea;
 import controlador.CtrNuevoMensaje;
 
 import java.awt.Toolkit;
+
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -33,10 +35,12 @@ public class NuevoMensaje extends JFrame {
 	 * Create the panel.
 	 */
 	public NuevoMensaje(MenuPrincipal padre, todosUsuarios emisor, todosUsuarios receptor) {
+		this.setResizable(false);
 		control = new CtrNuevoMensaje(padre, this, emisor, receptor);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NuevoMensaje.class.getResource("/resources/chat.png")));
 		setTitle("Nuevo mensaje");
 		this.setBounds(0, 0, 600, 400);
+		
 		getContentPane().setLayout(null);
 		
 		System.out.println("He entrado a nuevo mensaje");

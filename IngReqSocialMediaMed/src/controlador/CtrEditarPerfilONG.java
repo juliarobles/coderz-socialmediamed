@@ -43,7 +43,7 @@ public class CtrEditarPerfilONG implements MouseListener {
 					ong.setDescripcion(panel.getTextoDescripcion().getText());
 					panel.guardadoCorrectamente();
 				}else {
-					JFrame error = new Toast(todoCorrecto());
+					JFrame error = new Toast(todoCorrecto(), false);
 					error.setVisible(true);
 					panel.noGuardado();
 				}
