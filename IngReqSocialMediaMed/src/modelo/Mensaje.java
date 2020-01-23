@@ -16,6 +16,18 @@ public class Mensaje {
 	//Si te hace falta alguna funcion dimelo
 	//0 gestor, 1 participante, 2 ong 
 	
+	public String getEmisor() {
+		return emisor;
+	}
+
+	public String getReceptor() {
+		return receptor;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
 	public static List<Mensaje> getMensajes(String emisor, String receptor){
 		List<Mensaje> lista = new ArrayList<Mensaje>();
 		BD mibd = new BD();

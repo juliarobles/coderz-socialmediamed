@@ -9,17 +9,21 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 public class AdapterChat extends JPanel {
-
+		private String receptor;
 	/**
 	 * Create the panel.
 	 */
 	public AdapterChat(String correo) {
+		this.receptor = correo;
 		setLayout(null);
-		this.setSize(320, 80);
+		this.setSize(316, 80);
 		JLabel lblCorreo = new JLabel("");
 		lblCorreo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCorreo.setBounds(47, 11, 226, 14);
+		lblCorreo.setBounds(47, 11, 226, 20);
 		add(lblCorreo);
 		lblCorreo.setText(correo);
+	}
+	public String getReceptor() {
+		return receptor;
 	}
 }

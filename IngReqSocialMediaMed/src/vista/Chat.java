@@ -14,17 +14,25 @@ import java.awt.Font;
 import java.util.List;
 
 import javax.swing.SwingConstants;
+
+import controlador.CtrChat;
+
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import java.awt.Toolkit;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class Chat extends JFrame
 {
-
+	private CtrChat control;
+	private JTextField lblMensaje;
+	private JTextArea conversacion;
 	/**
 	 * Create the panel.
 	 */
 	public Chat(todosUsuarios usu) {
+		control = new CtrChat(this, usu);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Chat.class.getResource("/resources/chat.png")));
 		setTitle("Chat");
 		setSize(new Dimension(1100, 715));
@@ -33,7 +41,8 @@ public class Chat extends JFrame
 		JScrollPane paneConversaciones = new JScrollPane();
 		paneConversaciones.setBounds(35, 73, 320, 579);
 		getContentPane().add(paneConversaciones);
-		
+		paneConversaciones.setBorder(null);
+		paneConversaciones.setLayout(null);
 		
 		//Crea el adaptador
 		
@@ -48,7 +57,8 @@ public class Chat extends JFrame
 			JPanel conv = new AdapterChat(t.elemento1);
 			paneConversaciones.add(conv);
 			conv.setVisible(true);
-			conv.setLocation(0, x);
+			conv.setLocation(2, x);
+			conv.addMouseListener(control);
 			x+=80;
 			System.out.println("Añadida conversación nueva");
 		}
@@ -61,16 +71,32 @@ public class Chat extends JFrame
 		getContentPane().add(lblConversaciones);
 		
 		JScrollPane AreaConversacion = new JScrollPane();
-		AreaConversacion.setBounds(417, 73, 638, 579);
+		AreaConversacion.setBounds(417, 73, 638, 539);
 		getContentPane().add(AreaConversacion);
 		
 		JTextArea textConversacion = new JTextArea();
 		AreaConversacion.setViewportView(textConversacion);
 		
-		JLabel lblNewLabel = new JLabel("Conversaci\u00F3n");
-		lblNewLabel.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 23));
-		lblNewLabel.setBounds(625, 33, 181, 29);
-		getContentPane().add(lblNewLabel);
+		JLabel lblConversacion = new JLabel("Conversaci\u00F3n");
+		lblConversacion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 23));
+		lblConversacion.setBounds(625, 33, 181, 29);
+		getContentPane().add(lblConversacion);
 		
+		lblMensaje = new JTextField();
+		lblMensaje.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		lblMensaje.setBounds(417, 623, 552, 29);
+		getContentPane().add(lblMensaje);
+		lblMensaje.setColumns(10);
+		
+		JButton btnEnviar = new JButton("Enviar");
+		btnEnviar.setBounds(985, 623, 70, 29);
+		getContentPane().add(btnEnviar);
+		
+	}
+	public JTextArea getConversacion() {
+		return conversacion;
+	}
+	public void setConversacion(JTextArea conversacion) {
+		this.conversacion = conversacion;
 	}
 }
