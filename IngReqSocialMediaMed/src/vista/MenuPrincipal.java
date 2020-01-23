@@ -41,6 +41,8 @@ public class MenuPrincipal extends JFrame {
 	private MisActividadesConSeguimiento misactividades;
 	private Container anterior;
 	private Chat chat;
+	private todosUsuarios activo;
+	private NuevoMensaje nuevom;
 	
 
 	/**
@@ -111,6 +113,7 @@ public class MenuPrincipal extends JFrame {
 			usuario.actualizarUltimasPublicadas();
 		} else {
 			usuario = new MenuPrincipalUsuario(this, usu);
+			activo = usu;
 		}
 		if(listaActividades != null) {
 			listaActividades.setVisible(false);
@@ -151,7 +154,7 @@ public class MenuPrincipal extends JFrame {
 	}
 	public void cambiarONG(ONG usu) {
 		ong = new MenuPrincipalONG(this, usu);
-		
+		activo = usu;
 		
 		ong.setVisible(true);
 		if(invitado != null) {
@@ -180,6 +183,7 @@ public class MenuPrincipal extends JFrame {
 	public void cambiarGestor() {
 		if(gestor == null) {
 			gestor = new MenuPrincipalGestor(this);
+			
 		}
 		if(gestionPropuestas != null) {
 			gestionPropuestas.setVisible(false);
@@ -445,5 +449,14 @@ public class MenuPrincipal extends JFrame {
 			anterior.setVisible(true);
 			setContentPane(anterior);
 		}
+	}
+
+	public void cambiarNuevoMensaje(todosUsuarios usu) {
+		// TODO Auto-generated method stub
+		nuevom = new NuevoMensaje(this, activo, usu);
+		nuevom.setVisible(true);
+		//perfilong.setVisible(false);//Modificar, es una prueba
+		System.out.println("Entrando a cambiar a nuevo mensaje");
+		//setContentPane(nuevom);
 	}
 }

@@ -5,10 +5,13 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 
 import modelo.Mensaje;
+import modelo.Tupla;
 import modelo.todosUsuarios;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.List;
+
 import javax.swing.SwingConstants;
 import javax.swing.JList;
 import javax.swing.JTextArea;
@@ -27,8 +30,17 @@ public class Chat extends JPanel {
 		add(paneConversaciones);
 		
 		
-		JList listaConversaciones = new JList();
+		//Crea el adaptador
+		
+		JList<AdapterChat> listaConversaciones = new JList<AdapterChat>();
 		paneConversaciones.setViewportView(listaConversaciones);
+		
+		List<Tupla> l = Mensaje.getChat(usu.getEmail());
+		for (Tupla t: l){
+			listaConversaciones.add(new AdapterChat(t.elemento1));
+			System.out.println("Añadida conversación nueva");
+		}
+		
 		
 		JLabel lblConversaciones = new JLabel("Conversaciones");
 		lblConversaciones.setBounds(117, 33, 160, 29);

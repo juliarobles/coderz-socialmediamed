@@ -7,7 +7,7 @@ import java.util.TreeMap;
 
 public class ONG extends todosUsuarios{
 	
-	private String email;
+	
 	private String nombre;
 	private String descripcion;
 	
@@ -83,9 +83,7 @@ public class ONG extends todosUsuarios{
 	}
 	
 	
-	public String getEmail() {
-		return email;
-	}
+	
 	
 	public String getPassword() {
 		BD mibd = new BD();

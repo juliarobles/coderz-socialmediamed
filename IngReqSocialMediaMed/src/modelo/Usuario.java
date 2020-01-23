@@ -2,7 +2,6 @@ package modelo;
 
 public abstract class Usuario extends todosUsuarios{
 	
-	protected String email;
 	protected String nombre;
 	protected String apellido1;
 	protected String apellido2;
@@ -83,9 +82,6 @@ public abstract class Usuario extends todosUsuarios{
 		this.ambito = null;
 	}
 	
-	public String getEmail() {
-		return email;
-	}
 	/*
 	private void setEmail(String email) {
 		no se puede cambiar el email
