@@ -29,7 +29,7 @@ public class Mensaje {
 	public static List<Tupla> getChat(String usuario){
 		List<Tupla> lista = new ArrayList<Tupla>();
 		BD mibd = new BD();
-		for(Object[] tupla : mibd.Select("SELECT receptor, tiporeceptor FROM MENSAJE WHERE emisor = '" + usuario + "' UNION SELECT emisor FROM MENSAJE WHERE receptor = '" + usuario + "';")) {
+		for(Object[] tupla : mibd.Select("SELECT receptor, tiporeceptor FROM MENSAJE WHERE emisor = '" + usuario + "' UNION SELECT emisor, tiporeceptor FROM MENSAJE WHERE receptor = '" + usuario + "';")) {
 			int tipo = (int) tupla[1];
 			if(tipo == 0) { //gestor
 				lista.add(new Tupla((String)tupla[0], "Gestor"));

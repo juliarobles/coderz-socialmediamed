@@ -31,7 +31,7 @@ public class Actividad {
 		String f;
 		
 		if(u != null) {
-			List<Object[]> tupla = mibd.Select("SELECT id, titulo, fechainicio FROM ACTIVIDADES WHERE tipooferta = '" + u.tipoOferta + "' and zonaaccion = '" + u.zonaAccion + "' LIMIT 15;");
+			List<Object[]> tupla = mibd.Select("SELECT id, titulo, fechainicio FROM ACTIVIDADES WHERE tipooferta = '" + u.tipoOferta + "' and zonaaccion = '" + u.zonaAccion + "' AND NOT " + filtroFecha() + " LIMIT 15;");
 			if(u.disponibilidad.equals(Disponibilidad.Siempre)){
 				for(Object[] t : tupla) {
 					lista.add(new Tupla(Integer.toString((Integer) t[0]), (String) t[1]));
@@ -58,7 +58,7 @@ public class Actividad {
 				}
 			}
 			if(lista.size() < 15) {
-				for(Object[] t : mibd.Select("SELECT id, titulo FROM ACTIVIDADES WHERE tipooferta = '" + u.tipoOferta.toString() + "' AND zonaaccion <> '" + u.zonaAccion.toString() + "' LIMIT " + (15 - lista.size())+ ";")) {
+				for(Object[] t : mibd.Select("SELECT id, titulo FROM ACTIVIDADES WHERE tipooferta = '" + u.tipoOferta.toString() + "' AND zonaaccion <> '" + u.zonaAccion.toString() + "' AND NOT " + filtroFecha() + " LIMIT " + (15 - lista.size())+ ";")) {
 					lista.add(new Tupla(Integer.toString((Integer) t[0]), (String) t[1]));
 				}
 			}
@@ -70,7 +70,7 @@ public class Actividad {
 	public static List<Tupla> getUltimasAniadidas() {
 		List<Tupla> lista = new ArrayList<>();
 		BD mibd = new BD();
-		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES ORDER BY id DESC LIMIT 15;")) {
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES WHERE NOT " + filtroFecha() + " ORDER BY id DESC LIMIT 15;")) {
 			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
 		}
 		mibd.finalize();
@@ -80,7 +80,7 @@ public class Actividad {
 	public static List<Tupla> getMasSolicitadas() {
 		List<Tupla> lista = new ArrayList<>();
 		BD mibd = new BD();
-		for(Object[] tupla : mibd.Select("SELECT a.id, a.titulo, count(s.participante) FROM ACTIVIDADES a, SOLICITUDES s WHERE a.id = s.actividad GROUP BY a.id ORDER BY count(s.participante) DESC LIMIT 15;")) {
+		for(Object[] tupla : mibd.Select("SELECT a.id, a.titulo, count(s.participante) FROM ACTIVIDADES a, SOLICITUDES s WHERE a.id = s.actividad AND NOT " + filtroFecha() + " GROUP BY a.id ORDER BY count(s.participante) DESC LIMIT 15;")) {
 			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
 		}
 		mibd.finalize();
@@ -140,6 +140,16 @@ public class Actividad {
 		List<Tupla> lista = new ArrayList<>();
 		BD mibd = new BD();
 		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES")) {
+			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
+		}
+		mibd.finalize();
+		return lista;
+	}
+	
+	public static List<Tupla> getActividadesSimpleNoFinalizadas(){
+		List<Tupla> lista = new ArrayList<>();
+		BD mibd = new BD();
+		for(Object[] tupla : mibd.Select("SELECT id, titulo FROM ACTIVIDADES WHERE NOT " + filtroFecha() + ";")) {
 			lista.add(new Tupla(Integer.toString((Integer) tupla[0]), (String) tupla[1]));
 		}
 		mibd.finalize();

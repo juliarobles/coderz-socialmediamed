@@ -60,10 +60,12 @@ public class CtrListaPropuestaONG implements ListSelectionListener {
 			String proy = (p.getProyecto() == null) ? "No incluido en ningún proyecto" : p.getProyecto().getNombre();
 			vista.proyecto.setText(proy);
 			vista.setPropuesta(p);
-			if(p.getAsignatura() == null) {
+			if(p.getAsignatura() != null) {
+				vista.tipo.setText("Aprendizaje - " + p.getAsignatura().getNombre());
+			} else if (p.getInvestigador() != null) {
 				vista.tipo.setText("Investigación");
 			} else {
-				vista.tipo.setText("Aprendizaje - " + p.getAsignatura().getNombre());
+				vista.tipo.setText("Voluntariado");
 			}
 			for(Component c : panel.getComponents()) {
 				c.setVisible(true);

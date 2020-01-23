@@ -102,7 +102,7 @@ public class ListaActividades extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				listmodel.clear();
-				for(Tupla t : Actividad.getActividadesSimple()) {
+				for(Tupla t : Actividad.getActividadesSimpleNoFinalizadas()) {
 					if(t.elemento2.contains(busqueda.getText())) {
 						System.out.println(t.elemento2);
 						System.out.println(busqueda.getText());
@@ -133,7 +133,7 @@ public class ListaActividades extends JPanel {
 		
 		
 		//System.out.println("Hola??????????????????????");
-		for(Tupla t : Actividad.getActividadesSimple()) {
+		for(Tupla t : Actividad.getActividadesSimpleNoFinalizadas()) {
 			System.out.println("Añadido elemento");
 			listmodel.addElement(t);
 		}
