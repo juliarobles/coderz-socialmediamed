@@ -19,6 +19,7 @@ import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import java.awt.Dimension;
 
 public class ConsultarActividad extends JPanel {
 	private boolean apuntado;
@@ -115,7 +116,7 @@ public class ConsultarActividad extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		panel.setBounds(87, 165, 212, 272);
+		panel.setBounds(87, 165, 212, 271);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -126,7 +127,7 @@ public class ConsultarActividad extends JPanel {
 		panel.add(lblFoto);
 		
 		JScrollPane sclActividades = new JScrollPane();
-		sclActividades.setBounds(362, 165, 663, 453);
+		sclActividades.setBounds(362, 165, 663, 271);
 		add(sclActividades);
 		
 		JTextArea sclDescripcion = new JTextArea();
@@ -134,7 +135,7 @@ public class ConsultarActividad extends JPanel {
 		sclActividades.setViewportView(sclDescripcion);
 		sclDescripcion.setText(act.getDescripcion());
 		
-	
+		
 		
 		JLabel lblxb = new JLabel("<html>&larr;<html>");
 		lblxb.addMouseListener(new MouseAdapter() {
@@ -179,6 +180,39 @@ public class ConsultarActividad extends JPanel {
 				campoONG.setForeground(Color.BLACK);
 			}
 		});
+		
+		JLabel lblTipoOferta = new JLabel("Fecha inicio: <dynamic>");
+		lblTipoOferta.setSize(new Dimension(148, 20));
+		lblTipoOferta.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		lblTipoOferta.setBounds(674, 493, 148, 20);
+		add(lblTipoOferta);
+		lblTipoOferta.setText("Tipo de oferta: " + act.getTipooferta().toString());
+		lblTipoOferta.setSize(lblTipoOferta.getPreferredSize());
+		
+		JLabel lblAmbito = new JLabel();
+		lblAmbito.setSize(new Dimension(148, 20));
+		lblAmbito.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		lblAmbito.setBounds(674, 529, 148, 20);
+		add(lblAmbito);
+		lblAmbito.setText("Ámbito: " + act.getAmbito().toString());
+		lblAmbito.setSize(lblAmbito.getPreferredSize());
+		
+		JLabel lblFechaFin = new JLabel();
+		lblFechaFin.setSize(new Dimension(148, 20));
+		lblFechaFin.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		lblFechaFin.setBounds(362, 524, 148, 20);
+		add(lblFechaFin);
+		lblFechaFin.setText("Fecha fin: " + act.getFechafinal());
+		lblFechaFin.setSize(lblFechaFin.getPreferredSize());
+		
+		
+		JLabel lblFechaInicio = new JLabel("");
+		lblFechaInicio.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
+		lblFechaInicio.setBounds(362, 493, 90, 29);
+		add(lblFechaInicio);
+		lblFechaInicio.setText("Fecha inicio: " + act.getFechainicio());
+		lblFechaInicio.setSize(lblFechaInicio.getPreferredSize());
+		
 		campoONG.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 14));
 		campoONG.setBounds(140, 493, 159, 20);
 		add(campoONG);
