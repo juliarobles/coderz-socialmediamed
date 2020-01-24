@@ -508,7 +508,7 @@ public class SeguimientoONGPDIGestor extends JPanel {
 					valoracionONG.setVisible(false);
 				}
 			}
-			if(Actividad.esDeAprendizaje(ActConsultada)) { //Es de aprendizaje y ademas soy su profe ole
+			if(!Actividad.esDeAprendizaje(ActConsultada)) { //Es de aprendizaje y ademas soy su profe ole
 				nota.setVisible(false);
 				lblNota.setVisible(false);
 				comentarioPDI.setVisible(false);
