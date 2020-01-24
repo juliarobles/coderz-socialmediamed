@@ -18,7 +18,8 @@ import vista.Chat;
 public class CtrChat implements MouseListener {
 	private Chat panel;
 	private todosUsuarios usu;
-	
+	private String receptor;
+	private List<Mensaje> lista;
 	public CtrChat(Chat p, todosUsuarios u) {
 		panel = p;
 		usu = u;
@@ -26,14 +27,26 @@ public class CtrChat implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		
 		Object o = e.getSource();
-		if((JPanel) o instanceof AdapterChat) {
+		if( o instanceof AdapterChat) {
 			AdapterChat a = (AdapterChat) o;
-			a.getReceptor();
+			 this.receptor =a.getReceptor();
 			
-			List<Mensaje> lista = Mensaje.getMensajes(usu.getEmail(), a.getReceptor());
+			 lista= Mensaje.getMensajes(usu.getEmail(), a.getReceptor());
 			
 			crearConversacion(lista);
+			panel.getEnviar().setEnabled(true);
+		}else if( o instanceof JButton ) {
+			System.out.println("Enviar");
+			Mensaje m = new Mensaje(this.usu.getEmail(), receptor, panel.getLblMensaje().getText() );
+			lista.add(m);
+			Mensaje.enviarMensaje(this.usu.getEmail(), receptor, panel.getLblMensaje().getText(), 2 );
+			panel.getConversacion().setText("");
+			panel.getLblMensaje().setText("");
+			crearConversacion(lista);
+			
+			//Guardar nuevos mensajes (Enviar)
 		}
 			
 			
@@ -46,12 +59,12 @@ public class CtrChat implements MouseListener {
 		
 		String conver = "";
 		while(iter.hasNext()) {
-			System.out.println("Añadido mensajes");
+			System.out.println("Añadido mensaje");
 			Mensaje m = iter.next();
-			conver += m.getEmisor() + ":" + m.getMensaje() + "\";";
+			conver += m.getEmisor() + ":" + m.getMensaje() + "\n";
 		}
-		System.out.println(conver);
-		//c.setText(conver);
+		System.out.println(c);
+		c.setText( conver );
 		panel.setConversacion(c);
 	}
 
