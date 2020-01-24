@@ -228,6 +228,31 @@ public class MenuPrincipalUsuario extends JPanel {
 				lblMisSolicitudes.setForeground(Color.BLACK);
 			}
 		});
+		
+		JLabel Chat = new JLabel("Chat");
+		Chat.setForeground(Color.BLACK);
+		Chat.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 18));
+		Chat.setBounds(366, 24, 46, 62);
+		add(Chat);
+		Chat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+					padre.cambiarAChat(usu);
+				Chat.setForeground(Color.BLACK);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				Chat.setForeground(new Color(51, 204, 204));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				Chat.setForeground(Color.BLACK);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			
+			}
+		});
 		add(lblMisSolicitudes);
 		
 		JLabel lblMisActividades = new JLabel("Mis actividades");

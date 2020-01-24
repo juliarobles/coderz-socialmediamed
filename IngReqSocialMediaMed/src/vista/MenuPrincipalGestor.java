@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import modelo.Gestor;
 import utilidades.JPictureBox;
 
 import javax.swing.JLabel;
@@ -286,6 +287,10 @@ public class MenuPrincipalGestor extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				chat.setForeground(Color.BLACK);
 				chat.setIcon(new ImageIcon(MenuPrincipalONG.class.getResource("/resources/chat.png")));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//padre.cambiarAChat(new Gestor());
 			}
 		});
 		add(chat);
