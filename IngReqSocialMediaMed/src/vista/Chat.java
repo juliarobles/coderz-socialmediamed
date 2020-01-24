@@ -27,7 +27,21 @@ public class Chat extends JFrame
 {
 	private CtrChat control;
 	private JTextField lblMensaje;
+	private JPanel panelConv;
 	private JTextArea conversacion;
+	private JButton enviar;
+	public JTextField getLblMensaje() {
+		return lblMensaje;
+	}
+	public void setLblMensaje(JTextField lblMensaje) {
+		this.lblMensaje = lblMensaje;
+	}
+	public JPanel getPanelConv() {
+		return panelConv;
+	}
+	public void setPanelConv(JPanel panelConv) {
+		this.panelConv = panelConv;
+	}
 	/**
 	 * Create the panel.
 	 */
@@ -39,10 +53,11 @@ public class Chat extends JFrame
 		getContentPane().setLayout(null);
 		
 		JScrollPane paneConversaciones = new JScrollPane();
-		paneConversaciones.setBounds(35, 73, 320, 579);
+		paneConversaciones.setBounds(35, 73, 320, 539);
 		getContentPane().add(paneConversaciones);
 		paneConversaciones.setBorder(null);
 		paneConversaciones.setLayout(null);
+		
 		
 		//Crea el adaptador
 		
@@ -59,10 +74,10 @@ public class Chat extends JFrame
 			conv.setVisible(true);
 			conv.setLocation(2, x);
 			conv.addMouseListener(control);
-			x+=80;
+			x+=30;
 			System.out.println("Añadida conversación nueva");
 		}
-		
+		//paneConversaciones.
 		
 		JLabel lblConversaciones = new JLabel("Conversaciones");
 		lblConversaciones.setBounds(117, 33, 160, 29);
@@ -75,7 +90,9 @@ public class Chat extends JFrame
 		getContentPane().add(AreaConversacion);
 		
 		JTextArea textConversacion = new JTextArea();
+		textConversacion.setEditable(false);
 		AreaConversacion.setViewportView(textConversacion);
+		//textConversacion.setText("Hola Hola");											///Borrar despues de las comprobaciones
 		
 		JLabel lblConversacion = new JLabel("Conversaci\u00F3n");
 		lblConversacion.setFont(new Font("Malgun Gothic Semilight", Font.PLAIN, 23));
@@ -89,9 +106,19 @@ public class Chat extends JFrame
 		lblMensaje.setColumns(10);
 		
 		JButton btnEnviar = new JButton("Enviar");
+		btnEnviar.setEnabled(false);
 		btnEnviar.setBounds(985, 623, 70, 29);
 		getContentPane().add(btnEnviar);
-		
+		enviar = btnEnviar;
+		textConversacion.setLineWrap(true);
+		conversacion = textConversacion;
+		btnEnviar.addMouseListener(control);
+	}
+	public JButton getEnviar() {
+		return enviar;
+	}
+	public void setEnviar(JButton enviar) {
+		this.enviar = enviar;
 	}
 	public JTextArea getConversacion() {
 		return conversacion;
