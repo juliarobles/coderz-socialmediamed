@@ -42,7 +42,7 @@ public class Mensaje {
 		List<Tupla> lista = new ArrayList<Tupla>();
 		BD mibd = new BD();
 		for(Object[] tupla : mibd.Select("SELECT receptor, tiporeceptor FROM MENSAJE WHERE emisor = '" + usuario + "' UNION SELECT emisor, tiporeceptor FROM MENSAJE WHERE receptor = '" + usuario + "';")) {
-			int tipo = (int) tupla[1];
+			/*int tipo = (int) tupla[1];
 			if(tipo == 0) { //gestor
 				lista.add(new Tupla((String)tupla[0], "Gestor"));
 			} else if (tipo == 1) { //participante
@@ -52,6 +52,8 @@ public class Mensaje {
 				Object[] tupla2 = mibd.Select("SELECT nombre FROM USUARIOONG WHERE email = '" + usuario + "';").get(0);
 				lista.add(new Tupla((String)tupla[0], (String)tupla2[0]));
 			}
+			*/
+			lista.add(new Tupla((String)tupla[0], ""));
 		}
 		mibd.finalize();
 		return lista;
