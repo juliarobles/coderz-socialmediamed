@@ -1,7 +1,7 @@
 package modelo;
 
 public class Gestor extends todosUsuarios{
-	public Gestor () {
-		
+	public Gestor (String email) {
+		this.email = email;
 	}
 }

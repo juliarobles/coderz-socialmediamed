@@ -290,7 +290,7 @@ public class MenuPrincipalGestor extends JPanel {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//padre.cambiarAChat(new Gestor());
+				padre.cambiarAChat(new Gestor("gestor"));
 			}
 		});
 		add(chat);
